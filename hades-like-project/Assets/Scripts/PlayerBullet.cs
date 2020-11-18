@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class PlayerBullet : MonoBehaviour
 {
-
     public GameObject explodeEffect;
-    // Start is called before the first frame update
+    GameObject mainCamera;
+
+    // Set a lifetime timer
     void Start()
     {
+        mainCamera = GameObject.Find("MainCamera");
         Destroy(gameObject, 1);
     }
 
@@ -18,7 +20,17 @@ public class PlayerBullet : MonoBehaviour
         
     }
 
+    private void OnCollisionEnter2D(Collision2D other) {
+        // Collide with enemies
+        //TODO: Damage multiple types of enemies!
+        if(other.transform.tag == "Enemy"){
+            other.gameObject.GetComponent<Enemy>().takeDamage(1);
+            Destroy(gameObject);
+        }   
+    }
+
     private void OnDestroy() {
+        // Create particle effects
         Instantiate(explodeEffect, transform.position, transform.rotation);
     }
 }
