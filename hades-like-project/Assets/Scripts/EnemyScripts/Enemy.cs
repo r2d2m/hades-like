@@ -10,6 +10,7 @@ public class Enemy : MonoBehaviour
     protected float maxHP;
     protected float currentHP;
     protected GameObject player;
+    protected int collisionDamage = 0;
 
     // Start is called before the first frame update
     void Awake()
@@ -35,5 +36,9 @@ public class Enemy : MonoBehaviour
 
     public void heal(){
         
+    }
+
+    public int getCollisionDamage(){
+        return collisionDamage;
     }
 }

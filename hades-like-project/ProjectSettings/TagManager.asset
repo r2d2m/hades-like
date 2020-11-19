@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Enemy
   - PlayerBullet
+  - Door
+  - Corpse
   layers:
   - Default
   - TransparentFX
@@ -15,12 +17,12 @@ TagManager:
   - UI
   - 
   - 
-  - PlayerBullets
+  - PlayerBullet
   - Player
-  - 
-  - 
-  - 
-  - 
+  - Doors
+  - ScreenEffect
+  - Corpse
+  - Enemy
   - 
   - 
   - 
@@ -42,4 +44,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Doors
+    uniqueID: 3731215437
+    locked: 0
+  - name: ScreenEffects
+    uniqueID: 1419093983
     locked: 0

@@ -7,10 +7,9 @@ public class PlayerMain : MonoBehaviour
     GameObject mainCamera;
 
     float movementSpeed = 5000f;
-    float movementAcc = 0.1f;
     float bulletForce = 1800f;
-    float shootCD = 0.2f;
-    float specialCD = 1f;
+    float shootCD = 0.2f; 
+    float specialCD = 1.0f; // Rightclick = special
     float currentShootCD;
 
     public GameObject playerGun;
@@ -20,13 +19,20 @@ public class PlayerMain : MonoBehaviour
 
     Vector2 movementVector;
 
+    float invisCD = 1.0f;
+    float currentInvisCD;
+
     int maxHP;
     int currentHP;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentShootCD = shootCD;
+        maxHP = 5;
+        currentHP = maxHP;
+        currentShootCD = 0;
+
+        currentInvisCD = 0;
         mainCamera = GameObject.Find("MainCamera");
         rigidBody = GetComponent<Rigidbody2D>();
     }
@@ -34,15 +40,34 @@ public class PlayerMain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        updateCooldowns();
+        playerMovement();
+        playerAim();
+        playerActions();
+
+        // TODO: delete this later!
+        debugPlayer();
+    }
+
+    void debugPlayer(){
+        if(Input.GetKeyDown(KeyCode.Z)){
+            UnityEngine.SceneManagement.SceneManager.LoadSceneAsync(UnityEngine.SceneManagement.SceneManager.GetActiveScene().buildIndex);
+        }
+    }
+
+    // Update all cooldowns
+    void updateCooldowns(){
         if(currentShootCD > 0){
             currentShootCD -= Time.deltaTime;
         }else{
             currentShootCD = 0;
         }
 
-        playerMovement();
-        playerAim();
-        playerActions();
+        if(invisCD > 0){
+            currentInvisCD -= Time.deltaTime;
+        }else{
+            currentInvisCD = 0;
+        }
     }
     
     // All physics related stuff should be here!
@@ -108,14 +133,28 @@ public class PlayerMain : MonoBehaviour
 
     // Take damage 
     void takeDamage(int amount){
-        currentHP -= amount;
-        if(currentHP <= 0){
-            gameOver();
+        if(currentInvisCD <= 0){
+            currentHP -= amount;
+            currentInvisCD = invisCD;
+            print("Took: " + amount + " damage, " + currentHP + "/" + maxHP + " HP left!");
+            if(currentHP <= 0){
+                gameOver();
+            }
         }
     }
 
     // Call on this when you are DEAD
     void gameOver(){
         print("Game Over :(");
+        mainCamera.GetComponent<EffectManager>().setBackground(Color.red);
+    }
+
+    private void OnCollisionEnter2D(Collision2D other){
+        if(other.gameObject.tag == "Enemy"){
+            int recievedDamage = other.gameObject.GetComponent<Enemy>().getCollisionDamage();
+            if(recievedDamage > 0){
+                takeDamage(recievedDamage);
+            }
+        }
     }
 }

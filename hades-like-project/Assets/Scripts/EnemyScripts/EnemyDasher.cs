@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyDasher : Enemy
 {
+
+    public GameObject corpsePrefab;
+
     Vector3 movementVector;
     Rigidbody2D rb;
     float dashCD;
@@ -14,6 +17,7 @@ public class EnemyDasher : Enemy
     // Start is called before the first frame update
     void Start()
     {
+        collisionDamage = 1;
         maxHP = 3;
         currentHP = maxHP;
         doDash = false;
@@ -56,6 +60,9 @@ public class EnemyDasher : Enemy
     }
 
     void die(){
+        GameObject corpse = Instantiate(corpsePrefab, transform.position, transform.rotation);
+        corpse.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+        corpse.transform.parent = transform.parent; // TODO CHANGE THIS!
         Destroy(gameObject);
         //TODO: Spawn corpse etc
     }
