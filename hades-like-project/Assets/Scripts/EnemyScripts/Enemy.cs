@@ -7,10 +7,15 @@ using UnityEngine;
 */
 public class Enemy : MonoBehaviour
 {
+    public GameObject corpsePrefab;
+
     protected float maxHP;
     protected float currentHP;
     protected GameObject player;
     protected int collisionDamage = 0;
+    protected Vector3 movementVector;
+    protected Rigidbody2D rigidBody;
+    protected float movementStr;
 
     // Start is called before the first frame update
     void Awake()
@@ -29,6 +34,18 @@ public class Enemy : MonoBehaviour
         
     }
 
+    protected bool deathCheck(){
+        if(currentHP <= 0){
+            die();
+            return true;
+        }
+        return false;
+    }
+
+    GameObject getPlayer(){
+        return player;
+    }
+
     // 
     public void takeDamage(float damage){
         currentHP -= damage;
@@ -40,5 +57,16 @@ public class Enemy : MonoBehaviour
 
     public int getCollisionDamage(){
         return collisionDamage;
+    }
+
+    public void die(){
+        // Spawn corpse if we have a prefab
+        if(corpsePrefab != null){
+            GameObject corpse = Instantiate(corpsePrefab, transform.position, transform.rotation);
+            corpse.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+            corpse.transform.parent = transform.parent; // TODO CHANGE THIS!
+        }
+
+        Destroy(gameObject);
     }
 }

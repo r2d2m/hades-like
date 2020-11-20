@@ -104,7 +104,7 @@ public class PlayerMain : MonoBehaviour
             Vector3 randSpawn, randTarget;
             float spawnOffset = 0.3f;
             float targetOffset = 0.5f;
-            for(int i = 0; i < 6; i++){
+            for(int i = 0; i < 4; i++){
                 randSpawn = new Vector3(Random.Range(-spawnOffset, spawnOffset), Random.Range(-spawnOffset, spawnOffset), 0.0f);
                 randTarget = randSpawn = new Vector3(Random.Range(-targetOffset, targetOffset), Random.Range(-targetOffset, targetOffset), 0.0f);
                 shoot(playerGun.transform.position + randSpawn, mousePos + randTarget);
