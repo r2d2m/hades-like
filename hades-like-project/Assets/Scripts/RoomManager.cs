@@ -32,7 +32,7 @@ public class RoomManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.X)){
             activeRoomID += 1;
             print("DEBUG: go to next room: " + activeRoomID);
-            GameObject.Find("MainCamera").GetComponent<EffectManager>().roomChangeEffect(blackFadeSpeed, blackScreenDuration);
+            GameObject.Find("MainCamera").GetComponent<CameraManager>().roomChangeEffect(blackFadeSpeed, blackScreenDuration);
             StartCoroutine(activateRoom(activeRoomID));
         }
     }

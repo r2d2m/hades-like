@@ -116,7 +116,7 @@ public class PlayerMain : MonoBehaviour
     // Function for firing a bullet from spawnPos to targetPos 
     // TODO: Shoot different bullets!
     void shoot(Vector2 spawnPos, Vector2 targetPos){
-        mainCamera.GetComponent<EffectManager>().screenShake(0.08f,0.05f);
+        mainCamera.GetComponent<CameraManager>().screenShake(0.08f,0.05f);
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 deltaVec = mousePos - transform.position;
         GameObject newBullet = Instantiate(playerBullet, spawnPos, Quaternion.Euler(0,0, Random.Range(0, 360)));
@@ -146,7 +146,7 @@ public class PlayerMain : MonoBehaviour
     // Call on this when you are DEAD
     void gameOver(){
         print("Game Over :(");
-        mainCamera.GetComponent<EffectManager>().setBackground(Color.red);
+        mainCamera.GetComponent<CameraManager>().setBackground(Color.red);
     }
 
     private void OnCollisionEnter2D(Collision2D other){
@@ -156,5 +156,9 @@ public class PlayerMain : MonoBehaviour
                 takeDamage(recievedDamage);
             }
         }
+    }
+
+    public Vector3 getPlayerPosition(){
+        return transform.position;
     }
 }
