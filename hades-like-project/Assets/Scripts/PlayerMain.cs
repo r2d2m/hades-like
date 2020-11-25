@@ -14,6 +14,7 @@ public class PlayerMain : MonoBehaviour
 
     public GameObject playerGun;
     public GameObject playerBullet;
+    public GameObject healthBar;
 
     private Rigidbody2D rigidBody;
 
@@ -30,8 +31,9 @@ public class PlayerMain : MonoBehaviour
     {
         maxHP = 5;
         currentHP = maxHP;
-        currentShootCD = 0;
+        updateHealthBar();
 
+        currentShootCD = 0;
         currentInvisCD = 0;
         mainCamera = GameObject.Find("MainCamera");
         rigidBody = GetComponent<Rigidbody2D>();
@@ -135,12 +137,18 @@ public class PlayerMain : MonoBehaviour
     void takeDamage(int amount){
         if(currentInvisCD <= 0){
             currentHP -= amount;
+            updateHealthBar();
             currentInvisCD = invisCD;
             print("Took: " + amount + " damage, " + currentHP + "/" + maxHP + " HP left!");
             if(currentHP <= 0){
                 gameOver();
             }
         }
+    }
+
+    void updateHealthBar(){
+        healthBar.GetComponent<HealthBarManager>().setMaxHP(maxHP);
+        healthBar.GetComponent<HealthBarManager>().setCurrentHP(currentHP);
     }
 
     // Call on this when you are DEAD

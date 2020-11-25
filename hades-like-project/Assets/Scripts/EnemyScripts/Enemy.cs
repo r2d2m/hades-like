@@ -8,6 +8,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
     public GameObject corpsePrefab;
+    public GameObject roomManager;
 
     protected float maxHP;
     protected float currentHP;
@@ -21,6 +22,8 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        roomManager = GameObject.FindGameObjectWithTag("RoomManager");
+
     }
 
     void Start()
@@ -67,6 +70,7 @@ public class Enemy : MonoBehaviour
             corpse.transform.parent = transform.parent; // TODO CHANGE THIS!
         }
 
+        roomManager.GetComponent<RoomManager>().enemyDeath();
         Destroy(gameObject);
     }
 }

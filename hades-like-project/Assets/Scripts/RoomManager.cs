@@ -7,7 +7,10 @@ public class RoomManager : MonoBehaviour
 
     public GameObject currentFloor;
     List<GameObject> currentRooms;
+    bool currentRoomClear;
     int activeRoomID;
+    GameObject activeRoom;
+    int enemiesAliveInRoom;
     
     // Fade effect length
     float blackFadeSpeed = 4f;
@@ -17,15 +20,44 @@ public class RoomManager : MonoBehaviour
     void Start()
     {
         currentRooms = new List<GameObject>();
-
+        currentRoomClear = false;
+        enemiesAliveInRoom = 0;
         initFloor();
     }
 
     // Update is called once per frame
     void Update()
     {
-        // TODO: Delete this later!
+        // TODO: Debug shit
         debugRoomManager();
+        print(enemiesAliveInRoom);
+    }
+
+    public void enemyDeath(){
+        enemiesAliveInRoom--;
+
+        if(enemiesAliveInRoom <= 0){
+            openRoomDoors(activeRoom);
+        }
+    }
+
+    public void openRoomDoors(GameObject room){
+        foreach(Transform door in room.transform.Find("Doors").transform){
+            if(door.tag == "Door"){
+                door.GetComponent<DoorScript>().openDoor();
+            }
+        }
+    }
+
+    int countAliveEnemies(GameObject room){
+        int aliveEnemies = 0;
+        foreach(Transform enemy in room.transform.Find("Enemies").transform){
+            print("Enemy!");
+            if(enemy.tag == "Enemy"){
+                aliveEnemies++;
+            }
+        }
+        return aliveEnemies;
     }
 
     void debugRoomManager(){
@@ -42,6 +74,8 @@ public class RoomManager : MonoBehaviour
         for(int i = 0; i < currentRooms.Count; i++){
             if(i == activeRoomID){
                 currentRooms[i].SetActive(true);
+                activeRoom = currentRooms[i];
+                enemiesAliveInRoom = countAliveEnemies(activeRoom);
             }else{
                 currentRooms[i].SetActive(false);
             }
@@ -63,5 +97,7 @@ public class RoomManager : MonoBehaviour
         } 
 
         activeRoomID = 0;
+        activeRoom = currentRooms[activeRoomID];
+        enemiesAliveInRoom = countAliveEnemies(activeRoom);
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - PlayerBullet
   - Door
   - Corpse
+  - RoomManager
   layers:
   - Default
   - TransparentFX
@@ -59,6 +60,9 @@ TagManager:
     locked: 0
   - name: Projectiles
     uniqueID: 1899475829
+    locked: 0
+  - name: UI
+    uniqueID: 47204287
     locked: 0
   - name: ScreenEffects
     uniqueID: 1419093983
