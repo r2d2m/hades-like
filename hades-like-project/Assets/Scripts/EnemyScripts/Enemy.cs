@@ -5,8 +5,7 @@ using UnityEngine;
 /*
 * Parent class for all enemies, should include things that all enemies share!
 */
-public class Enemy : MonoBehaviour
-{
+public class Enemy : MonoBehaviour {
     public GameObject corpsePrefab;
     public GameObject roomManager;
 
@@ -19,52 +18,49 @@ public class Enemy : MonoBehaviour
     protected float movementStr;
 
     // Start is called before the first frame update
-    void Awake()
-    {
+    void Awake() {
         player = GameObject.FindGameObjectWithTag("Player");
         roomManager = GameObject.FindGameObjectWithTag("RoomManager");
 
     }
 
-    void Start()
-    {
+    void Start() {
 
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
     }
 
-    protected bool deathCheck(){
-        if(currentHP <= 0){
+    protected bool deathCheck() {
+        if (currentHP <= 0) {
             die();
             return true;
         }
         return false;
     }
 
-    GameObject getPlayer(){
+    GameObject getPlayer() {
         return player;
     }
 
     // 
-    public void takeDamage(float damage){
+    public void takeDamage(float damage) {
         currentHP -= damage;
     }
 
-    public void heal(){
-        
+    public void heal() {
+
     }
 
-    public int getCollisionDamage(){
+    public int getCollisionDamage() {
         return collisionDamage;
     }
 
-    public void die(){
+    public void die() {
         // Spawn corpse if we have a prefab
-        if(corpsePrefab != null){
+        if (corpsePrefab != null) {
             GameObject corpse = Instantiate(corpsePrefab, transform.position, transform.rotation);
             corpse.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
             corpse.transform.parent = transform.parent; // TODO CHANGE THIS!

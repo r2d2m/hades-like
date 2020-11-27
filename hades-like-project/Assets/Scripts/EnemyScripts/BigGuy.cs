@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigGuy : Enemy
-{
-    public 
+public class BigGuy : Enemy {
+    public
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         collisionDamage = 1;
         maxHP = 80;
         currentHP = maxHP;
@@ -16,8 +14,7 @@ public class BigGuy : Enemy
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
         deathCheck();
     }
 

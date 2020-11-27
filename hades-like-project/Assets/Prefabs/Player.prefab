@@ -326,8 +326,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerGun: {fileID: 5428975482954686609}
-  playerBullet: {fileID: 9022039294609508486, guid: c159b85df4a6fe84183c5cae25ac9443,
+  primBullet: {fileID: 9022039294609508486, guid: c159b85df4a6fe84183c5cae25ac9443,
     type: 3}
+  altBullet: {fileID: 9022039294609508486, guid: c159b85df4a6fe84183c5cae25ac9443,
+    type: 3}
+  healthBar: {fileID: 0}
 --- !u!50 &5428975484495120929
 Rigidbody2D:
   serializedVersion: 4
