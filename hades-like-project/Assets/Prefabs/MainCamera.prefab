@@ -1,5 +1,44 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2030926816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2030926817}
+  - component: {fileID: 2030926818}
+  m_Layer: 0
+  m_Name: AudioCentre
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &2030926817
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030926816}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4562611108377575021}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &2030926818
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2030926816}
+  m_Enabled: 0
 --- !u!1 &4562611108377575057
 GameObject:
   m_ObjectHideFlags: 0
@@ -10,9 +49,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4562611108377575021}
   - component: {fileID: 4562611108377575058}
-  - component: {fileID: 4562611108377575056}
   - component: {fileID: 4562611108377575059}
-  - component: {fileID: 4562611108377575020}
   m_Layer: 0
   m_Name: MainCamera
   m_TagString: MainCamera
@@ -32,6 +69,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4562611109758002955}
+  - {fileID: 2030926817}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -45,7 +83,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.6415094, g: 0.57796365, b: 0.57796365, a: 0}
+  m_BackGroundColor: {r: 0.6603774, g: 0.57425714, b: 0.51397294, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -78,14 +116,6 @@ Camera:
   m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &4562611108377575056
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4562611108377575057}
-  m_Enabled: 1
 --- !u!114 &4562611108377575059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,20 +128,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80978a5581deaca44a28dd43e2582f2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blackScreen: {fileID: 4562611109758002952}
---- !u!114 &4562611108377575020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4562611108377575057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34d321ff98c38cc48840c76b3bb8e279, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   player: {fileID: 0}
+  blackScreen: {fileID: 4562611109758002952}
 --- !u!1 &4562611109758002952
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +199,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1419093983
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2d7b3637a2c6cac40acb9d133ea37858, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 0}

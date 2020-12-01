@@ -11,6 +11,9 @@ public class RoomManager : MonoBehaviour {
     GameObject activeRoom;
     int enemiesAliveInRoom;
 
+    int currentFloorDepth;
+    int currentRoomInFloor;
+
     // Fade effect length
     float blackFadeSpeed = 4f;
     float blackScreenDuration = 0.3f;
@@ -20,6 +23,8 @@ public class RoomManager : MonoBehaviour {
         currentRooms = new List<GameObject>();
         currentRoomClear = false;
         enemiesAliveInRoom = 0;
+        currentFloorDepth = 1;
+        currentRoomInFloor = 1;
         initFloor();
     }
 
