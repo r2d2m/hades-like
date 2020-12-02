@@ -213,6 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 554835006}
   - component: {fileID: 554835007}
+  - component: {fileID: 554835008}
   m_Layer: 0
   m_Name: Floor
   m_TagString: Untagged
@@ -246,6 +247,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e25c330a417e64bb869ffa2ea4d95d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &554835008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 554835005}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e70a1f60143d0e447914a8020652c3e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentFloor: {fileID: 0}
 --- !u!1 &629178727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1015,6 +1029,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RoomManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 6111390549485316175, guid: 3c6b95e8a8771204e84ee6a682ffad84,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6111390549485316175, guid: 3c6b95e8a8771204e84ee6a682ffad84,
         type: 3}

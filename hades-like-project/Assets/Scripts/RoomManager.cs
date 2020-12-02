@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour {
 
-    public GameObject currentFloor;
     List<GameObject> currentRooms;
     bool currentRoomClear;
     int activeRoomID;
@@ -25,6 +24,8 @@ public class RoomManager : MonoBehaviour {
         enemiesAliveInRoom = 0;
         currentFloorDepth = 1;
         currentRoomInFloor = 1;
+
+        
         initFloor();
     }
 
@@ -84,7 +85,7 @@ public class RoomManager : MonoBehaviour {
 
     void initFloor() {
         // Get references to all rooms in current floor
-        foreach (Transform child in currentFloor.transform) {
+        foreach (Transform child in gameObject.transform) {
             currentRooms.Add(child.gameObject);
             // Set all Rooms to middle of SPACE
             child.gameObject.transform.position = new Vector3(0, 0, 0);
