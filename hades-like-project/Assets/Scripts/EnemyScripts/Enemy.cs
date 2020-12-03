@@ -7,7 +7,7 @@ using UnityEngine;
 */
 public class Enemy : MonoBehaviour {
     public GameObject corpsePrefab;
-    public GameObject roomManager;
+    public GameObject floor;
 
     protected float maxHP;
     protected float currentHP;
@@ -20,8 +20,7 @@ public class Enemy : MonoBehaviour {
     // Start is called before the first frame update
     void Awake() {
         player = GameObject.FindGameObjectWithTag("Player");
-        roomManager = GameObject.FindGameObjectWithTag("RoomManager");
-
+        floor = GameObject.FindGameObjectWithTag("Floor");
     }
 
     void Start() {
@@ -66,7 +65,7 @@ public class Enemy : MonoBehaviour {
             corpse.transform.parent = transform.parent; // TODO CHANGE THIS!
         }
 
-        roomManager.GetComponent<RoomManager>().enemyDeath();
+        floor.GetComponent<RoomManager>().enemyDeath();
         Destroy(gameObject);
     }
 }

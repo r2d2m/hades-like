@@ -10,6 +10,7 @@ TagManager:
   - Corpse
   - RoomManager
   - Reward
+  - Floor
   layers:
   - Default
   - TransparentFX

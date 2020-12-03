@@ -9,8 +9,10 @@ public class FloorGenerator : MonoBehaviour {
     int currentFloor;
     // Start is called before the first frame update
     void Start() {
+        /*
         GameObject newRoom = Instantiate(getRandomRoom(1,1), new Vector3(0,0,0), new Quaternion(0,0,0,0));
         newRoom.transform.parent = transform;
+        */
     }
 
     // Update is called once per frame
@@ -22,7 +24,7 @@ public class FloorGenerator : MonoBehaviour {
     }
 
     // difficulty 1 = normal, 2 = hard
-    GameObject getRandomRoom(int difficulty, int floorNumber){
+    public GameObject getRandomRoom(int difficulty, int floorNumber){
         string roomType = "";
         switch(difficulty){
             case 1:

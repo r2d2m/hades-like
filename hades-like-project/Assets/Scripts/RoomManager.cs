@@ -11,11 +11,13 @@ public class RoomManager : MonoBehaviour {
     int enemiesAliveInRoom;
 
     int currentFloorDepth;
-    int currentRoomInFloor;
+    int currentRoomDepth;
 
     // Fade effect length
     float blackFadeSpeed = 4f;
     float blackScreenDuration = 0.3f;
+
+    FloorGenerator floorGenerator;
 
     // Start is called before the first frame update
     void Start() {
@@ -23,8 +25,8 @@ public class RoomManager : MonoBehaviour {
         currentRoomClear = false;
         enemiesAliveInRoom = 0;
         currentFloorDepth = 1;
-        currentRoomInFloor = 1;
-
+        currentRoomDepth = 1;
+        floorGenerator = GetComponent<FloorGenerator>();
         
         initFloor();
     }
@@ -66,39 +68,27 @@ public class RoomManager : MonoBehaviour {
             activeRoomID += 1;
             print("DEBUG: go to next room: " + activeRoomID);
             GameObject.Find("MainCamera").GetComponent<CameraManager>().roomChangeEffect(blackFadeSpeed, blackScreenDuration);
-            StartCoroutine(activateRoom(activeRoomID));
+            StartCoroutine(goToNextRoom(1,1));
         }
     }
 
-    private IEnumerator activateRoom(int roomID) {
+    private IEnumerator goToNextRoom(int difficulty, int floorNumber) {
+        currentRoomDepth++;
         yield return new WaitForSeconds(1.0f / blackFadeSpeed);
-        for (int i = 0; i < currentRooms.Count; i++) {
-            if (i == activeRoomID) {
-                currentRooms[i].SetActive(true);
-                activeRoom = currentRooms[i];
-                enemiesAliveInRoom = countAliveEnemies(activeRoom);
-            } else {
-                currentRooms[i].SetActive(false);
-            }
+        foreach(Transform child in transform){
+           GameObject.Destroy(child.gameObject);
         }
+        createRoom(difficulty, floorNumber);
     }
 
     void initFloor() {
-        // Get references to all rooms in current floor
-        foreach (Transform child in gameObject.transform) {
-            currentRooms.Add(child.gameObject);
-            // Set all Rooms to middle of SPACE
-            child.gameObject.transform.position = new Vector3(0, 0, 0);
-            print(child.gameObject);
-        }
-
-        // Set all rooms except first to inactive        
-        for (int i = 1; i < currentRooms.Count; i++) {
-            currentRooms[i].SetActive(false);
-        }
-
         activeRoomID = 0;
-        activeRoom = currentRooms[activeRoomID];
+        createRoom(1,1);
         enemiesAliveInRoom = countAliveEnemies(activeRoom);
+    }
+
+    void createRoom(int difficulty, int floorNumber){
+        activeRoom = Instantiate(floorGenerator.getRandomRoom(difficulty, floorNumber), new Vector3(0,0,0), new Quaternion(0,0,0,0));
+        activeRoom.transform.parent = transform;
     }
 }
