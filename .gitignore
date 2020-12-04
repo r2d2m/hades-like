@@ -2,7 +2,8 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
-hades-like-project/[Ll]ibrary/
+[Ll]ibrary/
+hades-like-project/Library/*
 hades-like-project/[Tt]emp/
 hades-like-project/[Oo]bj/
 hades-like-project/[Bb]uild/
