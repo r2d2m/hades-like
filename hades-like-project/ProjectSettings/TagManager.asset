@@ -11,6 +11,7 @@ TagManager:
   - RoomManager
   - Reward
   - Floor
+  - RoomEntrance
   layers:
   - Default
   - TransparentFX

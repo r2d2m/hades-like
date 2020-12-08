@@ -7,11 +7,14 @@ public class PlayerBullet : MonoBehaviour {
     public float damage;
     public AudioClip[] fireSounds;
     GameObject mainCamera;
+    Transform floorTransform;
 
     // Set a lifetime timer
 
     private void Awake() {
         mainCamera = GameObject.Find("MainCamera");
+        floorTransform = GameObject.FindGameObjectWithTag("Floor").transform;
+        transform.parent = floorTransform.transform;
     }
 
     void Start() {

@@ -11,9 +11,9 @@ public class PlayerMain : MonoBehaviour {
 
     float movementSpeed = 5000f;
     float bulletForce = 1800f;
-    float shootCD = 0.2f;
-    float specialCD = 1.0f; // Rightclick = special
-    float currentShootCD;
+    float primaryCD = 0.2f;
+    float altCD = 1.0f; // Rightclick = special
+    float currentprimaryCD;
 
     public GameObject playerGun;
     public GameObject primBullet;
@@ -35,6 +35,13 @@ public class PlayerMain : MonoBehaviour {
     float altBaseDamage;
     float altDamageMultiplier;
 
+    float minPrimCD = 0.0001f;
+    float minAltCD = 0.0001f;
+    float minPrimDMG = 0.5f;
+    float minAltDMG = 0.5f;
+    float minPrimMULT = 0.5f;
+    float minAltMULT = 0.5f;
+    
     // Start is called before the first frame update
     void Start() {
         maxHP = 5;
@@ -46,7 +53,7 @@ public class PlayerMain : MonoBehaviour {
 
         updateHealthBar();
 
-        currentShootCD = 0;
+        currentprimaryCD = 0;
         currentInvisCD = 0;
         mainCamera = GameObject.Find("MainCamera");
         rigidBody = GetComponent<Rigidbody2D>();
@@ -72,10 +79,10 @@ public class PlayerMain : MonoBehaviour {
 
     // Update all cooldowns
     void updateCooldowns() {
-        if (currentShootCD > 0) {
-            currentShootCD -= Time.deltaTime;
+        if (currentprimaryCD > 0) {
+            currentprimaryCD -= Time.deltaTime;
         } else {
-            currentShootCD = 0;
+            currentprimaryCD = 0;
         }
 
         if (invisCD > 0) {
@@ -111,10 +118,10 @@ public class PlayerMain : MonoBehaviour {
         // SHoot!
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-        if (Input.GetMouseButton(0) && currentShootCD <= 0) {
+        if (Input.GetMouseButton(0) && currentprimaryCD <= 0) {
             shoot(primBullet, playerGun.transform.position, mousePos);
-            currentShootCD = shootCD;
-        } else if (Input.GetMouseButton(1) && currentShootCD <= 0) {
+            currentprimaryCD = primaryCD;
+        } else if (Input.GetMouseButton(1) && currentprimaryCD <= 0) {
             Vector3 randSpawn, randTarget;
             float spawnOffset = 0.3f;
             float targetOffset = 0.5f;
@@ -123,7 +130,7 @@ public class PlayerMain : MonoBehaviour {
                 randTarget = randSpawn = new Vector3(Random.Range(-targetOffset, targetOffset), Random.Range(-targetOffset, targetOffset), 0.0f);
                 shoot(primBullet, playerGun.transform.position + randSpawn, mousePos + randTarget);
             }
-            currentShootCD = specialCD;
+            currentprimaryCD = altCD;
         }
     }
 
@@ -188,7 +195,6 @@ public class PlayerMain : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         switch (other.gameObject.tag) {
             case "Reward":
-                print("Got reward: ");
                 other.gameObject.GetComponent<Reward>().grabReward(gameObject);
                 break;
         }
@@ -199,17 +205,56 @@ public class PlayerMain : MonoBehaviour {
     }
 
     public void modifyPlayerDamage(float primDmg, float primMult, float altDmg, float altMult) {
-        if (primBaseDamage + primDmg > 0.5f) {
+        if (primBaseDamage + primDmg > minPrimDMG) {
             primBaseDamage += primDmg;
+        }else{
+            primBaseDamage = minPrimDMG;
         }
-        if (primDamageMultiplier + primMult > 0.5f) {
+
+        if (primDamageMultiplier + primMult > minPrimMULT) {
             primDamageMultiplier += primMult;
+        }else{
+            primBaseDamage = minPrimMULT;
         }
-        if (altBaseDamage + altDmg > 0.5f) {
+
+        if (altBaseDamage + altDmg > minAltDMG) {
             altBaseDamage += altDmg;
+        }else{
+            altBaseDamage = minAltDMG;
         }
-        if (altDamageMultiplier + altMult > 0.5f) {
+
+        if (altDamageMultiplier + altMult > minAltMULT) {
             altDamageMultiplier += altMult;
+        }else{
+            altDamageMultiplier = minAltMULT;
+        }
+    }
+
+    public void modifyPlayerHealth(int maxHealthMod){
+        maxHP += maxHealthMod;
+        currentHP += maxHealthMod;
+        if(currentHP > maxHP){
+            currentHP = maxHP;
+        }
+
+        updateHealthBar();
+
+        if(maxHP <= 0){
+            gameOver();
+        }
+    }
+
+    public void modifyCooldowns(float primaryCooldown, float altCooldown){
+        if(primaryCD - primaryCooldown > minPrimCD){
+            primaryCD -= primaryCooldown;
+        }else{
+            primaryCD = minPrimCD;
+        }
+
+        if(altCD - altCooldown > minAltCD){
+            altCD -= altCooldown;
+        }else{
+            altCD = minAltCD;
         }
     }
 }

@@ -37,6 +37,6 @@ public class FloorGenerator : MonoBehaviour {
                 break;
         }
         roomArray = Resources.LoadAll<GameObject>("Rooms/Floor" + floorNumber + "/" + roomType);
-        return roomArray[Random.Range(0, roomArray.Length-1)];
+        return roomArray[Random.Range(0, roomArray.Length)];
     }
 }
