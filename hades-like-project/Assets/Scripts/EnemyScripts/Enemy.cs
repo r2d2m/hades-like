@@ -9,10 +9,10 @@ public class Enemy : MonoBehaviour {
     public GameObject corpsePrefab;
     public GameObject floor;
 
-    protected float maxHP;
-    protected float currentHP;
+    public float maxHP;
+    public float currentHP;
     protected GameObject player;
-    protected int collisionDamage = 0;
+    public int collisionDamage = 0;
     protected Vector3 movementVector;
     protected Rigidbody2D rigidBody;
     protected float movementStr;

@@ -12,6 +12,7 @@ TagManager:
   - Reward
   - Floor
   - RoomEntrance
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX
@@ -27,7 +28,7 @@ TagManager:
   - ScreenEffect
   - Corpse
   - Enemy
-  - 
+  - Bullets
   - 
   - 
   - 
