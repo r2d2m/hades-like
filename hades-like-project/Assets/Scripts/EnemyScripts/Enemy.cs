@@ -16,11 +16,15 @@ public class Enemy : MonoBehaviour {
     protected Vector3 movementVector;
     protected Rigidbody2D rigidBody;
     protected float movementStr;
+    protected Color originalColor;
+    protected SpriteRenderer spriteRenderer;
 
     // Start is called before the first frame update
     void Awake() {
         player = GameObject.FindGameObjectWithTag("Player");
         floor = GameObject.FindGameObjectWithTag("Floor");
+        spriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
     }
 
     void Start() {
@@ -63,6 +67,7 @@ public class Enemy : MonoBehaviour {
             GameObject corpse = Instantiate(corpsePrefab, transform.position, transform.rotation);
             corpse.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
             corpse.transform.parent = transform.parent; // TODO CHANGE THIS!
+            //corpse.GetComponent<SpriteRenderer>().color = originalColor;
         }
 
         floor.GetComponent<RoomManager>().enemyDeath();

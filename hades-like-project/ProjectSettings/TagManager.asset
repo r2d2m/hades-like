@@ -13,6 +13,7 @@ TagManager:
   - Floor
   - RoomEntrance
   - EnemyBullet
+  - CameraBounds
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - Corpse
   - Enemy
   - Bullets
-  - 
+  - CameraBounds
   - 
   - 
   - 
@@ -50,6 +51,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3985151091
+    locked: 0
   - name: Doors
     uniqueID: 3731215437
     locked: 0
@@ -64,6 +68,9 @@ TagManager:
     locked: 0
   - name: Projectiles
     uniqueID: 1899475829
+    locked: 0
+  - name: Foreground
+    uniqueID: 218055567
     locked: 0
   - name: UI
     uniqueID: 47204287
