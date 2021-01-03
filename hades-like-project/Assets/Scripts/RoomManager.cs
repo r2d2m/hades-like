@@ -50,6 +50,11 @@ public class RoomManager : MonoBehaviour {
         }
     }
 
+    public void addEnemiesIntoRoom(int count){
+        print("Enemies added: " + count);
+        enemiesAliveInRoom += count;
+    }
+
     public void roomIsClear() {
         openRoomDoors(activeRoom);
         spawnRandomRewards(1, 1);

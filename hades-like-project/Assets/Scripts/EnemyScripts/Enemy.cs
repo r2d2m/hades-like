@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour {
         return collisionDamage;
     }
 
-    public void die() {
+    public virtual void die() {
         // Spawn corpse if we have a prefab
         if (corpsePrefab != null) {
             GameObject corpse = Instantiate(corpsePrefab, transform.position, transform.rotation);

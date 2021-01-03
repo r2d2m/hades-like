@@ -6,7 +6,7 @@ public class EnemyDasher : Enemy {
 
     float dashCD;
     float currentDashCD;
-    float dashStrength;
+    float dashForce;
     bool doDash;
 
     // Start is called before the first frame update
@@ -15,7 +15,7 @@ public class EnemyDasher : Enemy {
         maxHP = 3;
         currentHP = maxHP;
         doDash = false;
-        dashStrength = 2000;
+        dashForce = 2000;
         dashCD = 0.8f;
         currentDashCD = dashCD;
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -40,9 +40,9 @@ public class EnemyDasher : Enemy {
         if (doDash) {
             movementVector = (player.transform.position - transform.position).normalized;
             if (Random.Range(0, 100) < 75) {
-                rigidBody.AddForce(movementVector * dashStrength);
+                rigidBody.AddForce(movementVector * dashForce);
             } else {
-                rigidBody.AddForce(-movementVector * dashStrength);
+                rigidBody.AddForce(-movementVector * dashForce);
             }
             doDash = false;
         }
