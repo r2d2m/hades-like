@@ -41,11 +41,9 @@ public class EnemySplitter : Enemy {
         for(int i = 0; i < numberOfSplits; i++){
             Vector3 rotatedVector = Quaternion.Euler(0, 0, 360/numberOfSplits * i) * splitVector;
             GameObject newSmallSplitter = Instantiate(smallSplitter, transform.position + rotatedVector * 0.3f, transform.rotation);
-            print(rotatedVector);
             newSmallSplitter.GetComponent<Rigidbody2D>().AddForce(splitForce * rotatedVector);
         }
-
-        //floor.GetComponent<RoomManager>().enemyDeath();
+        
         // Add one more enemy to room!
         floor.GetComponent<RoomManager>().addEnemiesIntoRoom(numberOfSplits - 1);
         Destroy(gameObject);
