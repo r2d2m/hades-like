@@ -11,27 +11,28 @@ public class PlayerMain : MonoBehaviour {
     float movementSpeed = 5000f;
     float primaryCD = 0.7f;
     float altCD = 1.0f; // Rightclick = special
-    float currentprimaryCD;
+    float currentprimaryCD = 0;
 
     public GameObject playerGun;
     public GameObject primWeapon;
     public GameObject altWeapon;
     public GameObject healthBar;
+    public Animator animator;
 
     private Rigidbody2D rigidBody;
 
     Vector2 movementVector;
 
     float invisCD = 1.0f;
-    float currentInvisCD;
+    float currentInvisCD = 0;
 
     int maxHP;
     int currentHP;
 
-    float primFlatDamageBonus;
-    float primDamageMultiplier;
-    float altBaseDamage;
-    float altDamageMultiplier;
+    float primFlatDamageBonus = 1;
+    float primDamageMultiplier = 1;
+    float altBaseDamage = 1;
+    float altDamageMultiplier = 1;
 
     float minPrimCD = 0.0001f;
     float minAltCD = 0.0001f;
@@ -43,19 +44,14 @@ public class PlayerMain : MonoBehaviour {
     float playerBulletForceMod = 1.0f;
     float weaponLifeTimeMod = 1.0f;
 
+    bool flipAnimatorX = false;
+
     // Start is called before the first frame update
     void Start() {
         maxHP = 5;
         currentHP = maxHP;
-        primFlatDamageBonus = 1;
-        primDamageMultiplier = 1;
-        altBaseDamage = 1;
-        altDamageMultiplier = 1;
 
         updateHealthBar();
-
-        currentprimaryCD = 0;
-        currentInvisCD = 0;
         mainCamera = GameObject.Find("MainCamera");
         rigidBody = GetComponent<Rigidbody2D>();
         soundManager = soundManagerObject.GetComponent<SoundManager>();
@@ -74,6 +70,11 @@ public class PlayerMain : MonoBehaviour {
 
         // TODO: delete this later!
         debugPlayer();
+        animator.SetFloat("MovementSpeed", movementVector.magnitude);
+    }
+
+    void LateUpdate() {
+        animator.GetComponent<SpriteRenderer>().flipX = flipAnimatorX;
     }
 
     void debugPlayer() {
@@ -107,14 +108,26 @@ public class PlayerMain : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         movementVector = new Vector2(moveHorizontal, moveVertical);
+        if (moveHorizontal > 0) {
+            flipAnimatorX = false;
+        } else if (moveHorizontal < 0) {
+            flipAnimatorX = true;
+        }
     }
 
     // Point the gun in the direction  of the mouse
     void playerAim() {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 deltaVec = mousePos - transform.position;
+        float rotationAngle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
 
-        playerGun.transform.position = transform.position + Vector3.Normalize(deltaVec) * 0.3f;
+        playerGun.transform.position = transform.position + Vector3.Normalize(deltaVec) * 0.4f;
+        playerGun.transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
+
+        playerGun.GetComponentInChildren<SpriteRenderer>().flipY = (rotationAngle >= -90 && rotationAngle < 90) ? false : true;
+        playerGun.GetComponentInChildren<SpriteRenderer>().sortingOrder = (rotationAngle >= 30 && rotationAngle <= 150) ? 9 : 11;
+
+        print(rotationAngle);
         Debug.DrawLine(transform.position, mousePos, Color.red);
     }
 
@@ -152,7 +165,9 @@ public class PlayerMain : MonoBehaviour {
     void rangedAttack(GameObject bullet, Vector2 spawnPos, Vector2 targetPos, float force) {
         mainCamera.GetComponent<CameraManager>().screenShake(0.08f, 0.05f);
         Vector2 deltaVec = targetPos - (Vector2)transform.position;
-        GameObject newBullet = Instantiate(bullet, spawnPos, Quaternion.Euler(0, 0, Random.Range(0, 360)));
+        float rotationAngle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
+        GameObject newBullet = Instantiate(bullet, spawnPos + deltaVec.normalized * 0.3f, Quaternion.AngleAxis(rotationAngle, Vector3.forward));
+
         newBullet.GetComponent<Bullet>().setDamage(primFlatDamageBonus, primDamageMultiplier);
         newBullet.GetComponent<Bullet>().setBulletForce(deltaVec.normalized, force);
         newBullet.GetComponent<Bullet>().setLifeTime(weaponLifeTimeMod);
