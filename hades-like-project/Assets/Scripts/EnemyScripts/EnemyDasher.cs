@@ -24,6 +24,7 @@ public class EnemyDasher : Enemy {
     // Update is called once per frame
     void Update() {
         movement();
+        updateCooldowns();
         deathCheck();
     }
 

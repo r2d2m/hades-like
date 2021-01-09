@@ -14,6 +14,7 @@ public class BigGuy : Enemy {
 
     // Update is called once per frame
     void Update() {
+        updateCooldowns();
         deathCheck();
     }
 

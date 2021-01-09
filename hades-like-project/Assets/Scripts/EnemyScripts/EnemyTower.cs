@@ -31,6 +31,7 @@ public class EnemyTower : Enemy {
             currentShootCD -= Time.deltaTime;
         }
 
+        updateCooldowns();
         deathCheck();
     }
 

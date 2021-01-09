@@ -7,7 +7,6 @@ public class PlayerMain : MonoBehaviour {
     public GameObject soundManagerObject;
     SoundManager soundManager;
 
-
     float movementSpeed = 5000f;
     float primaryCD = 0.7f;
     float altCD = 1.0f; // Rightclick = special
@@ -46,6 +45,12 @@ public class PlayerMain : MonoBehaviour {
 
     bool flipAnimatorX = false;
 
+    SpriteRenderer playerSpriteRenderer;
+    SpriteRenderer gunSpriteRenderer;
+
+    Color transparentColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+    Color opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
     // Start is called before the first frame update
     void Start() {
         maxHP = 5;
@@ -58,7 +63,8 @@ public class PlayerMain : MonoBehaviour {
 
         primaryCD = primWeapon.GetComponent<Weapon>().getBaseCoolDown();
         altCD = primWeapon.GetComponent<Weapon>().getBaseCoolDown() * 4;
-
+        playerSpriteRenderer = animator.GetComponent<SpriteRenderer>();
+        gunSpriteRenderer = playerGun.GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -67,14 +73,30 @@ public class PlayerMain : MonoBehaviour {
         playerMovement();
         playerAim();
         playerActions();
+        invisFlicker();
 
         // TODO: delete this later!
         debugPlayer();
         animator.SetFloat("MovementSpeed", movementVector.magnitude);
     }
 
+    void invisFlicker() {
+        if (currentInvisCD > 0) {
+            if(currentInvisCD % 0.1f < 0.05f){
+                gunSpriteRenderer.color = transparentColor;
+                playerSpriteRenderer.color = transparentColor;
+            }else{
+                gunSpriteRenderer.color = opaqueColor;
+                playerSpriteRenderer.color = opaqueColor;
+            }
+        } else {
+            gunSpriteRenderer.color = opaqueColor;
+            playerSpriteRenderer.color = opaqueColor;
+        }
+    }
+
     void LateUpdate() {
-        animator.GetComponent<SpriteRenderer>().flipX = flipAnimatorX;
+        playerSpriteRenderer.flipX = flipAnimatorX;
     }
 
     void debugPlayer() {
@@ -124,8 +146,8 @@ public class PlayerMain : MonoBehaviour {
         playerGun.transform.position = transform.position + Vector3.Normalize(deltaVec) * 0.4f;
         playerGun.transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
 
-        playerGun.GetComponentInChildren<SpriteRenderer>().flipY = (rotationAngle >= -90 && rotationAngle < 90) ? false : true;
-        playerGun.GetComponentInChildren<SpriteRenderer>().sortingOrder = (rotationAngle >= 30 && rotationAngle <= 150) ? 9 : 11;
+        gunSpriteRenderer.flipY = (rotationAngle >= -90 && rotationAngle < 90) ? false : true;
+        gunSpriteRenderer.sortingOrder = (rotationAngle >= 30 && rotationAngle <= 150) ? 9 : 11;
 
         print(rotationAngle);
         Debug.DrawLine(transform.position, mousePos, Color.red);
@@ -200,7 +222,9 @@ public class PlayerMain : MonoBehaviour {
             currentHP -= amount;
             updateHealthBar();
             currentInvisCD = invisCD;
+            animator.SetTrigger("TookDamage");
             print("Took: " + amount + " damage, " + currentHP + "/" + maxHP + " HP left!");
+
             if (currentHP <= 0) {
                 gameOver();
             }
@@ -208,8 +232,9 @@ public class PlayerMain : MonoBehaviour {
     }
 
     void updateHealthBar() {
-        healthBar.GetComponent<HealthBarManager>().setMaxHP(maxHP);
-        healthBar.GetComponent<HealthBarManager>().setCurrentHP(currentHP);
+        HealthBarManager hpManager = healthBar.GetComponent<HealthBarManager>();
+        hpManager.setMaxHP(maxHP);
+        hpManager.setCurrentHP(currentHP);
     }
 
     // Call on this when you are DEAD
@@ -233,8 +258,6 @@ public class PlayerMain : MonoBehaviour {
                 break;
         }
     }
-
-
 
     private void OnTriggerEnter2D(Collider2D other) {
         switch (other.gameObject.tag) {
