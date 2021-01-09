@@ -30,8 +30,6 @@ public class Grid : MonoBehaviour
 		grid = new Node[gridSizeX,gridSizeY];
 		Vector3 worldBottomLeft = transform.position - Vector3.right * gridWorldSize.x/2 - Vector3.up * gridWorldSize.y/2;
 
-        Debug.Log(worldBottomLeft);
-
 		for (int x = 0; x < gridSizeX; x ++) {
 			for (int y = 0; y < gridSizeY; y ++) {
 				Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
