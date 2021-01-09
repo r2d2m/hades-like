@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 4013360600201230977}
   - component: {fileID: 4013360600201230976}
   - component: {fileID: 5183659535900279754}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: DebugRoom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
