@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,9 +18,9 @@ public class EnemySplitter : Enemy {
 
     // Update is called once per frame
     void Update() {
+        updateCooldowns();
         deathCheck();
     }
-
 
     private void FixedUpdate() {
         movementVector = (player.transform.position - transform.position).normalized;

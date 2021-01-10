@@ -16,22 +16,25 @@ public class PlayerMain : MonoBehaviour {
     public GameObject primWeapon;
     public GameObject altWeapon;
     public GameObject healthBar;
+    public GameObject mousePointer;
+    public GameObject floorGameObject;
     public Animator animator;
 
     private Rigidbody2D rigidBody;
 
     Vector2 movementVector;
 
-    float invisCD = 1.0f;
-    float currentInvisCD = 0;
+    float invulCD = 1.0f;
+    float currentInvulCD = 0;
 
     int maxHP;
     int currentHP;
 
-    float primFlatDamageBonus = 1;
-    float primDamageMultiplier = 1;
-    float altBaseDamage = 1;
-    float altDamageMultiplier = 1;
+    public float damageMultiplier = 1;
+    public float cooldownMultiplier = 1;
+    public float rangeMultiplier = 1;
+    public float forceMultipler = 1.0f;
+    public float spellLifeTimeMultiplier = 1.0f;
 
     float minPrimCD = 0.0001f;
     float minAltCD = 0.0001f;
@@ -40,8 +43,6 @@ public class PlayerMain : MonoBehaviour {
     float minPrimMULT = 0.5f;
     float minAltMULT = 0.5f;
 
-    float playerBulletForceMod = 1.0f;
-    float weaponLifeTimeMod = 1.0f;
 
     bool flipAnimatorX = false;
 
@@ -51,10 +52,16 @@ public class PlayerMain : MonoBehaviour {
     Color transparentColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
     Color opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
+    public List<GameObject> equippedSpells;
+    List<float> spellCooldowns;
+
+    Vector3 currentMousePos = new Vector3(0, 0, 0);
+
     // Start is called before the first frame update
     void Start() {
         maxHP = 5;
         currentHP = maxHP;
+        spellCooldowns = new List<float>() { 0, 0 };
 
         updateHealthBar();
         mainCamera = GameObject.Find("MainCamera");
@@ -69,23 +76,50 @@ public class PlayerMain : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        currentMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         updateCooldowns();
         playerMovement();
         playerAim();
         playerActions();
-        invisFlicker();
+        spellInputHandler();
+        invulFlicker();
 
         // TODO: delete this later!
         debugPlayer();
         animator.SetFloat("MovementSpeed", movementVector.magnitude);
     }
 
-    void invisFlicker() {
-        if (currentInvisCD > 0) {
-            if(currentInvisCD % 0.1f < 0.05f){
+    void spellInputHandler() {
+        if (Input.GetKeyDown(KeyCode.Alpha1) && spellCooldowns[0] <= 0) {
+            castSpell(0);
+        } else if (Input.GetKeyDown(KeyCode.Alpha2) && spellCooldowns[1] <= 0) {
+            castSpell(1);
+        } else if (Input.GetKeyDown(KeyCode.Alpha3) && spellCooldowns[2] <= 0) {
+            castSpell(2);
+        }
+    }
+
+    void castSpell(int spellIndex) {
+        GameObject spellObject = Instantiate(equippedSpells[spellIndex]);
+        spellObject.transform.parent = floorGameObject.transform;
+        Spell spellScript = spellObject.GetComponent<Spell>();
+
+        spellCooldowns[spellIndex] = spellScript.getCooldownTime() * cooldownMultiplier;
+        spellScript.setMousePos(currentMousePos);
+        spellScript.setPlayerGameObject(gameObject);
+        spellScript.setPlayerPos(transform.position);
+        spellScript.setGunGameObject(playerGun);
+        spellScript.setMouseGameObject(mousePointer);
+        spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier);
+    }
+
+    // flicker player sprite when invurnable
+    void invulFlicker() {
+        if (currentInvulCD > 0) {
+            if (currentInvulCD % 0.1f < 0.05f) {
                 gunSpriteRenderer.color = transparentColor;
                 playerSpriteRenderer.color = transparentColor;
-            }else{
+            } else {
                 gunSpriteRenderer.color = opaqueColor;
                 playerSpriteRenderer.color = opaqueColor;
             }
@@ -113,10 +147,18 @@ public class PlayerMain : MonoBehaviour {
             currentprimaryCD = 0;
         }
 
-        if (invisCD > 0) {
-            currentInvisCD -= Time.deltaTime;
+        if (invulCD > 0) {
+            currentInvulCD -= Time.deltaTime;
         } else {
-            currentInvisCD = 0;
+            currentInvulCD = 0;
+        }
+
+        for (int i = 0; i < spellCooldowns.Count; i++) {
+            if (spellCooldowns[i] > 0) {
+                spellCooldowns[i] -= Time.deltaTime;
+            } else {
+                spellCooldowns[i] = 0;
+            }
         }
     }
 
@@ -139,8 +181,7 @@ public class PlayerMain : MonoBehaviour {
 
     // Point the gun in the direction  of the mouse
     void playerAim() {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 deltaVec = mousePos - transform.position;
+        Vector2 deltaVec = currentMousePos - transform.position;
         float rotationAngle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
 
         playerGun.transform.position = transform.position + Vector3.Normalize(deltaVec) * 0.4f;
@@ -149,22 +190,20 @@ public class PlayerMain : MonoBehaviour {
         gunSpriteRenderer.flipY = (rotationAngle >= -90 && rotationAngle < 90) ? false : true;
         gunSpriteRenderer.sortingOrder = (rotationAngle >= 30 && rotationAngle <= 150) ? 9 : 11;
 
-        print(rotationAngle);
-        Debug.DrawLine(transform.position, mousePos, Color.red);
+        Debug.DrawLine(transform.position, currentMousePos, Color.red);
     }
 
     // Input for rangedAttacking and non-movement related input
     void playerActions() {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         // Left click and right click action
         if (Input.GetMouseButton(0) && currentprimaryCD <= 0) {
             WeaponType currentWeaponType = primWeapon.GetComponent<Weapon>().getWeaponType();
             if (currentWeaponType == WeaponType.RANGED) {
-                rangedAttack(primWeapon, transform.position, mousePos, playerBulletForceMod);
+                rangedAttack(primWeapon, transform.position, currentMousePos, damageMultiplier);
             } else if (currentWeaponType == WeaponType.MELEE) {
-                meleeAttack(primWeapon, transform.position, mousePos);
+                meleeAttack(primWeapon, transform.position, currentMousePos);
             }
-            currentprimaryCD = primaryCD;
+            currentprimaryCD = primaryCD * cooldownMultiplier;
         } else if (Input.GetMouseButton(1) && currentprimaryCD <= 0) {
             WeaponType currentWeaponType = altWeapon.GetComponent<Weapon>().getWeaponType();
             if (currentWeaponType == WeaponType.RANGED) {
@@ -173,12 +212,12 @@ public class PlayerMain : MonoBehaviour {
                 float forceOffset = 0.2f;
                 for (int i = 0; i < 4; i++) {
                     randTarget = new Vector3(Random.Range(-targetOffset, targetOffset), Random.Range(-targetOffset, targetOffset), 0.0f);
-                    rangedAttack(primWeapon, transform.position, mousePos + randTarget, playerBulletForceMod * Random.Range(1 - forceOffset, 1 + forceOffset));
+                    rangedAttack(primWeapon, transform.position, currentMousePos + randTarget, forceMultipler * Random.Range(1 - forceOffset, 1 + forceOffset));
                 }
             } else if (currentWeaponType == WeaponType.MELEE) {
-                meleeAttack(primWeapon, transform.position, mousePos);
+                meleeAttack(primWeapon, transform.position, currentMousePos);
             }
-            currentprimaryCD = altCD;
+            currentprimaryCD = altCD * cooldownMultiplier;
         }
     }
 
@@ -190,9 +229,9 @@ public class PlayerMain : MonoBehaviour {
         float rotationAngle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
         GameObject newBullet = Instantiate(bullet, spawnPos + deltaVec.normalized * 0.3f, Quaternion.AngleAxis(rotationAngle, Vector3.forward));
 
-        newBullet.GetComponent<Bullet>().setDamage(primFlatDamageBonus, primDamageMultiplier);
+        newBullet.GetComponent<Bullet>().setDamageMultiplier(damageMultiplier);
         newBullet.GetComponent<Bullet>().setBulletForce(deltaVec.normalized, force);
-        newBullet.GetComponent<Bullet>().setLifeTime(weaponLifeTimeMod);
+        newBullet.GetComponent<Bullet>().setLifeTime(spellLifeTimeMultiplier);
         soundManager.playSoundClip(newBullet.GetComponent<Bullet>().getAttackSound(), 0.1f);
     }
 
@@ -203,7 +242,8 @@ public class PlayerMain : MonoBehaviour {
         Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         Vector2 spawnPos = playerPos + deltaVec.normalized * 0.5f;
         GameObject newWeapon = Instantiate(weapon, spawnPos, rotation);
-        newWeapon.GetComponent<Melee>().setDamage(primFlatDamageBonus, primDamageMultiplier);
+
+        newWeapon.GetComponent<Melee>().setDamageMultiplier(damageMultiplier);
         newWeapon.GetComponent<Melee>().setDeltaVector(deltaVec.normalized);
         newWeapon.transform.parent = transform;
     }
@@ -218,10 +258,10 @@ public class PlayerMain : MonoBehaviour {
 
     // Take damage 
     void takeDamage(int amount) {
-        if (currentInvisCD <= 0) {
+        if (currentInvulCD <= 0) {
             currentHP -= amount;
             updateHealthBar();
-            currentInvisCD = invisCD;
+            currentInvulCD = invulCD;
             animator.SetTrigger("TookDamage");
             print("Took: " + amount + " damage, " + currentHP + "/" + maxHP + " HP left!");
 
@@ -280,29 +320,11 @@ public class PlayerMain : MonoBehaviour {
         return transform.position;
     }
 
-    public void modifyPlayerDamage(float primDmg, float primMult, float altDmg, float altMult) {
-        if (primFlatDamageBonus + primDmg > minPrimDMG) {
-            primFlatDamageBonus += primDmg;
+    public void modifyPlayerDamageMultiplier(float damageMult) {
+        if (damageMultiplier + damageMult > minPrimMULT) {
+            damageMultiplier += damageMult;
         } else {
-            primFlatDamageBonus = minPrimDMG;
-        }
-
-        if (primDamageMultiplier + primMult > minPrimMULT) {
-            primDamageMultiplier += primMult;
-        } else {
-            primFlatDamageBonus = minPrimMULT;
-        }
-
-        if (altBaseDamage + altDmg > minAltDMG) {
-            altBaseDamage += altDmg;
-        } else {
-            altBaseDamage = minAltDMG;
-        }
-
-        if (altDamageMultiplier + altMult > minAltMULT) {
-            altDamageMultiplier += altMult;
-        } else {
-            altDamageMultiplier = minAltMULT;
+            damageMultiplier = minPrimMULT;
         }
     }
 
@@ -320,17 +342,11 @@ public class PlayerMain : MonoBehaviour {
         }
     }
 
-    public void modifyCooldowns(float primaryCooldown, float altCooldown) {
-        if (primaryCD - primaryCooldown > minPrimCD) {
-            primaryCD -= primaryCooldown;
+    public void modifyCooldown(float cooldownMod) {
+        if (cooldownMultiplier - cooldownMod > minPrimCD) {
+            cooldownMultiplier -= cooldownMod;
         } else {
-            primaryCD = minPrimCD;
-        }
-
-        if (altCD - altCooldown > minAltCD) {
-            altCD -= altCooldown;
-        } else {
-            altCD = minAltCD;
+            cooldownMultiplier = minPrimCD;
         }
     }
 }

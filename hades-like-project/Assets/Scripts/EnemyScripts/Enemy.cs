@@ -82,6 +82,18 @@ public class Enemy : MonoBehaviour {
         return collisionDamage;
     }
 
+    private void OnCollisionEnter2D(Collision2D other) {
+        float damageTaken;
+        switch (other.transform.tag) {
+            case "PlayerSpell":
+                damageTaken = other.gameObject.GetComponent<Spell>().getDamage();
+                takeDamage(damageTaken);
+                break;
+        }
+
+    }
+
+
     // Things to do and set during deah
     public virtual void die() {
         // Spawn corpse if we have a prefab
