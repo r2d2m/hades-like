@@ -7,7 +7,7 @@ public class EnemyPathfinder : Enemy {
     const float minPathUpdateTime = .2f;
 	const float pathUpdateMoveThreshold = .2f;
 
-	public Transform target;
+	public Transform target; // Initiate to player.
     public float turnSpeed = 2;
     public float turnDst = 1;
     
@@ -16,6 +16,8 @@ public class EnemyPathfinder : Enemy {
 
     public Path path;
     
+
+    // Sets new path if available.
     public void OnPathFound(Vector3[] waypoints, bool pathSuccessful) {
 		if (pathSuccessful) {
 			path = new Path(waypoints,transform.position,turnDst);
@@ -24,6 +26,8 @@ public class EnemyPathfinder : Enemy {
 		}
 	}
 
+
+    // Updates path if enemy moves.
     public IEnumerator UpdatePath() {
 
 		if (Time.timeSinceLevelLoad < .3f) {
@@ -43,9 +47,9 @@ public class EnemyPathfinder : Enemy {
 		}
 	}
     
-
+    // Returns movement direction along path.
 	public Vector3 GetPathVector(Vector3 currentPosition) {
-        Debug.Log(pathIndex);
+
 		Vector3 forwardDirection = (path.lookPoints[pathIndex]-currentPosition).normalized;
 		
         Vector2 pos2D = new Vector2(currentPosition.x,currentPosition.y);
@@ -64,6 +68,8 @@ public class EnemyPathfinder : Enemy {
         return forwardDirection;
 	}
 
+
+    // Draws path of object.
     public void OnDrawGizmos() {
 		if (path != null) {
 			path.DrawWithGizmos ();
