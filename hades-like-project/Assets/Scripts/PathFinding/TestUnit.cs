@@ -52,7 +52,6 @@ public class TestUnit : MonoBehaviour {
 		int pathIndex = 0;
 
 		Vector3 forwardDirection = (path.lookPoints[0]-transform.position).normalized;
-		Debug.Log(forwardDirection);
 
 
 		while (true) {
