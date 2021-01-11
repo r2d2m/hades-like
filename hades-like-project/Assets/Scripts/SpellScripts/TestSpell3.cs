@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestSpell2Proj : Spell {
-    public GameObject explosionObject;
+public class TestSpell3 : Spell {
     // Start is called before the first frame update
 
     private void Awake() {
-        cooldownTime = 1;
+        damage = 1 * damageMultiplier;
+        cooldownTime = 0.4f;
     }
 
     void Start() {
         transform.position = gunGameObject.transform.position;
         GetComponent<Rigidbody2D>().AddForce(getMouseVector() * 1000 * rangeMultiplier);
-        setRotationTowardsVector(mousePos - playerPos);
-        Destroy(gameObject, 1.0f);
+        setRotationTowardsVector(getMouseDeltaVector());
+        Destroy(gameObject, 0.7f);
     }
 
     // Update is called once per frame
@@ -22,17 +22,10 @@ public class TestSpell2Proj : Spell {
 
     }
 
-    void explode() {
-        GameObject explosion = Instantiate(explosionObject, transform.position, transform.rotation);
-        explosion.transform.parent = transform.parent;
-        explosion.GetComponent<Spell>().damage = 1 * damageMultiplier;
-
-    }
-
     private void OnCollisionEnter2D(Collision2D other) {
         switch (other.transform.tag) {
             case "Enemy":
-                explode();
+                other.gameObject.GetComponent<Enemy>().takeDamage(damage);
                 Destroy(gameObject);
                 break;
         }

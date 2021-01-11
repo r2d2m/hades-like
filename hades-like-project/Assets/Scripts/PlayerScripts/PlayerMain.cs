@@ -61,7 +61,7 @@ public class PlayerMain : MonoBehaviour {
     void Start() {
         maxHP = 5;
         currentHP = maxHP;
-        spellCooldowns = new List<float>() { 0, 0 };
+        spellCooldowns = new List<float>() { 0, 0, 0, 0 };
 
         updateHealthBar();
         mainCamera = GameObject.Find("MainCamera");
@@ -80,7 +80,7 @@ public class PlayerMain : MonoBehaviour {
         updateCooldowns();
         playerMovement();
         playerAim();
-        playerActions();
+        //playerActions();
         spellInputHandler();
         invulFlicker();
 
@@ -90,12 +90,16 @@ public class PlayerMain : MonoBehaviour {
     }
 
     void spellInputHandler() {
-        if (Input.GetKeyDown(KeyCode.Alpha1) && spellCooldowns[0] <= 0) {
+        if (Input.GetMouseButton(0) && spellCooldowns[0] <= 0) {
             castSpell(0);
-        } else if (Input.GetKeyDown(KeyCode.Alpha2) && spellCooldowns[1] <= 0) {
+        } else if (Input.GetMouseButton(1) && spellCooldowns[1] <= 0) {
             castSpell(1);
-        } else if (Input.GetKeyDown(KeyCode.Alpha3) && spellCooldowns[2] <= 0) {
+        } else if (Input.GetKey(KeyCode.Alpha1) && spellCooldowns[2] <= 0) {
             castSpell(2);
+        } else if (Input.GetKey(KeyCode.Alpha2) && spellCooldowns[3] <= 0) {
+            castSpell(3);
+        } else if (Input.GetKey(KeyCode.Alpha3) && spellCooldowns[4] <= 0) {
+            castSpell(4);
         }
     }
 
@@ -110,6 +114,7 @@ public class PlayerMain : MonoBehaviour {
         spellScript.setPlayerPos(transform.position);
         spellScript.setGunGameObject(playerGun);
         spellScript.setMouseGameObject(mousePointer);
+        spellScript.setMainCameraObject(mainCamera);
         spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier);
     }
 
@@ -191,61 +196,6 @@ public class PlayerMain : MonoBehaviour {
         gunSpriteRenderer.sortingOrder = (rotationAngle >= 30 && rotationAngle <= 150) ? 9 : 11;
 
         Debug.DrawLine(transform.position, currentMousePos, Color.red);
-    }
-
-    // Input for rangedAttacking and non-movement related input
-    void playerActions() {
-        // Left click and right click action
-        if (Input.GetMouseButton(0) && currentprimaryCD <= 0) {
-            WeaponType currentWeaponType = primWeapon.GetComponent<Weapon>().getWeaponType();
-            if (currentWeaponType == WeaponType.RANGED) {
-                rangedAttack(primWeapon, transform.position, currentMousePos, damageMultiplier);
-            } else if (currentWeaponType == WeaponType.MELEE) {
-                meleeAttack(primWeapon, transform.position, currentMousePos);
-            }
-            currentprimaryCD = primaryCD * cooldownMultiplier;
-        } else if (Input.GetMouseButton(1) && currentprimaryCD <= 0) {
-            WeaponType currentWeaponType = altWeapon.GetComponent<Weapon>().getWeaponType();
-            if (currentWeaponType == WeaponType.RANGED) {
-                Vector3 randTarget;
-                float targetOffset = 1f;
-                float forceOffset = 0.2f;
-                for (int i = 0; i < 4; i++) {
-                    randTarget = new Vector3(Random.Range(-targetOffset, targetOffset), Random.Range(-targetOffset, targetOffset), 0.0f);
-                    rangedAttack(primWeapon, transform.position, currentMousePos + randTarget, forceMultipler * Random.Range(1 - forceOffset, 1 + forceOffset));
-                }
-            } else if (currentWeaponType == WeaponType.MELEE) {
-                meleeAttack(primWeapon, transform.position, currentMousePos);
-            }
-            currentprimaryCD = altCD * cooldownMultiplier;
-        }
-    }
-
-    // Function for firing a bullet from spawnPos to targetPos 
-    // TODO: rangedAttack different bullets!
-    void rangedAttack(GameObject bullet, Vector2 spawnPos, Vector2 targetPos, float force) {
-        mainCamera.GetComponent<CameraManager>().screenShake(0.08f, 0.05f);
-        Vector2 deltaVec = targetPos - (Vector2)transform.position;
-        float rotationAngle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
-        GameObject newBullet = Instantiate(bullet, spawnPos + deltaVec.normalized * 0.3f, Quaternion.AngleAxis(rotationAngle, Vector3.forward));
-
-        newBullet.GetComponent<Bullet>().setDamageMultiplier(damageMultiplier);
-        newBullet.GetComponent<Bullet>().setBulletForce(deltaVec.normalized, force);
-        newBullet.GetComponent<Bullet>().setLifeTime(spellLifeTimeMultiplier);
-        soundManager.playSoundClip(newBullet.GetComponent<Bullet>().getAttackSound(), 0.1f);
-    }
-
-    void meleeAttack(GameObject weapon, Vector2 playerPos, Vector2 targetPos) {
-        mainCamera.GetComponent<CameraManager>().screenShake(0.08f, 0.05f);
-        Vector2 deltaVec = targetPos - (Vector2)transform.position;
-        float angle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        Vector2 spawnPos = playerPos + deltaVec.normalized * 0.5f;
-        GameObject newWeapon = Instantiate(weapon, spawnPos, rotation);
-
-        newWeapon.GetComponent<Melee>().setDamageMultiplier(damageMultiplier);
-        newWeapon.GetComponent<Melee>().setDeltaVector(deltaVec.normalized);
-        newWeapon.transform.parent = transform;
     }
 
     // Heal damage
@@ -349,4 +299,62 @@ public class PlayerMain : MonoBehaviour {
             cooldownMultiplier = minPrimCD;
         }
     }
+
+    /*
+    // Input for rangedAttacking and non-movement related input
+    void playerActions() {
+        // Left click and right click action
+        if (Input.GetMouseButton(0) && currentprimaryCD <= 0) {
+            WeaponType currentWeaponType = primWeapon.GetComponent<Weapon>().getWeaponType();
+            if (currentWeaponType == WeaponType.RANGED) {
+                rangedAttack(primWeapon, transform.position, currentMousePos, damageMultiplier);
+            } else if (currentWeaponType == WeaponType.MELEE) {
+                meleeAttack(primWeapon, transform.position, currentMousePos);
+            }
+            currentprimaryCD = primaryCD * cooldownMultiplier;
+        } else if (Input.GetMouseButton(1) && currentprimaryCD <= 0) {
+            WeaponType currentWeaponType = altWeapon.GetComponent<Weapon>().getWeaponType();
+            if (currentWeaponType == WeaponType.RANGED) {
+                Vector3 randTarget;
+                float targetOffset = 1f;
+                float forceOffset = 0.2f;
+                for (int i = 0; i < 4; i++) {
+                    randTarget = new Vector3(Random.Range(-targetOffset, targetOffset), Random.Range(-targetOffset, targetOffset), 0.0f);
+                    rangedAttack(primWeapon, transform.position, currentMousePos + randTarget, forceMultipler * Random.Range(1 - forceOffset, 1 + forceOffset));
+                }
+            } else if (currentWeaponType == WeaponType.MELEE) {
+                meleeAttack(primWeapon, transform.position, currentMousePos);
+            }
+            currentprimaryCD = altCD * cooldownMultiplier;
+        }
+    }
+
+    // Function for firing a bullet from spawnPos to targetPos 
+    // TODO: rangedAttack different bullets!
+    void rangedAttack(GameObject bullet, Vector2 spawnPos, Vector2 targetPos, float force) {
+        mainCamera.GetComponent<CameraManager>().screenShake(0.08f, 0.05f);
+        Vector2 deltaVec = targetPos - (Vector2)transform.position;
+        float rotationAngle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
+        GameObject newBullet = Instantiate(bullet, spawnPos + deltaVec.normalized * 0.3f, Quaternion.AngleAxis(rotationAngle, Vector3.forward));
+
+        newBullet.GetComponent<Bullet>().setDamageMultiplier(damageMultiplier);
+        newBullet.GetComponent<Bullet>().setBulletForce(deltaVec.normalized, force);
+        newBullet.GetComponent<Bullet>().setLifeTime(spellLifeTimeMultiplier);
+        soundManager.playSoundClip(newBullet.GetComponent<Bullet>().getAttackSound(), 0.1f);
+    }
+
+    void meleeAttack(GameObject weapon, Vector2 playerPos, Vector2 targetPos) {
+        mainCamera.GetComponent<CameraManager>().screenShake(0.08f, 0.05f);
+        Vector2 deltaVec = targetPos - (Vector2)transform.position;
+        float angle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        Vector2 spawnPos = playerPos + deltaVec.normalized * 0.5f;
+        GameObject newWeapon = Instantiate(weapon, spawnPos, rotation);
+
+        newWeapon.GetComponent<Melee>().setDamageMultiplier(damageMultiplier);
+        newWeapon.GetComponent<Melee>().setDeltaVector(deltaVec.normalized);
+        newWeapon.transform.parent = transform;
+    }
+
+*/
 }

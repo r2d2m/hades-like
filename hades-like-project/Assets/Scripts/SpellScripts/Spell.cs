@@ -9,6 +9,7 @@ public class Spell : MonoBehaviour {
     public GameObject playerGameObject;
     public GameObject gunGameObject;
     public GameObject mouseGameObject;
+    public GameObject mainCameraObject;
 
     public Vector3 playerPos;
     public Vector3 mousePos;
@@ -38,6 +39,10 @@ public class Spell : MonoBehaviour {
     public void setMouseGameObject(GameObject mouseGameObject){
         this.mouseGameObject = mouseGameObject;
     }
+
+    public void setMainCameraObject(GameObject mainCameraObject){
+        this.mainCameraObject = mainCameraObject;
+    }
     
     public float getDamage(){
         return damage;
@@ -55,5 +60,14 @@ public class Spell : MonoBehaviour {
 
     public virtual float getCooldownTime() {
         return cooldownTime;
+    }
+
+    protected Vector3 getMouseDeltaVector(){
+        return (mousePos - playerPos);
+    }
+
+    protected void setRotationTowardsVector(Vector3 deltaVector){
+        float rotationAngle = Mathf.Atan2(deltaVector.y, deltaVector.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
     }
 }

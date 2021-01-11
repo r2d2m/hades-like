@@ -65,9 +65,11 @@ public class Enemy : MonoBehaviour {
 
     // Take damage and set color
     public void takeDamage(float damage) {
-        currentHP -= damage;
-        currentColorTime = colorTime;
-        spriteRenderer.color = new Color(1.0f, 0.0f, 0.0f);
+        if (damage > 0) {
+            currentHP -= damage;
+            currentColorTime = colorTime;
+            spriteRenderer.color = new Color(1.0f, 0.0f, 0.0f);
+        }
     }
 
     private void setToOriginalColor() {
@@ -82,6 +84,7 @@ public class Enemy : MonoBehaviour {
         return collisionDamage;
     }
 
+/*
     private void OnCollisionEnter2D(Collision2D other) {
         float damageTaken;
         switch (other.transform.tag) {
@@ -92,7 +95,7 @@ public class Enemy : MonoBehaviour {
         }
 
     }
-
+*/
 
     // Things to do and set during deah
     public virtual void die() {

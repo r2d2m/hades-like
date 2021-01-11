@@ -583,7 +583,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 52.799988, y: 210.3}
+  m_AnchoredPosition: {x: 52.80005, y: 210.3}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1767712073
@@ -1082,6 +1082,11 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5428975484495120929, guid: a4a58113c3152fa40bd518898c8ce135,
+        type: 3}
+      propertyPath: m_LinearDrag
+      value: 1000
+      objectReference: {fileID: 0}
     - target: {fileID: 5428975484495120940, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: m_Name
@@ -1110,19 +1115,31 @@ PrefabInstance:
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: equippedSpells.Array.size
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: equippedSpells.Array.data[0]
       value: 
-      objectReference: {fileID: 8853799596945735059, guid: 78856aecf7f79274583c2d5e34ac0e96,
+      objectReference: {fileID: 8853799596945735059, guid: e2a74c327bfbc8540980eade12a1cfd7,
         type: 3}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: equippedSpells.Array.data[1]
       value: 
+      objectReference: {fileID: 8853799596945735059, guid: 78856aecf7f79274583c2d5e34ac0e96,
+        type: 3}
+    - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
+        type: 3}
+      propertyPath: equippedSpells.Array.data[2]
+      value: 
       objectReference: {fileID: 4857134667406225093, guid: d07187ed238699f4bb008d557ec49d81,
+        type: 3}
+    - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
+        type: 3}
+      propertyPath: equippedSpells.Array.data[3]
+      value: 
+      objectReference: {fileID: 5799916215232180067, guid: 77e330c9dc0f14945ba2968c9b3040d7,
         type: 3}
     - target: {fileID: 5428975484495120943, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
