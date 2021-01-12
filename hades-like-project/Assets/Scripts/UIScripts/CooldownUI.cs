@@ -37,10 +37,7 @@ public class CooldownUI : MonoBehaviour {
     }
 
     public void updateCooldowns(List<float> spellCooldowns) {
-            print(spellCooldowns.Count + " / " + currentSpellCount + ", " + cooldownDurations.Count);
-
         for (int i = 0; i < currentSpellCount; i++) {
-            print(spellCooldowns[i] + " / " + cooldownDurations[i]);
             cooldownIcons[i].GetComponentInChildren<Image>().fillAmount = spellCooldowns[i] / cooldownDurations[i];
         }
     }

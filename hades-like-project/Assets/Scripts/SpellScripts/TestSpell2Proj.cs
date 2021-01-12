@@ -8,7 +8,7 @@ public class TestSpell2Proj : Spell {
     // Start is called before the first frame update
 
     private void Awake() {
-        cooldownTime = 1;
+        cooldownTime = 12;
     }
 
     void Start() {

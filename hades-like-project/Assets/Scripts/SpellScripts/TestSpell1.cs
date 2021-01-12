@@ -6,7 +6,7 @@ public class TestSpell1 : Spell {
 
     private void Awake() {
         damage = 2 * damageMultiplier;
-        cooldownTime = 2;
+        cooldownTime = 10;
     }
 
     // Start is called before the first frame update

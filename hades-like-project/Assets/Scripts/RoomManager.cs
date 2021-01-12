@@ -105,6 +105,7 @@ public class RoomManager : MonoBehaviour {
         float[] cameraBounds = getCameraBoundsCollider();
         mainCamera.GetComponent<CameraManager>().setCameraBounds(cameraBounds[0], cameraBounds[1]);
         moveCameraToPlayer(cameraBounds[0], cameraBounds[1]);
+        player.GetComponent<PlayerMain>().resetCooldowns();
     }
 
     void moveCameraToPlayer(float boundX, float boundY) {
