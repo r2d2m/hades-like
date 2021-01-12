@@ -22,7 +22,6 @@ public class RoomManager : MonoBehaviour {
     GameObject mainCamera;
     GameObject currentDoor;
 
-
     // Start is called before the first frame update
     void Start() {
         currentRooms = new List<GameObject>();
@@ -67,7 +66,7 @@ public class RoomManager : MonoBehaviour {
         currentDoor.GetComponent<DoorScript>().openDoor();
     }
 
-    public void doorButtonClicked(){
+    public void doorButtonClicked() {
         playerExitDoor();
     }
 
@@ -122,6 +121,10 @@ public class RoomManager : MonoBehaviour {
         activeRoom = Instantiate(floorGenerator.getRandomRoom(difficulty, floorNumber), new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
         activeRoom.transform.parent = transform;
         enemiesAliveInRoom = countAliveEnemies(activeRoom);
+        float[] cameraBounds = getCameraBoundsCollider();
+        GetComponent<Grid>().setGridWorld(cameraBounds[0], cameraBounds[1]);
+        GetComponent<Grid>().CreateGrid();
+
     }
 
     void initFloor() {
@@ -167,8 +170,6 @@ public class RoomManager : MonoBehaviour {
             dimensions[0] = 0;
             dimensions[1] = 0;
         }
-        print(dimensions[0]);
-        print(dimensions[1]);
         return dimensions;
     }
 
