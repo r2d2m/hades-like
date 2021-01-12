@@ -52,9 +52,6 @@ public class TestUnit : MonoBehaviour {
 		int pathIndex = 0;
 
 		Vector3 forwardDirection = (path.lookPoints[0]-transform.position).normalized;
-		Debug.Log(forwardDirection);
-
-
 		while (true) {
 			Vector2 pos2D = new Vector2(transform.position.x,transform.position.y);
 			while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D)){

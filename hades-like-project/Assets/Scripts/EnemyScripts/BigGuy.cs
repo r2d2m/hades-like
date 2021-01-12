@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BigGuy : Enemy {
+public class BigGuy : EnemyPathfinder {
     // Start is called before the first frame update
     void Start() {
         collisionDamage = 1;
@@ -10,6 +10,9 @@ public class BigGuy : Enemy {
         currentHP = maxHP;
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         movementStr = 1000;
+        target = player.transform;
+        followingPath = true;
+        StartCoroutine (UpdatePath ());
     }
 
     // Update is called once per frame
@@ -19,7 +22,13 @@ public class BigGuy : Enemy {
     }
 
     private void FixedUpdate() {
-        movementVector = (player.transform.position - transform.position).normalized;
+        
+        if (followingPath) {
+            movementVector = GetPathVector(transform.position);
+        } else {
+            movementVector = (player.transform.position - transform.position).normalized;
+        }
+        
         rigidBody.AddForce(movementVector * movementStr);
     }
 
