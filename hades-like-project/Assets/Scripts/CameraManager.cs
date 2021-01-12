@@ -59,7 +59,7 @@ public class CameraManager : MonoBehaviour {
 
 
     void debugCameraManager() {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.O)) {
             followingPlayer = !followingPlayer;
             print("TOGGLE CAMERA! Following player: " + followingPlayer);
         }

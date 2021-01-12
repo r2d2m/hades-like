@@ -17,6 +17,7 @@ public class BigGuy : EnemyPathfinder {
 
     // Update is called once per frame
     void Update() {
+        updateCooldowns();
         deathCheck();
     }
 

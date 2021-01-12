@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Grid : MonoBehaviour {   
-	
+public class Grid : MonoBehaviour
+
 	public bool displayGridGizmos;
     public LayerMask unwalkableMask;
     public Vector2 gridWorldSize;
     public float nodeRadius;
 	public float avoidanceRadius;
+
     Node[,] grid;
 
     float nodeDiameter;
@@ -19,6 +20,7 @@ public class Grid : MonoBehaviour {
 		gridSizeX = Mathf.RoundToInt(gridWorldSize.x/nodeDiameter);
 		gridSizeY = Mathf.RoundToInt(gridWorldSize.y/nodeDiameter);
 		avoidanceRadius = 0.8f;
+
 		CreateGrid();
 	}
 
@@ -36,9 +38,7 @@ public class Grid : MonoBehaviour {
 			for (int y = 0; y < gridSizeY; y ++) {
 				Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
 				bool walkable = !(Physics2D.OverlapCircle(worldPoint,nodeRadius,unwalkableMask));
-
 				int movementPenalty = (Physics2D.OverlapCircle(worldPoint,avoidanceRadius,unwalkableMask))?100:0;
-
 				grid[x,y] = new Node(walkable,worldPoint,x,y,movementPenalty);
 			}
 		}
@@ -87,7 +87,6 @@ public class Grid : MonoBehaviour {
 		if (grid != null && displayGridGizmos) {
 			foreach (Node n in grid) {
 				Gizmos.color = (n.walkable)?((n.movementPenalty == 0)?white:green):red;
-
 				Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter-.1f));
 			}
 		}

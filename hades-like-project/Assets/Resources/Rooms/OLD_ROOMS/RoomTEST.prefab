@@ -267,6 +267,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
 --- !u!1 &5566745295022910348
 GameObject:
   m_ObjectHideFlags: 0
@@ -792,6 +795,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
 --- !u!114 &5566745294651289527
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -806,6 +812,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
 --- !u!114 &5566745296354745077
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -820,6 +829,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
 --- !u!114 &5566745296353371228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -834,6 +846,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
 --- !u!114 &5566745295747995264
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -848,6 +863,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
 --- !u!114 &5566745294926821503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -862,6 +880,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
 --- !u!114 &5566745296726796057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -876,6 +897,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
 --- !u!114 &5566745296102732359
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -890,6 +914,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
 --- !u!1001 &150108980271112766
 PrefabInstance:
   m_ObjectHideFlags: 0

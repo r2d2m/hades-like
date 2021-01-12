@@ -29,7 +29,6 @@ public class Bullet : Weapon {
         //TODO: Damage multiple types of enemies!
         if (other.transform.tag == "Enemy") {
             other.gameObject.GetComponent<Enemy>().takeDamage(weaponDamage);
-            print(GetComponent<Rigidbody2D>().velocity);
             other.gameObject.GetComponent<Rigidbody2D>().velocity = GetComponent<Rigidbody2D>().velocity.normalized * enemyPushForce;
 
             bulletPierceCount--;

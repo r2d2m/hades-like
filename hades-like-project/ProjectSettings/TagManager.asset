@@ -14,6 +14,8 @@ TagManager:
   - RoomEntrance
   - EnemyBullet
   - CameraBounds
+  - PlayerSpell
+  - RoomSelectionUI
   layers:
   - Default
   - TransparentFX
@@ -23,7 +25,7 @@ TagManager:
   - UI
   - 
   - 
-  - PlayerBullet
+  - PlayerSpell
   - Player
   - Doors
   - ScreenEffect
@@ -48,14 +50,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Background
     uniqueID: 3985151091
     locked: 0
   - name: Doors
     uniqueID: 3731215437
+    locked: 0
+  - name: Environment
+    uniqueID: 4038555619
     locked: 0
   - name: Corpses
     uniqueID: 935885817
@@ -63,11 +65,14 @@ TagManager:
   - name: Enemies
     uniqueID: 90081535
     locked: 0
+  - name: Projectiles
+    uniqueID: 1899475829
+    locked: 0
   - name: Player
     uniqueID: 2504261557
     locked: 0
-  - name: Projectiles
-    uniqueID: 1899475829
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Foreground
     uniqueID: 218055567
