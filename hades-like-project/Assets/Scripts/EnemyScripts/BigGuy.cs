@@ -21,11 +21,13 @@ public class BigGuy : EnemyPathfinder {
     }
 
     private void FixedUpdate() {
+        
         if (followingPath) {
             movementVector = GetPathVector(transform.position);
         } else {
             movementVector = (player.transform.position - transform.position).normalized;
         }
+        
         rigidBody.AddForce(movementVector * movementStr);
     }
 }
