@@ -15,7 +15,9 @@ public class Reward : MonoBehaviour {
     }
 
     public virtual void grabReward(GameObject player) {
-        AudioSource.PlayClipAtPoint(pickupSound, transform.position, 0.7f);
+        if (pickupSound != null) {
+            AudioSource.PlayClipAtPoint(pickupSound, transform.position, 0.7f);
+        }
         despawnSelf();
     }
 

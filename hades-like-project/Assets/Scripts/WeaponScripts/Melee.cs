@@ -12,7 +12,7 @@ public class Melee : Weapon {
 
     private void OnTriggerEnter2D(Collider2D other) {
         // Collide with enemies
-        //TODO: Damage multiple types of enemies!
+        // TODO: Damage multiple types of enemies!
         if (other.transform.tag == "Enemy") {
             other.gameObject.GetComponent<Enemy>().takeDamage(weaponDamage);
             other.gameObject.GetComponent<Rigidbody2D>().velocity = deltaVector * enemyPushForce;

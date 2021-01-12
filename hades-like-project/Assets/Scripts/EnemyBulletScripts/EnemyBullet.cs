@@ -40,7 +40,7 @@ public class EnemyBullet : MonoBehaviour {
                 break;
             case "Enemy":
                 break;
-            case "playerbullet":
+            case "PlayerSpell":
                 break;
             default:
                 Destroy(gameObject);

@@ -20,7 +20,7 @@ public class RoomManager : MonoBehaviour {
     FloorGenerator floorGenerator;
     GameObject player;
     GameObject mainCamera;
-
+    GameObject currentDoor;
 
     // Start is called before the first frame update
     void Start() {
@@ -50,6 +50,11 @@ public class RoomManager : MonoBehaviour {
         }
     }
 
+    public void addEnemiesIntoRoom(int count) {
+        print("Enemies added: " + count);
+        enemiesAliveInRoom += count;
+    }
+
     public void roomIsClear() {
         openRoomDoors(activeRoom);
         spawnRandomRewards(1, 1);
@@ -57,11 +62,12 @@ public class RoomManager : MonoBehaviour {
     }
 
     public void openRoomDoors(GameObject room) {
-        foreach (Transform door in room.transform.Find("Doors").transform) {
-            if (door.tag == "Door") {
-                door.GetComponent<DoorScript>().openDoor();
-            }
-        }
+        currentDoor = GameObject.FindGameObjectWithTag("Door");
+        currentDoor.GetComponent<DoorScript>().openDoor();
+    }
+
+    public void doorButtonClicked() {
+        playerExitDoor();
     }
 
     int countAliveEnemies(GameObject room) {
@@ -98,6 +104,7 @@ public class RoomManager : MonoBehaviour {
         float[] cameraBounds = getCameraBoundsCollider();
         mainCamera.GetComponent<CameraManager>().setCameraBounds(cameraBounds[0], cameraBounds[1]);
         moveCameraToPlayer(cameraBounds[0], cameraBounds[1]);
+        player.GetComponent<PlayerMain>().resetCooldowns();
     }
 
     void moveCameraToPlayer(float boundX, float boundY) {
@@ -106,7 +113,7 @@ public class RoomManager : MonoBehaviour {
         cameraX = Mathf.Min(cameraX, boundX / 4);
         cameraX = Mathf.Max(cameraX, -boundX / 4);
         cameraY = Mathf.Min(cameraY, boundY / 4);
-        cameraY = Mathf.Max(cameraY, -boundY/ 4);
+        cameraY = Mathf.Max(cameraY, -boundY / 4);
         mainCamera.GetComponent<CameraManager>().setCameraPosition(cameraX, cameraY);
     }
 
@@ -114,6 +121,10 @@ public class RoomManager : MonoBehaviour {
         activeRoom = Instantiate(floorGenerator.getRandomRoom(difficulty, floorNumber), new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
         activeRoom.transform.parent = transform;
         enemiesAliveInRoom = countAliveEnemies(activeRoom);
+        float[] cameraBounds = getCameraBoundsCollider();
+        GetComponent<Grid>().setGridWorld(cameraBounds[0], cameraBounds[1]);
+        GetComponent<Grid>().CreateGrid();
+
     }
 
     void initFloor() {
@@ -159,8 +170,6 @@ public class RoomManager : MonoBehaviour {
             dimensions[0] = 0;
             dimensions[1] = 0;
         }
-        print(dimensions[0]);
-        print(dimensions[1]);
         return dimensions;
     }
 

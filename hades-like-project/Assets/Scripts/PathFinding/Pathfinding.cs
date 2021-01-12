@@ -36,7 +36,7 @@ public class Pathfinding : MonoBehaviour {
 
 				if (node == targetNode) {
 					pathSuccess = true;
-					
+
 					break;
 				}
 
@@ -53,7 +53,7 @@ public class Pathfinding : MonoBehaviour {
 
 						if (!openSet.Contains(neighbour))
 							openSet.Add(neighbour);
-						else 
+						else
 							openSet.UpdateItem(neighbour);
 					}
 				}

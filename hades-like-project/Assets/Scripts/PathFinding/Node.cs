@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Node : IHeapItem<Node> {
-    
+
     public bool walkable;
     public Vector3 worldPosition;
     public int gridX;
@@ -47,7 +47,7 @@ public class Node : IHeapItem<Node> {
 
         if (compare == 0) {
             compare = hCost.CompareTo(nodeToCompare.hCost);
-            
+
         }
 
         return -compare;

@@ -19,6 +19,9 @@ public class Enemy : MonoBehaviour {
     protected Color originalColor;
     protected SpriteRenderer spriteRenderer;
 
+    protected float colorTime = 0.07f;
+    protected float currentColorTime = 0.0f;
+
     // Start is called before the first frame update
     void Awake() {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -36,6 +39,7 @@ public class Enemy : MonoBehaviour {
 
     }
 
+    // Check if enemy is dead
     protected bool deathCheck() {
         if (currentHP <= 0) {
             die();
@@ -44,13 +48,32 @@ public class Enemy : MonoBehaviour {
         return false;
     }
 
+    // Get the player gameobject
     GameObject getPlayer() {
         return player;
     }
 
-    // 
+    // Update things as current color etc
+    protected void updateCooldowns() {
+        if (currentColorTime > 0) {
+            currentColorTime -= Time.deltaTime;
+        } else {
+            currentColorTime = 0;
+            spriteRenderer.color = originalColor;
+        }
+    }
+
+    // Take damage and set color
     public void takeDamage(float damage) {
-        currentHP -= damage;
+        if (damage > 0) {
+            currentHP -= damage;
+            currentColorTime = colorTime;
+            spriteRenderer.color = new Color(1.0f, 0.0f, 0.0f);
+        }
+    }
+
+    private void setToOriginalColor() {
+        spriteRenderer.color = originalColor;
     }
 
     public void heal() {
@@ -61,7 +84,21 @@ public class Enemy : MonoBehaviour {
         return collisionDamage;
     }
 
-    public void die() {
+/*
+    private void OnCollisionEnter2D(Collision2D other) {
+        float damageTaken;
+        switch (other.transform.tag) {
+            case "PlayerSpell":
+                damageTaken = other.gameObject.GetComponent<Spell>().getDamage();
+                takeDamage(damageTaken);
+                break;
+        }
+
+    }
+*/
+
+    // Things to do and set during deah
+    public virtual void die() {
         // Spawn corpse if we have a prefab
         if (corpsePrefab != null) {
             GameObject corpse = Instantiate(corpsePrefab, transform.position, transform.rotation);
