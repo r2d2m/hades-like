@@ -14,4 +14,12 @@ public class TestSpell2Exp : Spell {
         transform.localScale += new Vector3(0.05f * rangeMultiplier, 0.05f * rangeMultiplier, 0);
     }
 
+    private void OnCollisionEnter2D(Collision2D other) {
+        switch (other.transform.tag) {
+            case "Enemy":
+                other.gameObject.GetComponent<Enemy>().takeDamage(damage);
+                break;
+        }
+    }
+
 }

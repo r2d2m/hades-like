@@ -15,7 +15,7 @@ public class PlayerMain : MonoBehaviour {
     public GameObject playerGun;
     public GameObject primWeapon;
     public GameObject altWeapon;
-    public GameObject healthBar;
+    public GameObject canvasUI;
     public GameObject mousePointer;
     public GameObject floorGameObject;
     public Animator animator;
@@ -57,11 +57,19 @@ public class PlayerMain : MonoBehaviour {
 
     Vector3 currentMousePos = new Vector3(0, 0, 0);
 
+    CooldownUI cooldownUI;
+    HealthBarManager hpManager;
+
     // Start is called before the first frame update
     void Start() {
         maxHP = 5;
         currentHP = maxHP;
         spellCooldowns = new List<float>() { 0, 0, 0, 0 };
+
+        cooldownUI = canvasUI.GetComponent<CooldownUI>();
+        hpManager = canvasUI.GetComponent<HealthBarManager>();
+
+        cooldownUI.setSpellCount(spellCooldowns.Count);
 
         updateHealthBar();
         mainCamera = GameObject.Find("MainCamera");
@@ -78,6 +86,7 @@ public class PlayerMain : MonoBehaviour {
     void Update() {
         currentMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         updateCooldowns();
+        updateCooldownsUI();
         playerMovement();
         playerAim();
         //playerActions();
@@ -109,6 +118,8 @@ public class PlayerMain : MonoBehaviour {
         Spell spellScript = spellObject.GetComponent<Spell>();
 
         spellCooldowns[spellIndex] = spellScript.getCooldownTime() * cooldownMultiplier;
+        cooldownUI.setCooldownDuration(spellIndex, spellCooldowns[spellIndex]);
+
         spellScript.setMousePos(currentMousePos);
         spellScript.setPlayerGameObject(gameObject);
         spellScript.setPlayerPos(transform.position);
@@ -167,6 +178,10 @@ public class PlayerMain : MonoBehaviour {
         }
     }
 
+    void updateCooldownsUI() {
+        cooldownUI.updateCooldowns(spellCooldowns);
+    }
+
     // All physics related stuff should be here!
     void FixedUpdate() {
         rigidBody.AddForce(movementVector * movementSpeed);
@@ -222,7 +237,7 @@ public class PlayerMain : MonoBehaviour {
     }
 
     void updateHealthBar() {
-        HealthBarManager hpManager = healthBar.GetComponent<HealthBarManager>();
+        hpManager = canvasUI.GetComponent<HealthBarManager>();
         hpManager.setMaxHP(maxHP);
         hpManager.setCurrentHP(currentHP);
     }

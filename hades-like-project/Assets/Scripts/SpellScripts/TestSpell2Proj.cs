@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TestSpell2Proj : Spell {
     public GameObject explosionObject;
+    float livedTime = 0;
     // Start is called before the first frame update
 
     private void Awake() {
@@ -12,21 +13,23 @@ public class TestSpell2Proj : Spell {
 
     void Start() {
         transform.position = gunGameObject.transform.position;
-        GetComponent<Rigidbody2D>().AddForce(getMouseVector() * 1000 * rangeMultiplier);
+        GetComponent<Rigidbody2D>().AddForce(getMouseVector() * 1000);
         setRotationTowardsVector(mousePos - playerPos);
-        Destroy(gameObject, 1.0f);
     }
 
     // Update is called once per frame
     void Update() {
-
+        livedTime += Time.deltaTime;
+        if(livedTime > rangeMultiplier * 1.0f){
+            explode();
+            Destroy(gameObject);
+        }
     }
 
     void explode() {
         GameObject explosion = Instantiate(explosionObject, transform.position, transform.rotation);
         explosion.transform.parent = transform.parent;
         explosion.GetComponent<Spell>().damage = 1 * damageMultiplier;
-
     }
 
     private void OnCollisionEnter2D(Collision2D other) {

@@ -15,6 +15,7 @@ TagManager:
   - EnemyBullet
   - CameraBounds
   - PlayerSpell
+  - RoomSelectionUI
   layers:
   - Default
   - TransparentFX
