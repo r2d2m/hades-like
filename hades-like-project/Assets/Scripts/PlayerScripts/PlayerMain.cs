@@ -36,13 +36,8 @@ public class PlayerMain : MonoBehaviour {
     public float forceMultipler = 1.0f;
     public float spellLifeTimeMultiplier = 1.0f;
 
-    float minPrimCD = 0.0001f;
-    float minAltCD = 0.0001f;
-    float minPrimDMG = 0.5f;
-    float minAltDMG = 0.5f;
-    float minPrimMULT = 0.5f;
-    float minAltMULT = 0.5f;
-
+    float minCD = 0.0001f;
+    float minDmgMult = 0.5f;
 
     bool flipAnimatorX = false;
 
@@ -286,10 +281,10 @@ public class PlayerMain : MonoBehaviour {
     }
 
     public void modifyPlayerDamageMultiplier(float damageMult) {
-        if (damageMultiplier + damageMult > minPrimMULT) {
+        if (damageMultiplier + damageMult > minDmgMult) {
             damageMultiplier += damageMult;
         } else {
-            damageMultiplier = minPrimMULT;
+            damageMultiplier = minDmgMult;
         }
     }
 
@@ -308,10 +303,10 @@ public class PlayerMain : MonoBehaviour {
     }
 
     public void modifyCooldown(float cooldownMod) {
-        if (cooldownMultiplier - cooldownMod > minPrimCD) {
+        if (cooldownMultiplier - cooldownMod > minCD) {
             cooldownMultiplier -= cooldownMod;
         } else {
-            cooldownMultiplier = minPrimCD;
+            cooldownMultiplier = minCD;
         }
     }
 

@@ -16,9 +16,12 @@ public class CooldownUI : MonoBehaviour {
     private void Start() {
         cooldownIcons = new List<GameObject>();
         cooldownDurations = new List<float>();
+        setSpellCount(4);
     }
 
     public void setSpellCount(int count) {
+        cooldownIcons = new List<GameObject>();
+        cooldownDurations = new List<float>();
         currentSpellCount = count;
         for (int i = 0; i < currentSpellCount; i++) {
             GameObject cooldownIcon = Instantiate(cooldownIconPrefab, new Vector3(spacing * i + spacing / 2, 0, 0), cooldownContainer.transform.rotation);
@@ -34,6 +37,8 @@ public class CooldownUI : MonoBehaviour {
     }
 
     public void updateCooldowns(List<float> spellCooldowns) {
+            print(spellCooldowns.Count + " / " + currentSpellCount + ", " + cooldownDurations.Count);
+
         for (int i = 0; i < currentSpellCount; i++) {
             print(spellCooldowns[i] + " / " + cooldownDurations[i]);
             cooldownIcons[i].GetComponentInChildren<Image>().fillAmount = spellCooldowns[i] / cooldownDurations[i];
