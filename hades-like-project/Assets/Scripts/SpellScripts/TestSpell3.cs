@@ -28,6 +28,10 @@ public class TestSpell3 : Spell {
                 other.gameObject.GetComponent<Enemy>().takeDamage(damage);
                 Destroy(gameObject);
                 break;
+            case "Destructible":
+                other.gameObject.GetComponent<Destructible>().TakeDamage(damage);
+                Destroy(gameObject);
+                break;
         }
     }
 }
