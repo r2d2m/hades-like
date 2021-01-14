@@ -16,6 +16,7 @@ TagManager:
   - CameraBounds
   - PlayerSpell
   - RoomSelectionUI
+  - Destructible
   layers:
   - Default
   - TransparentFX

@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Acorn : Destructible
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        maxHP = 1;
+    
+
+    void Start() {
+        maxHP = 5;
         currentHP = maxHP;
         
     }
