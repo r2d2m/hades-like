@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Destructible : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class Destructible : MonoBehaviour
     
     // Estetic
     protected SpriteRenderer spriteRenderer;
-    protected float shakeTime = 0.07f;
+    protected float shakeTime = 0.2f;
     protected float currentShakeTime = 0.0f;
     protected float shakeMagnitude = 0.05f;
     protected Vector3 shakeDirection; 
@@ -20,7 +21,8 @@ public class Destructible : MonoBehaviour
     // External
     public GameObject floor;
     public GameObject fracturedObject;
-    public GameObject reward;
+    public GameObject loot;
+    public Sprite[] crackedSprites;
 
 
     void Awake() {
@@ -35,6 +37,9 @@ public class Destructible : MonoBehaviour
             currentHP -= damage;
             currentShakeTime = shakeTime;
             
+            if (crackedSprites != null && crackedSprites.Length > 0 && currentHP > 0) {
+                UpdateSprite();
+            }
         }
     }
 
@@ -48,7 +53,7 @@ public class Destructible : MonoBehaviour
     }
 
     // Destroys game object and instantiates a fractured version, with force and torque applied to its fragments.
-    // Also instantiates a reward if available.
+    // Also instantiates loot item if available.
     public void Break() {
         GameObject fracturedInstance = Instantiate(fracturedObject,transform.position,Quaternion.identity);
         EdgeCollider2D[] edgeColliders = fracturedInstance.GetComponentsInChildren<EdgeCollider2D>();
@@ -74,8 +79,8 @@ public class Destructible : MonoBehaviour
         float ysize = transform.localScale.y;
         floor.GetComponent<Grid>().UpdateArea(transform.position,xsize,ysize);
 
-        if (reward != null) {
-            Instantiate(reward,transform.position,Quaternion.identity);
+        if (loot != null) {
+            Instantiate(loot,transform.position,Quaternion.identity);
         }
             
 
@@ -91,6 +96,17 @@ public class Destructible : MonoBehaviour
         avg.x = avg.x/points.Length;
         avg.y = avg.y/points.Length;
         return avg;
+    }
+
+    // Updates sprite when damage is taken.
+    private void UpdateSprite() {
+        int spriteIndex = Convert.ToInt32((maxHP - currentHP)/(maxHP-1) * crackedSprites.Length)-1;
+
+        if (spriteIndex >= 0) {
+            Sprite nextSprite = crackedSprites[spriteIndex];
+            spriteRenderer.sprite = nextSprite;
+        }
+
     }
 
     // Update shake-cooldown and move object if timer is set.

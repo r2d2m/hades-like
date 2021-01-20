@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Acorn : Destructible
-{
+public class Acorn : Destructible {
     
 
     void Start() {
