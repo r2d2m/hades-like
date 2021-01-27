@@ -88,7 +88,6 @@ public class OLD_RoomManager : MonoBehaviour {
             currentRooms.Add(child.gameObject);
             // Set all Rooms to middle of SPACE
             child.gameObject.transform.position = new Vector3(0, 0, 0);
-            print(child.gameObject);
         }
 
         // Set all rooms except first to inactive        

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class RoomManager : MonoBehaviour {
 
-    List<GameObject> currentRooms;
     bool currentRoomClear;
     int activeRoomID;
     GameObject activeRoom;
@@ -20,11 +19,16 @@ public class RoomManager : MonoBehaviour {
     FloorGenerator floorGenerator;
     GameObject player;
     GameObject mainCamera;
+    GameObject currentDoor;
+    GameObject[] rewardsInRoom;
 
+    public GameObject startRoom;
+    public GameObject debugRoom;
+    public bool DEBUG_startInStartRoom;
+    public bool DEBUG_startInDebugRoom;
 
     // Start is called before the first frame update
     void Start() {
-        currentRooms = new List<GameObject>();
         currentRoomClear = false;
         enemiesAliveInRoom = 0;
         currentFloorDepth = 1;
@@ -32,7 +36,11 @@ public class RoomManager : MonoBehaviour {
         floorGenerator = GetComponent<FloorGenerator>();
         player = GameObject.FindGameObjectWithTag("Player");
         mainCamera = GameObject.Find("MainCamera");
-        initFloor();
+        if (DEBUG_startInStartRoom) {
+            initStartRoom();
+        } else {
+            initFloor();
+        }
     }
 
     // Update is called once per frame
@@ -50,23 +58,25 @@ public class RoomManager : MonoBehaviour {
         }
     }
 
-    public void addEnemiesIntoRoom(int count){
+    public void addEnemiesIntoRoom(int count) {
         print("Enemies added: " + count);
         enemiesAliveInRoom += count;
     }
 
     public void roomIsClear() {
         openRoomDoors(activeRoom);
-        spawnRandomRewards(1, 1);
+        //spawnRandomRewards(1, 1);
         currentRoomClear = true;
     }
 
     public void openRoomDoors(GameObject room) {
-        foreach (Transform door in room.transform.Find("Doors").transform) {
-            if (door.tag == "Door") {
-                door.GetComponent<DoorScript>().openDoor();
-            }
-        }
+        currentDoor = GameObject.FindGameObjectWithTag("Door");
+        currentDoor.GetComponent<DoorScript>().openDoor();
+    }
+
+    public void doorButtonClicked() {
+        print("DoorButtonClicked!");
+        playerExitDoor();
     }
 
     int countAliveEnemies(GameObject room) {
@@ -95,14 +105,21 @@ public class RoomManager : MonoBehaviour {
     private IEnumerator fadeToNextRoom(int difficulty, int floorNumber) {
         currentRoomDepth++;
         yield return new WaitForSeconds(1.0f / blackFadeSpeed);
+
         foreach (Transform child in transform) {
             GameObject.Destroy(child.gameObject);
         }
-        createRoom(difficulty, floorNumber);
+
+        if (currentRoomDepth % 4 == 0) {
+            //createRewardRoom(1, Random.Range(1, 4));
+            createRewardRoom(1, 10);
+        } else {
+            createRoom(difficulty, floorNumber);
+        }
+
         movePlayerToEntrance();
-        float[] cameraBounds = getCameraBoundsCollider();
-        mainCamera.GetComponent<CameraManager>().setCameraBounds(cameraBounds[0], cameraBounds[1]);
-        moveCameraToPlayer(cameraBounds[0], cameraBounds[1]);
+        setCameraAndGridBounds();
+        player.GetComponent<PlayerMain>().resetCooldowns();
     }
 
     void moveCameraToPlayer(float boundX, float boundY) {
@@ -111,24 +128,60 @@ public class RoomManager : MonoBehaviour {
         cameraX = Mathf.Min(cameraX, boundX / 4);
         cameraX = Mathf.Max(cameraX, -boundX / 4);
         cameraY = Mathf.Min(cameraY, boundY / 4);
-        cameraY = Mathf.Max(cameraY, -boundY/ 4);
+        cameraY = Mathf.Max(cameraY, -boundY / 4);
         mainCamera.GetComponent<CameraManager>().setCameraPosition(cameraX, cameraY);
     }
 
     void createRoom(int difficulty, int floorNumber) {
-        activeRoom = Instantiate(floorGenerator.getRandomRoom(difficulty, floorNumber), new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+        if (DEBUG_startInDebugRoom) {
+            activeRoom = Instantiate(debugRoom, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+        } else {
+            activeRoom = Instantiate(floorGenerator.getRandomRoom(difficulty, floorNumber), new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+        }
         activeRoom.transform.parent = transform;
         enemiesAliveInRoom = countAliveEnemies(activeRoom);
+        setCameraAndGridBounds();
+    }
+
+    void createRewardRoom(int floorNumber, int numberOfRewards) {
+        activeRoom = Instantiate(floorGenerator.getRandomRewardRoom(floorNumber), new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+        activeRoom.transform.parent = transform;
+        GameObject rewardSpawnPoint = GameObject.Find("RewardSpawnPoint");
+        rewardsInRoom = new GameObject[numberOfRewards];
+        for (int i = 0; i < numberOfRewards; i++) {
+            GameObject newReward = Instantiate(getRandomReward(1), rewardSpawnPoint.transform.position + new Vector3(1.3f * i - numberOfRewards * 0.65f, 0, 0), rewardSpawnPoint.transform.rotation);
+            rewardsInRoom[i] = newReward;
+        }
+        currentRoomClear = true;
+        print("Spawned " + numberOfRewards + " rewards!");
+    }
+
+    public void rewardWasGrabbed() {
+        for (int i = 0; i < rewardsInRoom.Length; i++) {
+            rewardsInRoom[i].GetComponent<Reward>().despawnSelf();
+        }
+        openRoomDoors(activeRoom);
     }
 
     void initFloor() {
         activeRoomID = 0;
         createRoom(1, 1);
+        //createRewardRoom(1, 3);
         enemiesAliveInRoom = countAliveEnemies(activeRoom);
         movePlayerToEntrance();
-        float[] cameraBounds = getCameraBoundsCollider();
-        mainCamera.GetComponent<CameraManager>().setCameraBounds(cameraBounds[0], cameraBounds[1]);
-        moveCameraToPlayer(cameraBounds[0], cameraBounds[1]);
+        setCameraAndGridBounds();
+
+    }
+
+    void initStartRoom() {
+        activeRoom = Instantiate(startRoom, new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
+        activeRoom.transform.parent = transform;
+        movePlayerToEntrance();
+        setCameraAndGridBounds();
+    }
+
+    public void exitStartRoom() {
+        goToNextRoom();
     }
 
 
@@ -156,7 +209,9 @@ public class RoomManager : MonoBehaviour {
 
     public float[] getCameraBoundsCollider() {
         float[] dimensions = new float[2];
-        GameObject cameraBounds = GameObject.FindGameObjectWithTag("CameraBounds");
+        GameObject cameraBounds = activeRoom.transform.Find("CameraBounds").gameObject;
+
+        // GameObject cameraBounds = GameObject.FindGameObjectWithTag("CameraBounds");
         if (cameraBounds != null) {
             dimensions[0] = cameraBounds.GetComponent<BoxCollider2D>().size.x;
             dimensions[1] = cameraBounds.GetComponent<BoxCollider2D>().size.y;
@@ -164,9 +219,18 @@ public class RoomManager : MonoBehaviour {
             dimensions[0] = 0;
             dimensions[1] = 0;
         }
-        print(dimensions[0]);
-        print(dimensions[1]);
         return dimensions;
+    }
+
+    public float[] setCameraAndGridBounds() {
+        float[] cameraBounds = getCameraBoundsCollider();
+        mainCamera.GetComponent<CameraManager>().setCameraBounds(cameraBounds[0], cameraBounds[1]);
+        GetComponent<Grid>().setGridWorld(cameraBounds[0], cameraBounds[1]);
+        GetComponent<Grid>().CreateGrid();
+        //TODO maybe dont move camera here??
+        moveCameraToPlayer(cameraBounds[0], cameraBounds[1]);
+        print(cameraBounds[0] + ", " + cameraBounds[1]);
+        return cameraBounds;
     }
 
     public void playerExitDoor() {

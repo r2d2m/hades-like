@@ -14,6 +14,7 @@ public class EnemyWalker : Enemy {
 
     // Update is called once per frame
     void Update() {
+        updateCooldowns();
         deathCheck();
     }
 

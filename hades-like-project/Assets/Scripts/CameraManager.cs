@@ -37,7 +37,8 @@ public class CameraManager : MonoBehaviour {
         debugCameraManager();
         if (followingPlayer == true) {
             cameraDestination = new Vector3(playerPos.x + (mousePos.x - playerPos.x) / cameraSens, playerPos.y + (mousePos.y - playerPos.y) / cameraSens, -10);
-            cameraDestination = new Vector3(Mathf.Clamp(cameraDestination.x, -maxXPositions/4, maxXPositions/4) ,Mathf.Clamp(cameraDestination.y, -maxYPositions/4, maxYPositions/4), -10);
+            // x camera center offset ~= 9, y camera center offset ~= 5
+            cameraDestination = new Vector3(Mathf.Clamp(cameraDestination.x, -maxXPositions / 2 + 9, maxXPositions / 2 - 9), Mathf.Clamp(cameraDestination.y, -maxYPositions / 2 + 5, maxYPositions / 2 - 5), -10);
         } else {
             cameraDestination = new Vector3(0, 0, -1);
         }
@@ -59,18 +60,18 @@ public class CameraManager : MonoBehaviour {
 
 
     void debugCameraManager() {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        if (Input.GetKeyDown(KeyCode.O)) {
             followingPlayer = !followingPlayer;
             print("TOGGLE CAMERA! Following player: " + followingPlayer);
         }
     }
 
-    public void setCameraPosition(float x, float y){
+    public void setCameraPosition(float x, float y) {
         transform.position = new Vector3(x, y, -10);
         cameraDestination = transform.position;
     }
 
-    public void setCameraBounds(float maxX, float maxY){
+    public void setCameraBounds(float maxX, float maxY) {
         maxXPositions = maxX;
         maxYPositions = maxY;
     }
@@ -101,7 +102,6 @@ public class CameraManager : MonoBehaviour {
     }
 
     private IEnumerator fadeToNormal(float fadeSpeed) {
-        print("fade to normal");
         while (blackScreen.GetComponent<SpriteRenderer>().color.a > 0) {
             Color newColor = blackScreen.GetComponent<SpriteRenderer>().color - new Color(0, 0, 0, Time.deltaTime * fadeSpeed);
             blackScreen.GetComponent<SpriteRenderer>().color = newColor;

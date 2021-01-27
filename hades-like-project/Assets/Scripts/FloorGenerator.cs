@@ -4,33 +4,21 @@ using UnityEngine;
 
 public class FloorGenerator : MonoBehaviour {
 
-    List<GameObject> roomList;
     GameObject[] roomArray;
-    int currentFloor;
-    // Start is called before the first frame update
-    void Start() {
-        /*
-        GameObject newRoom = Instantiate(getRandomRoom(1,1), new Vector3(0,0,0), new Quaternion(0,0,0,0));
-        newRoom.transform.parent = transform;
-        */
-    }
 
-    // Update is called once per frame
-    void Update() {
-
-    }
-
-    void generateFloor() {
+    public GameObject getRandomRewardRoom(int floorNumber) {
+        roomArray = Resources.LoadAll<GameObject>("Rooms/Floor" + floorNumber + "/RewardRooms");
+        return roomArray[Random.Range(0, roomArray.Length)];
     }
 
     // difficulty 1 = normal, 2 = hard
-    public GameObject getRandomRoom(int difficulty, int floorNumber){
+    public GameObject getRandomRoom(int difficulty, int floorNumber) {
         string roomType = "";
-        switch(difficulty){
+        switch (difficulty) {
             case 1:
                 roomType = "NormalRooms";
                 break;
-            case 2: 
+            case 2:
                 roomType = "HardRooms";
                 break;
             default:

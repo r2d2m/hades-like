@@ -8,7 +8,6 @@ public class Bullet : Weapon {
     public int bulletPierceCount = 1;
 
     public void setBulletForce(Vector2 forceDirection, float playerBulletForce) {
-        //print(forceDirection * playerBulletForce * bulletForceMod);
         GetComponent<Rigidbody2D>().AddForce(forceDirection * (bulletBaseForce + playerBulletForce * bulletForceMod));
     }
 

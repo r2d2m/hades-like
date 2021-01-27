@@ -7,73 +7,242 @@ public class PlayerMain : MonoBehaviour {
     public GameObject soundManagerObject;
     SoundManager soundManager;
 
-
     float movementSpeed = 5000f;
-    float primaryCD = 0.7f;
-    float altCD = 1.0f; // Rightclick = special
-    float currentprimaryCD;
 
     public GameObject playerGun;
     public GameObject primWeapon;
     public GameObject altWeapon;
-    public GameObject healthBar;
+    public GameObject canvasUI;
+    public GameObject mousePointer;
+    public GameObject floorGameObject;
+    public Animator animator;
 
     private Rigidbody2D rigidBody;
 
     Vector2 movementVector;
 
-    float invisCD = 1.0f;
-    float currentInvisCD;
+    float invulCD = 1.0f;
+    float currentInvulCD = 0;
 
     int maxHP;
     int currentHP;
 
-    float primFlatDamageBonus;
-    float primDamageMultiplier;
-    float altBaseDamage;
-    float altDamageMultiplier;
+    public float damageMultiplier = 1.0f;
+    public float cooldownMultiplier = 1.0f;
+    public float rangeMultiplier = 1.0f;
+    public float spellSpeedMultiplier = 1.0f;
+    public float spellForceMultipler = 1.0f;
+    public float spellLifeTimeMultiplier = 1.0f;
+    public float movementSpeedMultiplier = 1.0f;
 
-    float minPrimCD = 0.0001f;
-    float minAltCD = 0.0001f;
-    float minPrimDMG = 0.5f;
-    float minAltDMG = 0.5f;
-    float minPrimMULT = 0.5f;
-    float minAltMULT = 0.5f;
+    float minCD = 0.0001f;
+    float minDmgMult = 0.5f;
+    float minLifeTime = 0.5f;
+    float minForce = 0.1f;
+    float minMoveSpeed = 0.1f;
+    float minSpellSpeed = 0.1f;
 
-    float playerBulletForceMod = 1.0f;
-    float weaponLifeTimeMod = 1.0f;
+    bool flipAnimatorX = false;
+
+    SpriteRenderer playerSpriteRenderer;
+    SpriteRenderer gunSpriteRenderer;
+
+    Color transparentColor = new Color(1.0f, 1.0f, 1.0f, 0.5f);
+    Color opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
+
+    public List<GameObject> equippedSpells;
+    List<float> spellCooldowns;
+
+    Vector3 currentMousePos = new Vector3(0, 0, 0);
+
+    CooldownUI cooldownUI;
+    public GameObject InventoryUI;
+    HealthBarManager hpManager;
+
+    bool inventoryIsOpen = false;
+    bool usingBasicAttack;
+    int currentHoldSpellID = -1;
 
     // Start is called before the first frame update
     void Start() {
         maxHP = 5;
         currentHP = maxHP;
-        primFlatDamageBonus = 1;
-        primDamageMultiplier = 1;
-        altBaseDamage = 1;
-        altDamageMultiplier = 1;
+        usingBasicAttack = false;
+        spellCooldowns = new List<float>();
+        for (int i = 0; i < equippedSpells.Count; i++) {
+            spellCooldowns.Add(0);
+        }
+        cooldownUI = canvasUI.GetComponent<CooldownUI>();
+        cooldownUI.setSpellCount(equippedSpells.Count);
+        cooldownUI.setSpellIcons(equippedSpells);
+        InventoryUI.GetComponent<InventoryManager>().initInventory();
+        InventoryUI.SetActive(false);
 
+        hpManager = canvasUI.GetComponent<HealthBarManager>();
         updateHealthBar();
-
-        currentprimaryCD = 0;
-        currentInvisCD = 0;
         mainCamera = GameObject.Find("MainCamera");
         rigidBody = GetComponent<Rigidbody2D>();
         soundManager = soundManagerObject.GetComponent<SoundManager>();
 
-        primaryCD = primWeapon.GetComponent<Weapon>().getBaseCoolDown();
-        altCD = primWeapon.GetComponent<Weapon>().getBaseCoolDown() * 4;
-
+        playerSpriteRenderer = animator.GetComponent<SpriteRenderer>();
+        gunSpriteRenderer = playerGun.GetComponentInChildren<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update() {
+        currentMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         updateCooldowns();
-        playerMovement();
-        playerAim();
-        playerActions();
+        handleInventory();
+        if (!inventoryIsOpen) {
+            playerMovement();
+            playerAim();
+            spellInputHandler();
+        }
+        invulFlicker();
 
         // TODO: delete this later!
         debugPlayer();
+        animator.SetFloat("MovementSpeed", movementVector.magnitude);
+    }
+
+    public List<GameObject> getEquippedSpells() {
+        return equippedSpells;
+    }
+
+    public void switchSpellSlots(int firstSpellIndex, int secondSpellIndex) {
+        GameObject temp = equippedSpells[firstSpellIndex];
+        float tempCD = spellCooldowns[firstSpellIndex];
+        equippedSpells[firstSpellIndex] = equippedSpells[secondSpellIndex];
+        spellCooldowns[firstSpellIndex] = spellCooldowns[secondSpellIndex];
+        equippedSpells[secondSpellIndex] = temp;
+        spellCooldowns[secondSpellIndex] = tempCD;
+        updateCooldowns();
+        updateIcons();
+    }
+
+    public void resetCooldowns() {
+        for (int i = 0; i < spellCooldowns.Count; i++) {
+            spellCooldowns[i] = 0;
+        }
+        cooldownUI.updateCooldowns(spellCooldowns);
+    }
+
+    public void pickupSpell(GameObject newSpell) {
+        if (equippedSpells.Count < 7) {
+            equippedSpells.Add(newSpell);
+            spellCooldowns.Add(0);
+            //cooldownUI.setSpellCount(equippedSpells.Count);
+            cooldownUI.addSpell();
+            InventoryUI.GetComponent<InventoryManager>().updateInventory();
+            updateIcons();
+        } else {
+            toggleInventory(true);
+        }
+    }
+
+    public void updateIcons() {
+        cooldownUI.setSpellIcons(equippedSpells);
+        InventoryUI.GetComponent<InventoryManager>().setInventoryIcons(equippedSpells);
+    }
+
+    public void handleInventory() {
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            inventoryIsOpen = !inventoryIsOpen;
+            toggleInventory(inventoryIsOpen);
+        }
+    }
+
+    public void toggleInventory(bool toggle) {
+        if (toggle) {
+            Time.timeScale = 0;
+            InventoryUI.SetActive(true);
+            updateIcons();
+        } else {
+            Time.timeScale = 1;
+            InventoryUI.SetActive(false);
+        }
+    }
+
+    //Todo FIX THIS MESS
+    void spellInputHandler() {
+        if (Input.GetMouseButton(0) && equippedSpells.Count > 0) {
+            spellCooldownCheckAndCast(0);
+            usingBasicAttack = true;
+        }
+        if (Input.GetMouseButton(1) && equippedSpells.Count > 1) {
+            spellCooldownCheckAndCast(1);
+            usingBasicAttack = true;
+        }
+        if (Input.GetKey(KeyCode.Space) && equippedSpells.Count > 2) {
+            spellCooldownCheckAndCast(2);
+            usingBasicAttack = true;
+        }
+        if (Input.GetKey(KeyCode.Q) && equippedSpells.Count > 3) {
+            spellCooldownCheckAndCast(3);
+            usingBasicAttack = true;
+        }
+        if (Input.GetKey(KeyCode.E) && equippedSpells.Count > 4) {
+            spellCooldownCheckAndCast(4);
+            usingBasicAttack = true;
+        }
+        if (Input.GetKey(KeyCode.R) && equippedSpells.Count > 5) {
+            spellCooldownCheckAndCast(5);
+            usingBasicAttack = true;
+        }
+        if (Input.GetKey(KeyCode.F) && equippedSpells.Count > 6) {
+            spellCooldownCheckAndCast(6);
+            usingBasicAttack = true;
+        }
+        usingBasicAttack = false;
+    }
+
+
+    void spellCooldownCheckAndCast(int spellIndex) {
+        if (spellCooldowns[spellIndex] <= 0) {
+            GameObject spellObject = Instantiate(equippedSpells[spellIndex]);
+            spellObject.transform.parent = floorGameObject.transform;
+            Spell spellScript = spellObject.GetComponent<Spell>();
+            if (spellScript.getIsBasicAttack()) {
+                if (!usingBasicAttack) {
+                    castSpell(spellObject, spellScript, spellIndex);
+                }
+            } else {
+                castSpell(spellObject, spellScript, spellIndex);
+                usingBasicAttack = false;
+            }
+        }
+    }
+
+    void castSpell(GameObject spellObject, Spell spellScript, int spellIndex) {
+        spellCooldowns[spellIndex] = spellScript.getCooldownTime() * cooldownMultiplier;
+        cooldownUI.setCooldownDuration(spellIndex, spellCooldowns[spellIndex]);
+        spellScript.setMousePos(currentMousePos);
+        spellScript.setPlayerGameObject(gameObject);
+        spellScript.setPlayerPos(transform.position);
+        spellScript.setGunGameObject(playerGun);
+        spellScript.setMouseGameObject(mousePointer);
+        spellScript.setMainCameraObject(mainCamera);
+        spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier, spellSpeedMultiplier, spellLifeTimeMultiplier, spellForceMultipler);
+    }
+
+    // flicker player sprite when invurnable
+    void invulFlicker() {
+        if (currentInvulCD > 0) {
+            if (currentInvulCD % 0.1f < 0.05f) {
+                gunSpriteRenderer.color = transparentColor;
+                playerSpriteRenderer.color = transparentColor;
+            } else {
+                gunSpriteRenderer.color = opaqueColor;
+                playerSpriteRenderer.color = opaqueColor;
+            }
+        } else {
+            gunSpriteRenderer.color = opaqueColor;
+            playerSpriteRenderer.color = opaqueColor;
+        }
+    }
+
+    void LateUpdate() {
+        playerSpriteRenderer.flipX = flipAnimatorX;
     }
 
     void debugPlayer() {
@@ -84,22 +253,26 @@ public class PlayerMain : MonoBehaviour {
 
     // Update all cooldowns
     void updateCooldowns() {
-        if (currentprimaryCD > 0) {
-            currentprimaryCD -= Time.deltaTime;
+        if (invulCD > 0) {
+            currentInvulCD -= Time.deltaTime;
         } else {
-            currentprimaryCD = 0;
+            currentInvulCD = 0;
         }
 
-        if (invisCD > 0) {
-            currentInvisCD -= Time.deltaTime;
-        } else {
-            currentInvisCD = 0;
+        for (int i = 0; i < spellCooldowns.Count; i++) {
+            if (spellCooldowns[i] > 0) {
+                spellCooldowns[i] -= Time.deltaTime;
+            } else {
+                spellCooldowns[i] = 0;
+            }
         }
+
+        cooldownUI.updateCooldowns(spellCooldowns);
     }
 
     // All physics related stuff should be here!
     void FixedUpdate() {
-        rigidBody.AddForce(movementVector * movementSpeed);
+        rigidBody.AddForce(movementVector * movementSpeed * movementSpeedMultiplier);
     }
 
     // Handle player input
@@ -107,68 +280,31 @@ public class PlayerMain : MonoBehaviour {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
         movementVector = new Vector2(moveHorizontal, moveVertical);
+
+        // Cap diagonal movespeed but keep smoothing from GetAxis()
+        if (movementVector.magnitude > 1) {
+            movementVector.Normalize();
+        }
+
+        if (moveHorizontal > 0) {
+            flipAnimatorX = false;
+        } else if (moveHorizontal < 0) {
+            flipAnimatorX = true;
+        }
     }
 
     // Point the gun in the direction  of the mouse
     void playerAim() {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 deltaVec = mousePos - transform.position;
+        Vector2 deltaVec = currentMousePos - transform.position;
+        float rotationAngle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
 
-        playerGun.transform.position = transform.position + Vector3.Normalize(deltaVec) * 0.3f;
-        Debug.DrawLine(transform.position, mousePos, Color.red);
-    }
+        playerGun.transform.position = transform.position + Vector3.Normalize(deltaVec) * 0.4f;
+        playerGun.transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
 
-    // Input for rangedAttacking and non-movement related input
-    void playerActions() {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        // Left click and right click action
-        if (Input.GetMouseButton(0) && currentprimaryCD <= 0) {
-            WeaponType currentWeaponType = primWeapon.GetComponent<Weapon>().getWeaponType();
-            if (currentWeaponType == WeaponType.RANGED) {
-                rangedAttack(primWeapon, transform.position, mousePos, playerBulletForceMod);
-            } else if (currentWeaponType == WeaponType.MELEE) {
-                meleeAttack(primWeapon, transform.position, mousePos);
-            }
-            currentprimaryCD = primaryCD;
-        } else if (Input.GetMouseButton(1) && currentprimaryCD <= 0) {
-            WeaponType currentWeaponType = altWeapon.GetComponent<Weapon>().getWeaponType();
-            if (currentWeaponType == WeaponType.RANGED) {
-                Vector3 randTarget;
-                float targetOffset = 1f;
-                float forceOffset = 0.2f;
-                for (int i = 0; i < 4; i++) {
-                    randTarget = new Vector3(Random.Range(-targetOffset, targetOffset), Random.Range(-targetOffset, targetOffset), 0.0f);
-                    rangedAttack(primWeapon, transform.position, mousePos + randTarget, playerBulletForceMod * Random.Range(1 - forceOffset, 1 + forceOffset));
-                }
-            } else if (currentWeaponType == WeaponType.MELEE) {
-                meleeAttack(primWeapon, transform.position, mousePos);
-            }
-            currentprimaryCD = altCD;
-        }
-    }
+        gunSpriteRenderer.flipY = (rotationAngle >= -90 && rotationAngle < 90) ? false : true;
+        gunSpriteRenderer.sortingOrder = (rotationAngle >= 30 && rotationAngle <= 150) ? 9 : 11;
 
-    // Function for firing a bullet from spawnPos to targetPos 
-    // TODO: rangedAttack different bullets!
-    void rangedAttack(GameObject bullet, Vector2 spawnPos, Vector2 targetPos, float force) {
-        mainCamera.GetComponent<CameraManager>().screenShake(0.08f, 0.05f);
-        Vector2 deltaVec = targetPos - (Vector2)transform.position;
-        GameObject newBullet = Instantiate(bullet, spawnPos, Quaternion.Euler(0, 0, Random.Range(0, 360)));
-        newBullet.GetComponent<Bullet>().setDamage(primFlatDamageBonus, primDamageMultiplier);
-        newBullet.GetComponent<Bullet>().setBulletForce(deltaVec.normalized, force);
-        newBullet.GetComponent<Bullet>().setLifeTime(weaponLifeTimeMod);
-        soundManager.playSoundClip(newBullet.GetComponent<Bullet>().getAttackSound(), 0.1f);
-    }
-
-    void meleeAttack(GameObject weapon, Vector2 playerPos, Vector2 targetPos) {
-        mainCamera.GetComponent<CameraManager>().screenShake(0.08f, 0.05f);
-        Vector2 deltaVec = targetPos - (Vector2)transform.position;
-        float angle = Mathf.Atan2(deltaVec.y, deltaVec.x) * Mathf.Rad2Deg;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        Vector2 spawnPos = playerPos + deltaVec.normalized * 0.5f;
-        GameObject newWeapon = Instantiate(weapon, spawnPos, rotation);
-        newWeapon.GetComponent<Melee>().setDamage(primFlatDamageBonus, primDamageMultiplier);
-        newWeapon.GetComponent<Melee>().setDeltaVector(deltaVec.normalized);
-        newWeapon.transform.parent = transform;
+        Debug.DrawLine(transform.position, currentMousePos, Color.red);
     }
 
     // Heal damage
@@ -181,11 +317,13 @@ public class PlayerMain : MonoBehaviour {
 
     // Take damage 
     void takeDamage(int amount) {
-        if (currentInvisCD <= 0) {
+        if (currentInvulCD <= 0) {
             currentHP -= amount;
             updateHealthBar();
-            currentInvisCD = invisCD;
+            currentInvulCD = invulCD;
+            animator.SetTrigger("TookDamage");
             print("Took: " + amount + " damage, " + currentHP + "/" + maxHP + " HP left!");
+
             if (currentHP <= 0) {
                 gameOver();
             }
@@ -193,8 +331,9 @@ public class PlayerMain : MonoBehaviour {
     }
 
     void updateHealthBar() {
-        healthBar.GetComponent<HealthBarManager>().setMaxHP(maxHP);
-        healthBar.GetComponent<HealthBarManager>().setCurrentHP(currentHP);
+        hpManager = canvasUI.GetComponent<HealthBarManager>();
+        hpManager.setMaxHP(maxHP);
+        hpManager.setCurrentHP(currentHP);
     }
 
     // Call on this when you are DEAD
@@ -219,8 +358,6 @@ public class PlayerMain : MonoBehaviour {
         }
     }
 
-
-
     private void OnTriggerEnter2D(Collider2D other) {
         switch (other.gameObject.tag) {
             case "Reward":
@@ -235,6 +372,8 @@ public class PlayerMain : MonoBehaviour {
                 other.gameObject.GetComponent<EnemyBullet>().collideWithPlayer();
                 // TODO: POISON AND OTHER EFFECTS?
                 break;
+            case "ExitDoor":
+                break;
         }
     }
 
@@ -242,30 +381,14 @@ public class PlayerMain : MonoBehaviour {
         return transform.position;
     }
 
-    public void modifyPlayerDamage(float primDmg, float primMult, float altDmg, float altMult) {
-        if (primFlatDamageBonus + primDmg > minPrimDMG) {
-            primFlatDamageBonus += primDmg;
+    public void modifyPlayerDamageMultiplier(float damageMult) {
+        /*
+        if (damageMultiplier + damageMult > minDmgMult) {
+            damageMultiplier += damageMult;
         } else {
-            primFlatDamageBonus = minPrimDMG;
-        }
-
-        if (primDamageMultiplier + primMult > minPrimMULT) {
-            primDamageMultiplier += primMult;
-        } else {
-            primFlatDamageBonus = minPrimMULT;
-        }
-
-        if (altBaseDamage + altDmg > minAltDMG) {
-            altBaseDamage += altDmg;
-        } else {
-            altBaseDamage = minAltDMG;
-        }
-
-        if (altDamageMultiplier + altMult > minAltMULT) {
-            altDamageMultiplier += altMult;
-        } else {
-            altDamageMultiplier = minAltMULT;
-        }
+            damageMultiplier = minDmgMult;
+        }*/
+        damageMultiplier = Mathf.Max(damageMultiplier + damageMult, minDmgMult);
     }
 
     public void modifyPlayerHealth(int maxHealthMod) {
@@ -282,17 +405,32 @@ public class PlayerMain : MonoBehaviour {
         }
     }
 
-    public void modifyCooldowns(float primaryCooldown, float altCooldown) {
-        if (primaryCD - primaryCooldown > minPrimCD) {
-            primaryCD -= primaryCooldown;
+    public void modifyCooldown(float cooldownMod) {
+        /*
+        if (cooldownMultiplier - cooldownMod > minCD) {
+            cooldownMultiplier -= cooldownMod;
         } else {
-            primaryCD = minPrimCD;
-        }
+            cooldownMultiplier = minCD;
+        }*/
+        cooldownMultiplier = Mathf.Max(cooldownMultiplier - cooldownMod, minCD);
+    }
 
-        if (altCD - altCooldown > minAltCD) {
-            altCD -= altCooldown;
-        } else {
-            altCD = minAltCD;
-        }
+
+    public void modifyLifeTime(float lifeTimeMod) {
+        spellLifeTimeMultiplier = Mathf.Max(spellLifeTimeMultiplier + lifeTimeMod, minLifeTime);
+    }
+
+    public void modifySpellForce(float forceMod) {
+        spellForceMultipler = Mathf.Max(spellForceMultipler + forceMod, minForce);
+    }
+
+
+    public void modifySpellSpeed(float speedMod) {
+        spellSpeedMultiplier = Mathf.Max(spellSpeedMultiplier + speedMod, minSpellSpeed);
+    }
+
+    public void modifyPlayerSpeed(float speedMod) {
+        movementSpeedMultiplier = Mathf.Max(movementSpeedMultiplier + speedMod, minMoveSpeed);
+
     }
 }

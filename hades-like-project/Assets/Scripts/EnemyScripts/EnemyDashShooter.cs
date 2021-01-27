@@ -29,6 +29,7 @@ public class EnemyDashShooter : Enemy {
     // Update is called once per frame
     void Update() {
         cooldowns();
+        updateCooldowns();
         deathCheck();
     }
 

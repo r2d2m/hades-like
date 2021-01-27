@@ -18,8 +18,8 @@ public class Weapon : MonoBehaviour {
     public AudioClip[] attackSounds;
     public WeaponType currentType;
 
-    public void setDamage(float playerFlatDamageBonus, float playerDamageMultiplier) {
-        weaponDamage = playerDamageMultiplier * baseDamage + playerFlatDamageBonus;
+    public void setDamageMultiplier(float playerDamageMultiplier) {
+        weaponDamage = playerDamageMultiplier * baseDamage;
     }
 
     public WeaponType getWeaponType() {
