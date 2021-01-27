@@ -19,6 +19,7 @@ TagManager:
   - SoundManager
   - ExitDoor
   - MousePointer
+  - Destructible
   layers:
   - Default
   - TransparentFX
