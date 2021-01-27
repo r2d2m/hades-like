@@ -51,6 +51,7 @@ MonoBehaviour:
   mousePos: {x: 0, y: 0, z: 0}
   cooldownTime: 0
   damage: 0
+  isBasicAttack: 0
   spellIcon: {fileID: 21300000, guid: 364c97ac9135a0445b706d9004ad7679, type: 3}
-  waveBeamSub: {fileID: 8853799596945735059, guid: 70eb60a804aabd54387eda9e097fc44e,
+  waveBeamSub: {fileID: 8853799596945735059, guid: 3738f38c315b4474fbfb4b7dc0a1779b,
     type: 3}
