@@ -1699,13 +1699,13 @@ PrefabInstance:
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: equippedSpells.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: equippedSpells.Array.data[0]
       value: 
-      objectReference: {fileID: 8853799596945735059, guid: e2a74c327bfbc8540980eade12a1cfd7,
+      objectReference: {fileID: 8853799596945735059, guid: beaccd7cf233dcc4bab574e8ab1ab4b6,
         type: 3}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
