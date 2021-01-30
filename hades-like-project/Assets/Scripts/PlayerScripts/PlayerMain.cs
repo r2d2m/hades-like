@@ -374,6 +374,10 @@ public class PlayerMain : MonoBehaviour {
                 break;
             case "ExitDoor":
                 break;
+            case "PlayerHazard":
+                takeDamage(other.gameObject.GetComponent<PlayerHazard>().getDamage());
+                break;
+
         }
     }
 

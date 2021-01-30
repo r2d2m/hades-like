@@ -174,7 +174,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff814066c75d2764892ca4cfbe0af7bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerMain: {fileID: 0}
+  playerMain: {fileID: 1486883451}
   spellSlotPrefab: {fileID: 4401036988332601783, guid: 33de02dce3029e4419f81c5274258ee7,
     type: 3}
   spellIconPrefab: {fileID: 7081369245090969225, guid: 115a07979db01db4385ee97847feb5ff,
@@ -189,43 +189,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 54693937}
   m_CullTransparentMesh: 0
---- !u!1 &159392978 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4562611108377575057, guid: 55804497ab4ffd4468388677784ce275,
+--- !u!20 &159392979 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 159392979, guid: 55804497ab4ffd4468388677784ce275,
     type: 3}
   m_PrefabInstance: {fileID: 4562611108022388461}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &159392981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 159392978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
-  m_RequiresOpaqueTextureOption: 2
-  m_CameraType: 0
-  m_Cameras: []
-  m_RendererIndex: -1
-  m_VolumeLayerMask:
-    serializedVersion: 2
-    m_Bits: 1
-  m_VolumeTrigger: {fileID: 0}
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
-  m_AntialiasingQuality: 2
-  m_StopNaN: 0
-  m_Dithering: 0
-  m_ClearDepth: 1
-  m_RequiresDepthTexture: 0
-  m_RequiresColorTexture: 0
-  m_Version: 2
 --- !u!850595691 &221229726
 LightingSettings:
   m_ObjectHideFlags: 0
@@ -555,12 +524,6 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!20 &676110096 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 4562611108377575058, guid: 55804497ab4ffd4468388677784ce275,
-    type: 3}
-  m_PrefabInstance: {fileID: 4562611108022388461}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &987743960
 GameObject:
   m_ObjectHideFlags: 0
@@ -709,6 +672,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5428975483329386537}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1486883451 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
+    type: 3}
+  m_PrefabInstance: {fileID: 5428975483329386537}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1486883447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e45378576ef73404da437f378da8d50b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1535126245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1089,7 +1064,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 676110096}
+  m_Camera: {fileID: 159392979}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -1539,46 +1514,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MainCamera
       objectReference: {fileID: 0}
-    - target: {fileID: 4562611108377575057, guid: 55804497ab4ffd4468388677784ce275,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4562611108377575059, guid: 55804497ab4ffd4468388677784ce275,
-        type: 3}
-      propertyPath: bounds
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4562611108377575059, guid: 55804497ab4ffd4468388677784ce275,
         type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1486883447}
-    - target: {fileID: 4562611109758002952, guid: 55804497ab4ffd4468388677784ce275,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4562611109758002954, guid: 55804497ab4ffd4468388677784ce275,
-        type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4562611109758002954, guid: 55804497ab4ffd4468388677784ce275,
-        type: 3}
-      propertyPath: m_Color.b
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4562611109758002954, guid: 55804497ab4ffd4468388677784ce275,
-        type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4562611109758002954, guid: 55804497ab4ffd4468388677784ce275,
-        type: 3}
-      propertyPath: m_Color.r
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 55804497ab4ffd4468388677784ce275, type: 3}
 --- !u!1001 &5428975483329386537
