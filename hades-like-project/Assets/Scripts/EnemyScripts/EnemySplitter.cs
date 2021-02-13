@@ -50,7 +50,7 @@ public class EnemySplitter : EnemyPathfinder {
 
         for (int i = 0; i < numberOfSplits; i++) {
             Vector3 rotatedVector = Quaternion.Euler(0, 0, 360 / numberOfSplits * i) * splitVector;
-            GameObject newSmallSplitter = Instantiate(smallSplitter, transform.position + rotatedVector * 0.3f, transform.rotation);
+            GameObject newSmallSplitter = Instantiate(smallSplitter, transform.position + rotatedVector * 0.3f, transform.rotation, transform.parent);
             newSmallSplitter.GetComponent<Rigidbody2D>().AddForce(splitForce * rotatedVector);
         }
 

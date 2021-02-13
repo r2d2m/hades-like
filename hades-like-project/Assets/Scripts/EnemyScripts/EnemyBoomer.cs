@@ -47,6 +47,8 @@ public class EnemyBoomer : EnemyPathfinder {
         GameObject poison = Instantiate(poisonField, transform.position, transform.rotation, transform.parent);
         poison.GetComponent<PoisonField>().setValues(1, 5.0f);
         StopUpdatePath();
+        floor.GetComponent<RoomManager>().enemyDeath();
+
         Destroy(gameObject);
     }
 

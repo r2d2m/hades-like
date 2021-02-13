@@ -8,32 +8,37 @@ public class MainMenu : MonoBehaviour {
     public Canvas canvas;
     public AudioSource audio;
     public float fadeoutTime = 1.0f;
-    
+
     float fadeoutTimer = 0.0f;
     float deltaAlpha;
     float deltaVolume;
     float initialVolume;
 
+    public MousePointerScript mouseScript;
 
-    public void PlayGame() { 
-        StartCoroutine(FadeOut());       
+    private void Start() {
+        mouseScript.setMouseHand();
+    }
+
+    public void PlayGame() {
+        StartCoroutine(FadeOut());
     }
 
     IEnumerator FadeOut() {
         initialVolume = audio.GetComponent<AudioSource>().volume;
 
-        while ( fadeoutTimer < fadeoutTime) {
+        while (fadeoutTimer < fadeoutTime) {
             fadeoutTimer += Time.deltaTime;
-            
-            deltaAlpha = Time.deltaTime/fadeoutTime;
-            deltaVolume = initialVolume*Time.deltaTime/fadeoutTime;
-            
+
+            deltaAlpha = Time.deltaTime / fadeoutTime;
+            deltaVolume = initialVolume * Time.deltaTime / fadeoutTime;
+
             audio.GetComponent<AudioSource>().volume -= deltaVolume;
             canvas.GetComponent<CanvasGroup>().alpha -= deltaAlpha;
-            
+
             yield return null;
         }
-
+        mouseScript.setMouseAim();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 

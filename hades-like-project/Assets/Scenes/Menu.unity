@@ -2169,6 +2169,87 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 787593569}
   m_CullTransparentMesh: 0
+--- !u!1001 &834887813
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 507.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 285.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686740, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2645345180141686741, guid: 03b96928923d18f48a6e082d84745c04,
+        type: 3}
+      propertyPath: m_Name
+      value: MousePointer
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 03b96928923d18f48a6e082d84745c04, type: 3}
+--- !u!114 &843874304 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2645345180141686743, guid: 03b96928923d18f48a6e082d84745c04,
+    type: 3}
+  m_PrefabInstance: {fileID: 834887813}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a39debe693fe0374699356d56317580d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &846457635
 GameObject:
   m_ObjectHideFlags: 0
@@ -4340,7 +4421,7 @@ GameObject:
   - component: {fileID: 1736859361}
   - component: {fileID: 1736859363}
   - component: {fileID: 1736859362}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4658,6 +4739,7 @@ MonoBehaviour:
   canvas: {fileID: 2057816715}
   audio: {fileID: 1197128700}
   fadeoutTime: 2
+  mouseScript: {fileID: 843874304}
 --- !u!1 &1879975056
 GameObject:
   m_ObjectHideFlags: 0
@@ -5029,8 +5111,8 @@ Canvas:
   m_GameObject: {fileID: 2057816712}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 2951072}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -5057,7 +5139,7 @@ RectTransform:
   - {fileID: 1858093211}
   - {fileID: 2030633396}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
