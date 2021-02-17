@@ -1804,12 +1804,12 @@ PrefabInstance:
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
       propertyPath: DEBUG_startInDebugRoom
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
       propertyPath: DEBUG_startInStartRoom
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8095881563316779233, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
