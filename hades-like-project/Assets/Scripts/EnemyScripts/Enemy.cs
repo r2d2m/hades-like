@@ -23,9 +23,6 @@ public class Enemy : MonoBehaviour {
     public EnemyStates currentState = EnemyStates.CHASING;
     protected float colorTime = 0.07f;
     protected float currentColorTime = 0.0f;
-
-    public enum EnemyStates { IDLE, CHASING, DYING };
-    public EnemyStates currentState = EnemyStates.CHASING;
     public float chaseRange = 0;
 
     // Start is called before the first frame update
