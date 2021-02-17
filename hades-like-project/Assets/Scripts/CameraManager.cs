@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Rendering;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour {
@@ -27,6 +28,12 @@ public class CameraManager : MonoBehaviour {
         cameraDestination = transform.position;
         cameraPos = transform.position;
         cameraSens = 6.0f; // Higher = less impact from mousePos
+
+        GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
+        GraphicsSettings.transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
+
+        GetComponent<Camera>().transparencySortMode = TransparencySortMode.CustomAxis;
+        GetComponent<Camera>().transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
     }
 
     // Update is called once per frame

@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class BigGuy : EnemyPathfinder {
     // Start is called before the first frame update
+
     void Start() {
+        setChaseRange(5);
+
         collisionDamage = 1;
         maxHP = 5;
         currentHP = maxHP;
@@ -19,16 +22,20 @@ public class BigGuy : EnemyPathfinder {
     void Update() {
         updateCooldowns();
         deathCheck();
+        chaseRangeCheck();
     }
 
     private void FixedUpdate() {
-        
-        if (followingPath) {
-            movementVector = GetPathVector(transform.position);
-        } else {
-            movementVector = (player.transform.position - transform.position).normalized;
+        print(currentState);
+        if (currentState == EnemyStates.CHASING) {
+            if (followingPath) {
+                movementVector = GetPathVector(transform.position);
+            } else {
+                movementVector = (player.transform.position - transform.position).normalized;
+            }
+
         }
-        
+
         rigidBody.AddForce(movementVector * movementStr);
     }
 }

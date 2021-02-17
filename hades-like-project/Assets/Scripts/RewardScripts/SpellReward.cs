@@ -19,7 +19,26 @@ public class SpellReward : Reward {
                 spellType = "NormalRooms";
                 break;
         }
+
+        PlayerMain playerMain = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMain>();
+        List<GameObject> playerSpells = playerMain.equippedSpells;
+        List<string> playerSpellNames = new List<string>();
+        for (int i = 0; i < playerSpells.Count; i++) {
+            playerSpellNames.Add(playerSpells[i].name);
+        }
+
         spellArray = Resources.LoadAll<GameObject>("Spells");
+        GameObject newSpell;
+
+        // TODO this is a very shitty solution
+        int tries = 100;
+        while (tries > 0) {
+            newSpell = spellArray[Random.Range(0, spellArray.Length)];
+            if (!playerSpellNames.Contains(newSpell.gameObject.name)) {
+                return newSpell;
+            }
+            tries -= 1;
+        }
         return spellArray[Random.Range(0, spellArray.Length)];
     }
 

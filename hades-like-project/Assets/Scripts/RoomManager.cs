@@ -20,7 +20,7 @@ public class RoomManager : MonoBehaviour {
     GameObject player;
     GameObject mainCamera;
     GameObject currentDoor;
-    GameObject[] rewardsInRoom;
+    List<GameObject> rewardsInRoom;
 
     public GameObject startRoom;
     public GameObject debugRoom;
@@ -112,7 +112,7 @@ public class RoomManager : MonoBehaviour {
 
         if (currentRoomDepth % 4 == 0) {
             //createRewardRoom(1, Random.Range(1, 4));
-            createRewardRoom(1, 10);
+            createRewardRoom(1, 5);
         } else {
             createRoom(difficulty, floorNumber);
         }
@@ -143,21 +143,35 @@ public class RoomManager : MonoBehaviour {
         setCameraAndGridBounds();
     }
 
+    //TODO Stopping duplicate loot has a very bad solution
     void createRewardRoom(int floorNumber, int numberOfRewards) {
         activeRoom = Instantiate(floorGenerator.getRandomRewardRoom(floorNumber), new Vector3(0, 0, 0), new Quaternion(0, 0, 0, 0));
         activeRoom.transform.parent = transform;
         GameObject rewardSpawnPoint = GameObject.Find("RewardSpawnPoint");
-        rewardsInRoom = new GameObject[numberOfRewards];
+        rewardsInRoom = new List<GameObject>(numberOfRewards);
+        List<string> rewardNames = new List<string>();
+        GameObject randomReward;
         for (int i = 0; i < numberOfRewards; i++) {
-            GameObject newReward = Instantiate(getRandomReward(1), rewardSpawnPoint.transform.position + new Vector3(1.3f * i - numberOfRewards * 0.65f, 0, 0), rewardSpawnPoint.transform.rotation);
-            rewardsInRoom[i] = newReward;
+            int tries = 50;
+            GameObject newReward = null;
+            while (tries > 0) {
+                randomReward = getRandomReward(1);
+                if (!rewardNames.Contains((randomReward.name + "(Clone)"))) {
+                    newReward = Instantiate(randomReward, rewardSpawnPoint.transform.position + new Vector3(1.3f * i - numberOfRewards * 0.65f, 0, 0), rewardSpawnPoint.transform.rotation);
+                    break;
+                }
+                tries--;
+            }
+            rewardsInRoom.Add(newReward);
+            rewardNames.Add(newReward.name);
         }
         currentRoomClear = true;
         print("Spawned " + numberOfRewards + " rewards!");
+
     }
 
     public void rewardWasGrabbed() {
-        for (int i = 0; i < rewardsInRoom.Length; i++) {
+        for (int i = 0; i < rewardsInRoom.Count; i++) {
             rewardsInRoom[i].GetComponent<Reward>().despawnSelf();
         }
         openRoomDoors(activeRoom);

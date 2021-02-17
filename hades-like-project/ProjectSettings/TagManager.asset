@@ -20,6 +20,7 @@ TagManager:
   - ExitDoor
   - MousePointer
   - Destructible
+  - PlayerHazard
   layers:
   - Default
   - TransparentFX
