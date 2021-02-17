@@ -15,6 +15,7 @@ public class PlayerMain : MonoBehaviour {
     public GameObject canvasUI;
     public GameObject mousePointer;
     public GameObject floorGameObject;
+    public GameObject shadowObject;
     public Animator animator;
 
     private Rigidbody2D rigidBody;
@@ -57,7 +58,7 @@ public class PlayerMain : MonoBehaviour {
 
     CooldownUI cooldownUI;
     public GameObject InventoryUI;
-    HealthBarManager hpManager;
+    HealthFlowerManger hpManager;
 
     bool inventoryIsOpen = false;
     bool usingBasicAttack;
@@ -78,7 +79,7 @@ public class PlayerMain : MonoBehaviour {
         InventoryUI.GetComponent<InventoryManager>().initInventory();
         InventoryUI.SetActive(false);
 
-        hpManager = canvasUI.GetComponent<HealthBarManager>();
+        hpManager = canvasUI.GetComponent<HealthFlowerManger>();
         updateHealthBar();
         mainCamera = GameObject.Find("MainCamera");
         rigidBody = GetComponent<Rigidbody2D>();
@@ -86,6 +87,8 @@ public class PlayerMain : MonoBehaviour {
 
         playerSpriteRenderer = animator.GetComponent<SpriteRenderer>();
         gunSpriteRenderer = playerGun.GetComponentInChildren<SpriteRenderer>();
+        mousePointer.GetComponent<MousePointerScript>().setMouseAim();
+
     }
 
     // Update is called once per frame
@@ -156,10 +159,12 @@ public class PlayerMain : MonoBehaviour {
         if (toggle) {
             Time.timeScale = 0;
             InventoryUI.SetActive(true);
+            mousePointer.GetComponent<MousePointerScript>().setMouseHand();
             updateIcons();
         } else {
             Time.timeScale = 1;
             InventoryUI.SetActive(false);
+            mousePointer.GetComponent<MousePointerScript>().setMouseAim();
         }
     }
 
@@ -302,7 +307,8 @@ public class PlayerMain : MonoBehaviour {
         playerGun.transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
 
         gunSpriteRenderer.flipY = (rotationAngle >= -90 && rotationAngle < 90) ? false : true;
-        gunSpriteRenderer.sortingOrder = (rotationAngle >= 30 && rotationAngle <= 150) ? 9 : 11;
+        // TODO: FIX THIS 
+        //gunSpriteRenderer.sortingOrder = (rotationAngle >= 30 && rotationAngle <= 150) ? 9 : 11;
 
         Debug.DrawLine(transform.position, currentMousePos, Color.red);
     }
@@ -331,7 +337,7 @@ public class PlayerMain : MonoBehaviour {
     }
 
     void updateHealthBar() {
-        hpManager = canvasUI.GetComponent<HealthBarManager>();
+        hpManager = canvasUI.GetComponent<HealthFlowerManger>();
         hpManager.setMaxHP(maxHP);
         hpManager.setCurrentHP(currentHP);
     }
@@ -374,6 +380,10 @@ public class PlayerMain : MonoBehaviour {
                 break;
             case "ExitDoor":
                 break;
+            case "PlayerHazard":
+                takeDamage(other.gameObject.GetComponent<PlayerHazard>().getDamage());
+                break;
+
         }
     }
 

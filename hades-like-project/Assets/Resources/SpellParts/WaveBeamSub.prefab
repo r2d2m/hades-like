@@ -153,6 +153,8 @@ MonoBehaviour:
   mousePos: {x: 0, y: 0, z: 0}
   cooldownTime: 0
   damage: 0
+  isBasicAttack: 0
+  spellIcon: {fileID: 0}
   waveDirection: 1
   mouseVector: {x: 0, y: 0, z: 0}
   timeSinceSpawn: 0

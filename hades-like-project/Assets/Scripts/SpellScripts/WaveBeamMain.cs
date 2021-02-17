@@ -14,7 +14,6 @@ public class WaveBeamMain : Spell {
     void Start() {
         transform.position = gunGameObject.transform.position;
         setRotationTowardsVector(getMouseDeltaVector());
-        Destroy(gameObject, 0.1f);
 
         for (int i = 0; i < 2; i++) {
             GameObject newWave = Instantiate(waveBeamSub, transform.position, transform.rotation);
@@ -25,6 +24,7 @@ public class WaveBeamMain : Spell {
             spellScript.waveDirection = (i == 0) ? 1 : -1;
             spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier, speedMultiplier, lifeTimeMultiplier, forceMultipler);
         }
+        Destroy(gameObject);
     }
 
 }

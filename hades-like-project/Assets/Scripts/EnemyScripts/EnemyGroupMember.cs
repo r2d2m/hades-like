@@ -8,7 +8,7 @@ public class EnemyGroupMember : EnemyPathfinder {
     public Animator animator;
     protected float revivalTimer;
     public float deathTime;
-    
+
 
     void Start() {
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -29,17 +29,17 @@ public class EnemyGroupMember : EnemyPathfinder {
         if (currentState != EnemyStates.DYING) {
             deathCheck();
         }
-        
+
     }
 
     private void FixedUpdate() {
-        
+
         if (currentState == EnemyStates.CHASING) {
             movementVector = GetPathVector(transform.position);
             rigidBody.AddForce(movementVector * movementStr);
-        } 
-        
-        
+        }
+
+
     }
 
     IEnumerator waitForRevival() {
@@ -47,18 +47,18 @@ public class EnemyGroupMember : EnemyPathfinder {
             revivalTimer += Time.deltaTime;
             yield return null;
         }
-        
-        if (doRevive()) 
+
+        if (doRevive())
             revive();
-        else 
+        else
             trueDeath();
-        
+
     }
 
     private bool doRevive() {
-        foreach(Enemy friend in dependencies) {
-           if (friend != null && friend.currentState != EnemyStates.DYING) {
-               return true;
+        foreach (Enemy friend in dependencies) {
+            if (friend != null && friend.currentState != EnemyStates.DYING) {
+                return true;
             }
         }
         return false;
@@ -75,18 +75,15 @@ public class EnemyGroupMember : EnemyPathfinder {
         if (corpsePrefab != null) {
             GameObject corpse = Instantiate(corpsePrefab, transform.position, transform.rotation);
             corpse.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
-            corpse.transform.parent = transform.parent; 
+            corpse.transform.parent = transform.parent;
         }
-
+        floor.GetComponent<RoomManager>().enemyDeath();
         Destroy(gameObject);
-        
     }
 
     public override void die() {
         currentState = EnemyStates.DYING;
         animator.SetTrigger("Dying");
         StartCoroutine(waitForRevival());
-        
-
     }
 }

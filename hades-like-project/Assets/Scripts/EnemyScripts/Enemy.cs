@@ -23,6 +23,7 @@ public class Enemy : MonoBehaviour {
     public EnemyStates currentState = EnemyStates.CHASING;
     protected float colorTime = 0.07f;
     protected float currentColorTime = 0.0f;
+    public float chaseRange = 0;
 
     // Start is called before the first frame update
     void Awake() {
@@ -39,6 +40,17 @@ public class Enemy : MonoBehaviour {
             return true;
         }
         return false;
+    }
+
+    public void setChaseRange(float range){
+        chaseRange = range;
+        currentState = EnemyStates.IDLE;
+    }
+
+    public void chaseRangeCheck(){
+        if((player.transform.position - transform.position).magnitude < chaseRange){
+            currentState = EnemyStates.CHASING;
+        }
     }
 
     // Get the player gameobject

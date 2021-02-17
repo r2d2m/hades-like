@@ -1,0 +1,119 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!74 &7400000
+AnimationClip:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Walk
+  serializedVersion: 6
+  m_Legacy: 0
+  m_Compressed: 0
+  m_UseHighQualityCurve: 1
+  m_RotationCurves: []
+  m_CompressedRotationCurves: []
+  m_EulerCurves: []
+  m_PositionCurves: []
+  m_ScaleCurves: []
+  m_FloatCurves: []
+  m_PPtrCurves:
+  - curve:
+    - time: 0
+      value: {fileID: 21300000, guid: accdecbabc6c4e8479826ab85310f99c, type: 3}
+    - time: 0.083333336
+      value: {fileID: 21300000, guid: 1e1973141adc19b44beb5ccaff812afe, type: 3}
+    - time: 0.16666667
+      value: {fileID: 21300000, guid: 7dcd4f52f8d32b440af97218b55b370c, type: 3}
+    - time: 0.25
+      value: {fileID: 21300000, guid: 3a40559b22fb89a469abc9a5919f96ff, type: 3}
+    - time: 0.33333334
+      value: {fileID: 21300000, guid: 233a7832e3e38914f926ca727dc33ee2, type: 3}
+    - time: 0.41666666
+      value: {fileID: 21300000, guid: 77cdd135b2cbeed499ffb8a37b5e1aba, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: 660e9835261b5684189e97beaaf4dcd7, type: 3}
+    - time: 0.5833333
+      value: {fileID: 21300000, guid: 2a5e5a118eebbfb4c860da53bd9aef6b, type: 3}
+    - time: 0.6666667
+      value: {fileID: 21300000, guid: d21490acb37b81c4f98ba63d6b256eb6, type: 3}
+    - time: 0.75
+      value: {fileID: 21300000, guid: 29f47686120448f41970847eb093de96, type: 3}
+    - time: 0.8333333
+      value: {fileID: 21300000, guid: 88a3642fb0098584893e5d286fdee815, type: 3}
+    - time: 0.9166667
+      value: {fileID: 21300000, guid: 83070f845d15a084595bd98652a8e17d, type: 3}
+    - time: 1
+      value: {fileID: 21300000, guid: 1c10e70d601c51b4aa9bc60486247185, type: 3}
+    - time: 1.0833334
+      value: {fileID: 21300000, guid: 2d3d053610fad3e488f9c73c1f4d90dd, type: 3}
+    - time: 1.1666666
+      value: {fileID: 21300000, guid: 345326fef86085446847aedfb95d9de4, type: 3}
+    - time: 1.25
+      value: {fileID: 21300000, guid: c264b61e123bd314587f7fb8f55ce86f, type: 3}
+    - time: 1.3333334
+      value: {fileID: 21300000, guid: 18742b01158deba4a9fd6b0749734327, type: 3}
+    - time: 1.4166666
+      value: {fileID: 21300000, guid: 1530b3d5c31a58148b50fc7e6f14c568, type: 3}
+    attribute: m_Sprite
+    path: 
+    classID: 212
+    script: {fileID: 0}
+  m_SampleRate: 12
+  m_WrapMode: 0
+  m_Bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_ClipBindingConstant:
+    genericBindings:
+    - serializedVersion: 2
+      path: 0
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+    pptrCurveMapping:
+    - {fileID: 21300000, guid: accdecbabc6c4e8479826ab85310f99c, type: 3}
+    - {fileID: 21300000, guid: 1e1973141adc19b44beb5ccaff812afe, type: 3}
+    - {fileID: 21300000, guid: 7dcd4f52f8d32b440af97218b55b370c, type: 3}
+    - {fileID: 21300000, guid: 3a40559b22fb89a469abc9a5919f96ff, type: 3}
+    - {fileID: 21300000, guid: 233a7832e3e38914f926ca727dc33ee2, type: 3}
+    - {fileID: 21300000, guid: 77cdd135b2cbeed499ffb8a37b5e1aba, type: 3}
+    - {fileID: 21300000, guid: 660e9835261b5684189e97beaaf4dcd7, type: 3}
+    - {fileID: 21300000, guid: 2a5e5a118eebbfb4c860da53bd9aef6b, type: 3}
+    - {fileID: 21300000, guid: d21490acb37b81c4f98ba63d6b256eb6, type: 3}
+    - {fileID: 21300000, guid: 29f47686120448f41970847eb093de96, type: 3}
+    - {fileID: 21300000, guid: 88a3642fb0098584893e5d286fdee815, type: 3}
+    - {fileID: 21300000, guid: 83070f845d15a084595bd98652a8e17d, type: 3}
+    - {fileID: 21300000, guid: 1c10e70d601c51b4aa9bc60486247185, type: 3}
+    - {fileID: 21300000, guid: 2d3d053610fad3e488f9c73c1f4d90dd, type: 3}
+    - {fileID: 21300000, guid: 345326fef86085446847aedfb95d9de4, type: 3}
+    - {fileID: 21300000, guid: c264b61e123bd314587f7fb8f55ce86f, type: 3}
+    - {fileID: 21300000, guid: 18742b01158deba4a9fd6b0749734327, type: 3}
+    - {fileID: 21300000, guid: 1530b3d5c31a58148b50fc7e6f14c568, type: 3}
+  m_AnimationClipSettings:
+    serializedVersion: 2
+    m_AdditiveReferencePoseClip: {fileID: 0}
+    m_AdditiveReferencePoseTime: 0
+    m_StartTime: 0
+    m_StopTime: 1.5
+    m_OrientationOffsetY: 0
+    m_Level: 0
+    m_CycleOffset: 0
+    m_HasAdditiveReferencePose: 0
+    m_LoopTime: 1
+    m_LoopBlend: 0
+    m_LoopBlendOrientation: 0
+    m_LoopBlendPositionY: 0
+    m_LoopBlendPositionXZ: 0
+    m_KeepOriginalOrientation: 0
+    m_KeepOriginalPositionY: 1
+    m_KeepOriginalPositionXZ: 0
+    m_HeightFromFeet: 0
+    m_Mirror: 0
+  m_EditorCurves: []
+  m_EulerEditorCurves: []
+  m_HasGenericRootTransform: 0
+  m_HasMotionFloatCurves: 0
+  m_Events: []
