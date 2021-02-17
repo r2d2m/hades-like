@@ -8,7 +8,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
     public GameObject corpsePrefab;
     public GameObject floor;
-
+    
     public float maxHP;
     public float currentHP;
     protected GameObject player;
@@ -19,8 +19,11 @@ public class Enemy : MonoBehaviour {
     protected Color originalColor;
     protected SpriteRenderer spriteRenderer;
 
+    public enum EnemyStates { IDLE, CHASING, DYING };
+    public EnemyStates currentState = EnemyStates.CHASING;
     protected float colorTime = 0.07f;
     protected float currentColorTime = 0.0f;
+    public float chaseRange = 0;
 
     public enum EnemyStates { IDLE, CHASING, DYING };
     public EnemyStates currentState = EnemyStates.CHASING;
