@@ -17,7 +17,6 @@ public class EnemySplitter : EnemyPathfinder {
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         followingPath = true;
         target = player.transform;
-        movementStr = 200;
         StartUpdatePath();
     }
 
@@ -34,7 +33,7 @@ public class EnemySplitter : EnemyPathfinder {
             movementVector = (player.transform.position - transform.position).normalized;
         }
 
-        rigidBody.AddForce(movementVector * movementStr);
+        rigidBody.AddForce(movementVector * walkSpeed);
     }
 
     public override void die() {
