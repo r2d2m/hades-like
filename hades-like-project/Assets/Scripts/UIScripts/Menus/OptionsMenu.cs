@@ -3,11 +3,29 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class OptionsMenu : MonoBehaviour
 {
 
     public AudioMixer audioMixer;
+    public Slider masterSlider;
+    public Slider musicSlider;
+    public Slider effectsSlider;
+
+    // Initialize sliders to current volumes.
+    void Awake() {
+        float volume;
+
+        audioMixer.GetFloat("masterVolume",out volume);
+        masterSlider.value = Math.Max(volume,-20f);
+
+        audioMixer.GetFloat("musicVolume",out volume);
+        musicSlider.value = Math.Max(volume,-20f);
+
+        audioMixer.GetFloat("effectsVolume",out volume);
+        effectsSlider.value = Math.Max(volume,-20f);
+    }
 
     public void SetMasterVolume(float volume) {
         
