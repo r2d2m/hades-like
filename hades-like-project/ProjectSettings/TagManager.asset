@@ -6,6 +6,21 @@ TagManager:
   tags:
   - Enemy
   - PlayerBullet
+  - Door
+  - Corpse
+  - RoomManager
+  - Reward
+  - Floor
+  - RoomEntrance
+  - EnemyBullet
+  - CameraBounds
+  - PlayerSpell
+  - RoomSelectionUI
+  - SoundManager
+  - ExitDoor
+  - MousePointer
+  - Destructible
+  - PlayerHazard
   layers:
   - Default
   - TransparentFX
@@ -15,15 +30,15 @@ TagManager:
   - UI
   - 
   - 
-  - PlayerBullets
+  - PlayerSpell
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Doors
+  - ScreenEffect
+  - Corpse
+  - Enemy
+  - Bullets
+  - CameraBounds
+  - Unwalkable
   - 
   - 
   - 
@@ -40,6 +55,36 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3985151091
+    locked: 0
+  - name: Doors
+    uniqueID: 3731215437
+    locked: 0
+  - name: Environment
+    uniqueID: 4038555619
+    locked: 0
+  - name: Corpses
+    uniqueID: 935885817
+    locked: 0
+  - name: Enemies
+    uniqueID: 90081535
+    locked: 0
+  - name: Projectiles
+    uniqueID: 1899475829
+    locked: 0
+  - name: Player
+    uniqueID: 2504261557
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Foreground
+    uniqueID: 218055567
+    locked: 0
+  - name: UI
+    uniqueID: 47204287
+    locked: 0
+  - name: ScreenEffects
+    uniqueID: 1419093983
     locked: 0
