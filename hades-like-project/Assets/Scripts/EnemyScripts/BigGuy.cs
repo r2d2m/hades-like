@@ -26,7 +26,7 @@ public class BigGuy : EnemyPathfinder {
     }
 
     private void FixedUpdate() {
-        print(currentState);
+//        print(currentState);
         if (currentState == EnemyStates.CHASING) {
             if (followingPath) {
                 movementVector = GetPathVector(transform.position);
