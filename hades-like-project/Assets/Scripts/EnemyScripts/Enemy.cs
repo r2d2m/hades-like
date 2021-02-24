@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    private void setToOriginalColor() {
+    protected void setToOriginalColor() {
         spriteRenderer.color = originalColor;
     }
 
