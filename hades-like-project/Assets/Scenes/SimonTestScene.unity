@@ -3152,7 +3152,7 @@ PrefabInstance:
         type: 3}
       propertyPath: debugRoom
       value: 
-      objectReference: {fileID: 4013360600201230991, guid: 6f0419dc5de8527438e31226072db414,
+      objectReference: {fileID: 4013360600201230991, guid: 97767dc40de4c494a9d5789d82b0b00d,
         type: 3}
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
@@ -3163,7 +3163,7 @@ PrefabInstance:
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
       propertyPath: DEBUG_startInDebugRoom
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
