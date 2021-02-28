@@ -8,7 +8,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
     public GameObject corpsePrefab;
     public GameObject floor;
-    
+
     public float maxHP;
     public float currentHP;
     protected GameObject player;
@@ -42,13 +42,13 @@ public class Enemy : MonoBehaviour {
         return false;
     }
 
-    public void setChaseRange(float range){
+    public void setChaseRange(float range) {
         chaseRange = range;
         currentState = EnemyStates.IDLE;
     }
 
-    public void chaseRangeCheck(){
-        if((player.transform.position - transform.position).magnitude < chaseRange){
+    public void chaseRangeCheck() {
+        if ((player.transform.position - transform.position).magnitude < chaseRange) {
             currentState = EnemyStates.CHASING;
         }
     }
@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour {
         }
     }
 
-    private void setToOriginalColor() {
+    protected void setToOriginalColor() {
         spriteRenderer.color = originalColor;
     }
 
@@ -89,18 +89,18 @@ public class Enemy : MonoBehaviour {
         return collisionDamage;
     }
 
-/*
-    private void OnCollisionEnter2D(Collision2D other) {
-        float damageTaken;
-        switch (other.transform.tag) {
-            case "PlayerSpell":
-                damageTaken = other.gameObject.GetComponent<Spell>().getDamage();
-                takeDamage(damageTaken);
-                break;
-        }
+    /*
+        private void OnCollisionEnter2D(Collision2D other) {
+            float damageTaken;
+            switch (other.transform.tag) {
+                case "PlayerSpell":
+                    damageTaken = other.gameObject.GetComponent<Spell>().getDamage();
+                    takeDamage(damageTaken);
+                    break;
+            }
 
-    }
-*/
+        }
+    */
 
     // Things to do and set during deah
     public virtual void die() {
@@ -113,6 +113,16 @@ public class Enemy : MonoBehaviour {
         }
 
         floor.GetComponent<RoomManager>().enemyDeath();
-        Destroy(gameObject);
+
+        // TODO: Debug, every enemy WILL have an animator
+        if (GetComponentInChildren<Animator>() != null) {
+            GetComponentInChildren<Animator>().SetTrigger("Die");
+        }else{
+            Destroy(gameObject);
+        }
+        GetComponent<Collider2D>().enabled = false;
+        GetComponentInChildren<SpriteRenderer>().sortingLayerName = "Corpses";
+        setToOriginalColor();
+        enabled = false;
     }
 }

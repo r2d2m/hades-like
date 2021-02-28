@@ -14,10 +14,9 @@ public class BubbleSpraySub : Spell {
 
     void Update() {
         if (transform.localScale.x < maxScale) {
-            transform.localScale = transform.localScale + Vector3.one * 0.025f;
+            transform.localScale = transform.localScale + Vector3.one * 2.5f * Time.deltaTime;
         }
     }
-
 
     private void OnCollisionEnter2D(Collision2D other) {
         switch (other.transform.tag) {
