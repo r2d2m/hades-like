@@ -1817,7 +1817,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &442716483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3234,7 +3234,7 @@ GameObject:
   - component: {fileID: 990518928}
   m_Layer: 5
   m_Name: Panel
-  m_TagString: Untagged
+  m_TagString: DialoguePanel
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3255,8 +3255,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -343.2}
-  m_SizeDelta: {x: 0, y: -686.4385}
+  m_AnchoredPosition: {x: 0, y: -343.20963}
+  m_SizeDelta: {x: 0, y: -686.41925}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &990518928
 MonoBehaviour:
@@ -5245,7 +5245,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!82 &1767712074
 AudioSource:
   m_ObjectHideFlags: 0
@@ -6243,7 +6243,7 @@ GameObject:
   - component: {fileID: 2042132899}
   m_Layer: 5
   m_Name: Dialogue
-  m_TagString: Untagged
+  m_TagString: DialogueDisplay
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6255,7 +6255,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042132897}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -6264,7 +6264,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 26, y: -340.2}
+  m_AnchoredPosition: {x: 38, y: -330.2}
   m_SizeDelta: {x: 1533.1656, y: 146.44177}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &2042132899

@@ -15,6 +15,10 @@ public class Dialogue : MonoBehaviour
     private int letterIndex;
     private bool typing;
 
+    void Awake() {
+        textDisplay = GameObject.FindGameObjectWithTag("DialogueDisplay").GetComponent<TextMeshProUGUI>();
+    }
+
     void OnEnable() {
         currentSpeed = typingSpeed;
         StartCoroutine(Type(sentences[index].ToCharArray()));
