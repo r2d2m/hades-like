@@ -7,6 +7,7 @@ public class FlowerPetalManager : MonoBehaviour {
     public List<GameObject> flowerPetals;
     int currentHP = 0;
     int maxHP = 0;
+    Color damagedColor = new Color(0.2f, 0, 0);
 
     // Start is called before the first frame update
     void Awake() {
@@ -18,7 +19,7 @@ public class FlowerPetalManager : MonoBehaviour {
             if (i < newCurrentHP) {
                 flowerPetals[i].GetComponent<SpriteRenderer>().color = Color.white;
             } else {
-                flowerPetals[i].GetComponent<SpriteRenderer>().color = Color.red;
+                flowerPetals[i].GetComponent<SpriteRenderer>().color = damagedColor;
             }
         }
         currentHP = newCurrentHP;
