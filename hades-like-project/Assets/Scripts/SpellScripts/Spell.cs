@@ -31,14 +31,14 @@ public class Spell : MonoBehaviour {
         this.playerPos = playerPos;
     }
 
-    public void setSpellIcon(Sprite spellIcon){
+    public void setSpellIcon(Sprite spellIcon) {
         this.spellIcon = spellIcon;
     }
 
-    public Sprite getSpellIcon(){
-        if(spellIcon != null){
+    public Sprite getSpellIcon() {
+        if (spellIcon != null) {
             return spellIcon;
-        }else{
+        } else {
             print("SpellIcon is missing!!!");
             return null;
         }
@@ -48,7 +48,7 @@ public class Spell : MonoBehaviour {
         this.mousePos = new Vector3(mousePos.x, mousePos.y, 0);
     }
 
-    public bool getIsBasicAttack(){
+    public bool getIsBasicAttack() {
         return isBasicAttack;
     }
 
@@ -96,5 +96,31 @@ public class Spell : MonoBehaviour {
     protected void setRotationTowardsVector(Vector3 deltaVector) {
         float rotationAngle = Mathf.Atan2(deltaVector.y, deltaVector.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.AngleAxis(rotationAngle, Vector3.forward);
+    }
+
+    protected void destroySelfWithDelay(float delay) {
+        if (GetComponentInChildren<Animator>() != null) {
+            IEnumerator destroyRutine = waitAndDestroy(delay);
+            StartCoroutine(destroyRutine);
+        } else {
+            Destroy(gameObject, delay);
+        }
+    }
+
+    protected IEnumerator waitAndDestroy(float delay) {
+        yield return new WaitForSeconds(delay);
+        destroySelfAndTriggerAnim();
+    }
+
+    protected void destroySelfAndTriggerAnim() {
+        Animator anim = GetComponentInChildren<Animator>();
+        anim.SetTrigger("Destroy");
+        if (anim != null) {
+            anim.SetTrigger("Destroy");
+            Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
+        }
+        GetComponent<Rigidbody2D>().velocity = Vector3.zero;
+        GetComponent<Collider2D>().enabled = false;
+        enabled = false;
     }
 }
