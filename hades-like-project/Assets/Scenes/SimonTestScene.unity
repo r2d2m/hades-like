@@ -2063,6 +2063,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   flowerPetalContainer: {fileID: 1965414507}
   healthFace: {fileID: 1398741047}
+  flowerFaces:
+  - {fileID: 21300000, guid: 53a47d2928bf3e84e9b511e74c633a00, type: 3}
+  - {fileID: 21300000, guid: fe44292f76653284ba3ab34a31b36ada, type: 3}
+  - {fileID: 21300000, guid: 6f034ce1444225840940185086be26dd, type: 3}
+  - {fileID: 21300000, guid: 52070da8a6d8b2c4586f52df327f0a47, type: 3}
+  - {fileID: 21300000, guid: 3a55e2e8c2db4dd46a246615f518de9c, type: 3}
+  - {fileID: 21300000, guid: 7e9359e51fb04884c8df53bd05dd49be, type: 3}
+  - {fileID: 21300000, guid: e498278d657d0c54a8f86b83f14c11e3, type: 3}
+  - {fileID: 21300000, guid: 7b2c8db599804ae4791cc611ada356b9, type: 3}
+  - {fileID: 21300000, guid: 50481fd43d3d345409e57670b2343865, type: 3}
+  maxHP: 0
+  currentHP: 0
 --- !u!1 &1880583477
 GameObject:
   m_ObjectHideFlags: 0
