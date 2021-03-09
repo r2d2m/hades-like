@@ -1,0 +1,34 @@
+
+{   
+    
+    "conversation":
+    [
+        {
+        "id": 0,
+        "sentences": ["Mr Flower: Hello, how are you?", 
+                    "Merchant: I am fine, thank you.", 
+                    "Mr Flower: Ok neat."],
+        "answers" : [ {
+                "pointer" : 1,
+                "text" : "Tell me about the mouist"
+                    } ]
+        
+        },
+
+        {
+        "id": 1,
+        "sentences": ["Merchant: I am the mouist.",  
+                    "Mr Flower: Ok good bye."],
+        "answers" : [ {
+                "pointer" : 0,
+                "text" : "Wow this is a button"
+                    } ]
+        
+        }
+    ]
+      
+    
+}
+
+
+

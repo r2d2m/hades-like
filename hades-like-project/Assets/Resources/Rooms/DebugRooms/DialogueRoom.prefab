@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 3993763941114340863}
   - component: {fileID: 5837135785241716211}
   - component: {fileID: 2833548961779092847}
-  - component: {fileID: 921682124452834344}
+  - component: {fileID: 8472253930199429877}
   m_Layer: 0
   m_Name: TestNPC
   m_TagString: Untagged
@@ -203,7 +203,7 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.5
---- !u!114 &921682124452834344
+--- !u!114 &8472253930199429877
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,8 +216,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogueManager: {fileID: 6622500675410727073}
-  dialoguePanel: {fileID: 0}
   dialogueDistance: 2
+  answerButtons: []
+  mouseScript: {fileID: 0}
+  inTop: -700
+  outTop: -900
+  panelFadeTime: 0.5
+  textFadeTime: 0.2
 --- !u!1 &4180979934438861373
 GameObject:
   m_ObjectHideFlags: 0
@@ -484,11 +489,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textDisplay: {fileID: 0}
-  sentences:
-  - 'Merchant: Yoo, har du lite seeds eller?'
-  - "Mr. Flower: Yee, l\xE4r plantera dem i ditt ass"
-  - 'Merchant: SLuuurrPP'
-  - "\xC4ter ass...."
+  dialogueFile: {fileID: 4900000, guid: a6f2680b780acfc4083af0f92059f3e7, type: 3}
+  answerButtons: []
+  answers: []
   typingSpeed: 0.05
   skipSpeed: 0.01
 --- !u!1 &8117022404249493776
