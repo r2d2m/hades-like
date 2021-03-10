@@ -43,6 +43,7 @@ public class PlayerMain : MonoBehaviour {
     float minMoveSpeed = 0.1f;
     float minSpellSpeed = 0.1f;
 
+    public bool inDialogue = false;
     bool flipAnimatorX = false;
 
     SpriteRenderer playerSpriteRenderer;
@@ -99,8 +100,10 @@ public class PlayerMain : MonoBehaviour {
         if (!inventoryIsOpen) {
             playerMovement();
             playerAim();
-            spellInputHandler();
+            if (!inDialogue) {spellInputHandler();}
         }
+
+        
         invulFlicker();
 
         // TODO: delete this later!
