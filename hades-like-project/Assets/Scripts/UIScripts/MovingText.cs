@@ -21,6 +21,11 @@ public class MovingText : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     void Awake() {
         textDisplay = this.GetComponentInChildren<TextMeshProUGUI>();
     }
+
+    void OnDisable() {
+        mouse_over = false;
+        textDisplay.fontMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, standardDilate);
+    }
     
     void Update() {
         if (mouse_over) {
