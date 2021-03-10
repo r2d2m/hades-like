@@ -21,6 +21,8 @@ TagManager:
   - MousePointer
   - Destructible
   - PlayerHazard
+  - DialoguePanel
+  - DialogueDisplay
   layers:
   - Default
   - TransparentFX

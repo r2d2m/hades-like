@@ -1,0 +1,110 @@
+
+{   
+    
+    "conversation":
+    [
+        {
+        "id": 0,
+        "sentences": ["Mr Flower: Hello, how are you?", 
+                      "Merchant: I am fine, thank you.", 
+                      "Mr Flower: Ok neat."],
+        "answers" : [ {
+                "pointer" : 1,
+                "text" : "Tell me about the bois"
+                    },
+
+                {
+                "pointer" : 2,
+                "text" : "Let me see your seeds"
+                    },
+
+                {
+                "pointer" : 3,
+                "text" : "Have you heard of the high elves?"
+                    }
+
+                ]
+        
+        },
+
+        {
+        "id": 1,
+        "sentences": ["Merchant: The bois are moist.",  
+                      "Mr Flower: Wow, that is nice."],
+        "answers" : [ {
+                "pointer" : 1,
+                "text" : "Tell me about the bois"
+                    },
+
+                {
+                "pointer" : 2,
+                "text" : "Let me see your seeds"
+                    },
+
+                {
+                "pointer" : 3,
+                "text" : "Have you heard of the high elves?"
+                    }
+                ]
+        
+        },
+
+        {
+        "id": 2,
+        "sentences": ["Merchant: No, go away."],
+        "answers" : [ {
+                "pointer" : 4,
+                "text" : "Rude!"
+                    } ]
+        
+        },
+
+        {
+        "id": 3,
+        "sentences": ["Merchant: Nasty creatures!"],
+        "answers" : [ {
+            "pointer" : 1,
+            "text" : "Tell me about the bois"
+                },
+
+            {
+            "pointer" : 2,
+            "text" : "Let me see your seeds"
+                },
+
+            {
+            "pointer" : 3,
+            "text" : "Have you heard of the high elves?"
+                }
+            ]
+    
+        
+        },
+
+        {
+            "id": 4,
+            "sentences": ["Merchant: Ok sorry."],
+            "answers" : [ {
+                "pointer" : 1,
+                "text" : "Tell me about the bois"
+                    },
+    
+                {
+                "pointer" : 2,
+                "text" : "Let me see your seeds"
+                    },
+    
+                {
+                "pointer" : 3,
+                "text" : "Have you heard of the high elves?"
+                    }
+                ]
+            
+            }
+    ]
+      
+    
+}
+
+
+

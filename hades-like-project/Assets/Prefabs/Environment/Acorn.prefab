@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 632764665121584957}
   - component: {fileID: 8062593469938183136}
-  - component: {fileID: 4373323504257356836}
+  - component: {fileID: 2330905191324368288}
   m_Layer: 16
   m_Name: Acorn
   m_TagString: Destructible
@@ -83,7 +83,7 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &4373323504257356836
+--- !u!114 &2330905191324368288
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -92,21 +92,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 632764665121584956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78c829d12eacabd409f174f8dbc8ab73, type: 3}
+  m_Script: {fileID: 11500000, guid: 13eb5b788655fbc459baf6a6917fc0fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 0
+  maxHP: 50
   currentHP: 0
   collisionDamage: 0
   floor: {fileID: 0}
   fracturedObject: {fileID: 4427314524548969985, guid: 00044deb8c8a37542a4a727ad71ac884,
     type: 3}
-  reward: {fileID: 0}
+  loot: {fileID: 4311801343773433974, guid: 6f6cb9c9236304046bc90d53ed7d7f5e, type: 3}
   crackedSprites:
-  - {fileID: 21300000, guid: a6b24fce3726e0c44ba1c2c8858a1c27, type: 3}
-  - {fileID: 21300000, guid: e13f70563cc21d744a9714eb809d2a9c, type: 3}
-  - {fileID: 21300000, guid: c84de2be04c09a74fa5baad6ff7cd010, type: 3}
-  - {fileID: 21300000, guid: a32cfe80b376c28479b1d94e579b4dab, type: 3}
+  - {fileID: 21300000, guid: fc751c13275a7034995965257b277324, type: 3}
+  - {fileID: 21300000, guid: 3488b60bb30b22642ad5d7ca556ab8c9, type: 3}
+  - {fileID: 21300000, guid: 79aa6031b0bc6b642bcfea6ea285306e, type: 3}
+  - {fileID: 21300000, guid: ce6a991d9162f704eb4aa5d6d244115b, type: 3}
 --- !u!1 &5044133462120288301
 GameObject:
   m_ObjectHideFlags: 0
