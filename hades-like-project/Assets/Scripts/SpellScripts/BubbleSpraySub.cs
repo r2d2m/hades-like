@@ -5,9 +5,11 @@ using UnityEngine;
 public class BubbleSpraySub : Spell {
     // Start is called before the first frame update
     float maxScale;
+    public GameObject bubblePop;
 
     void Start() {
-        Destroy(gameObject, Random.Range(0.7f, 2f) * rangeMultiplier);
+          destroySelfWithDelay(Random.Range(0.7f, 2f) * rangeMultiplier);
+    
         transform.localScale = Vector3.one * 0.2f;
         maxScale = Random.Range(0.8f, 1.2f);
     }
@@ -22,11 +24,11 @@ public class BubbleSpraySub : Spell {
         switch (other.transform.tag) {
             case "Enemy":
                 other.gameObject.GetComponent<Enemy>().takeDamage(damage);
-                Destroy(gameObject);
+                destroySelfAndTriggerAnim();
                 break;
             case "Destructible":
                 other.gameObject.GetComponent<Destructible>().TakeDamage(damage);
-                Destroy(gameObject);
+                destroySelfAndTriggerAnim();
                 break;
         }
     }

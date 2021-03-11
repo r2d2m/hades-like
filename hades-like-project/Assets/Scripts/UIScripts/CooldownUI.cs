@@ -9,7 +9,11 @@ public class CooldownUI : MonoBehaviour {
     List<float> cooldownDurations;
     float spacing = 80f;
     public int currentSpellCount = 0;
+    public Sprite[] branchSprites;
+    public GameObject branchGameObject;
 
+
+    List<Transform> spellSlots;
     List<GameObject> cooldownIcons;
     // Start is called before the first frame update
 
@@ -21,10 +25,16 @@ public class CooldownUI : MonoBehaviour {
         }
         cooldownIcons = new List<GameObject>();
         cooldownDurations = new List<float>();
+        spellSlots = new List<Transform>();
+        foreach (Transform spellSlot in cooldownContainer.transform) {
+            print(spellSlot);
+            spellSlots.Add(spellSlot);
+        }
+
         currentSpellCount = count;
 
         for (int i = 0; i < currentSpellCount; i++) {
-            GameObject cooldownIcon = Instantiate(cooldownIconPrefab, new Vector3(spacing * i + spacing / 2, 0, 0), cooldownContainer.transform.rotation);
+            GameObject cooldownIcon = Instantiate(cooldownIconPrefab, spellSlots[i].localPosition + new Vector3(50, 0, 0), cooldownContainer.transform.rotation);
             //cooldownIcon.GetComponent<RectTransform>().localScale = new Vector3(30, 30, 1);
             cooldownIcon.transform.SetParent(cooldownContainer.transform, false);
             cooldownIcons.Add(cooldownIcon);
@@ -33,12 +43,26 @@ public class CooldownUI : MonoBehaviour {
     }
 
     public void addSpell() {
-        GameObject cooldownIcon = Instantiate(cooldownIconPrefab, new Vector3(spacing * currentSpellCount + spacing / 2, 0, 0), cooldownContainer.transform.rotation);
+        GameObject cooldownIcon = Instantiate(cooldownIconPrefab, spellSlots[currentSpellCount].localPosition + new Vector3(50, 0, 0), cooldownContainer.transform.rotation);
         //cooldownIcon.GetComponent<RectTransform>().localScale = new Vector3(30, 30, 1);
         cooldownIcon.transform.SetParent(cooldownContainer.transform, false);
         cooldownIcons.Add(cooldownIcon);
         cooldownDurations.Add(1);
         currentSpellCount++;
+        
+        updateBranchSprite();
+    }
+
+    public void updateBranchSprite() {
+        int branchSpriteIndex = 0;
+        if (currentSpellCount > 5) {
+            branchSpriteIndex = 2;
+        } else if (currentSpellCount > 3) {
+            branchSpriteIndex = 1;
+        } else {
+            branchSpriteIndex = 0;
+        }
+        branchGameObject.GetComponent<SpriteRenderer>().sprite = branchSprites[branchSpriteIndex];
     }
 
     public void setCooldownDuration(int spellIndex, float cooldownDuration) {

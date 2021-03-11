@@ -23,6 +23,7 @@ TagManager:
   - PlayerHazard
   - DialoguePanel
   - DialogueDisplay
+  - Loot
   layers:
   - Default
   - TransparentFX

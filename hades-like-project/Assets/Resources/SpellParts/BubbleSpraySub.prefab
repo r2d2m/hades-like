@@ -93,6 +93,7 @@ MonoBehaviour:
   damage: 0
   isBasicAttack: 0
   spellIcon: {fileID: 0}
+  bubblePop: {fileID: 0}
 --- !u!1 &8912648530715280313
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,6 +104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8592274771317857467}
   - component: {fileID: 1120393954563036894}
+  - component: {fileID: 4414930867663954668}
   m_Layer: 0
   m_Name: ProjectileBubble
   m_TagString: Untagged
@@ -119,7 +121,7 @@ Transform:
   m_GameObject: {fileID: 8912648530715280313}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.09, y: 0.09, z: 1}
+  m_LocalScale: {x: 0.08, y: 0.08, z: 1}
   m_Children: []
   m_Father: {fileID: 8853799596945735057}
   m_RootOrder: 0
@@ -164,7 +166,7 @@ SpriteRenderer:
   m_SortingLayerID: 1899475829
   m_SortingLayer: -2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: f55ecab5d6652f84597500e5b63b64e5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d6a6d7cb107535d4899dc267fb9ed89b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -175,3 +177,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &4414930867663954668
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8912648530715280313}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f1af1d861cb1f9a458aacf8f7a9e365b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
