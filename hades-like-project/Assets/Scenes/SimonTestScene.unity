@@ -1611,7 +1611,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startRoom
       value: 
-      objectReference: {fileID: 5201213759069045624, guid: d6459591f101ed94aad412f574118df3,
+      objectReference: {fileID: 5201213759069045624, guid: 38ba7e5f2fce59242bf858eb0cdf84dd,
         type: 3}
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
