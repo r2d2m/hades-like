@@ -65,6 +65,8 @@ public class PlayerMain : MonoBehaviour {
     bool usingBasicAttack;
     int currentHoldSpellID = -1;
 
+    private Dictionary<KeyCode,int> inputs;
+
     // Start is called before the first frame update
     void Start() {
         maxHP = 5;
@@ -90,6 +92,8 @@ public class PlayerMain : MonoBehaviour {
         gunSpriteRenderer = playerGun.GetComponentInChildren<SpriteRenderer>();
         mousePointer.GetComponent<MousePointerScript>().setMouseAim();
 
+        MakeInputDictionary();
+
     }
 
     // Update is called once per frame
@@ -109,6 +113,18 @@ public class PlayerMain : MonoBehaviour {
         // TODO: delete this later!
         debugPlayer();
         animator.SetFloat("MovementSpeed", movementVector.magnitude);
+    }
+
+    void MakeInputDictionary() {
+        inputs = new Dictionary<KeyCode,int>() {
+            {KeyCode.Mouse0,0},
+            {KeyCode.Mouse1,1},
+            {KeyCode.Space,2},
+            {KeyCode.Q,3},
+            {KeyCode.E,4},
+            {KeyCode.R,5},
+            {KeyCode.F,6}
+        };
     }
 
     public List<GameObject> getEquippedSpells() {
@@ -173,6 +189,19 @@ public class PlayerMain : MonoBehaviour {
 
     //Todo FIX THIS MESS
     void spellInputHandler() {
+
+        foreach (KeyValuePair<KeyCode,int> entry in inputs) {
+            if (Input.GetKey(entry.Key) && equippedSpells.Count > entry.Value) {
+                spellCooldownCheckAndCast(entry.Value);
+                usingBasicAttack = true;
+                break;
+            }
+        }
+
+        usingBasicAttack = false;
+        /*      
+
+        
         if (Input.GetMouseButton(0) && equippedSpells.Count > 0) {
             spellCooldownCheckAndCast(0);
             usingBasicAttack = true;
@@ -201,7 +230,7 @@ public class PlayerMain : MonoBehaviour {
             spellCooldownCheckAndCast(6);
             usingBasicAttack = true;
         }
-        usingBasicAttack = false;
+        usingBasicAttack = false;*/
     }
 
 
