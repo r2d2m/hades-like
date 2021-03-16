@@ -18,11 +18,15 @@ public class HealthFlowerManger : MonoBehaviour {
     public void setCurrentHP(int HP) {
         petalManager.setCurrentHP(HP);
         currentHP = HP;
-        float percentHP = (float) currentHP / maxHP;
-        int newFaceIndex = (int) ((flowerFaces.Length - 1) * percentHP);
+        float percentHP = (float)currentHP / maxHP;
+        int newFaceIndex = (int)((flowerFaces.Length - 1) * percentHP);
         print(((flowerFaces.Length - 1) * (currentHP / maxHP)));
         print(newFaceIndex);
-        healthFace.GetComponent<SpriteRenderer>().sprite = flowerFaces[newFaceIndex];
+        if (currentHP > 0) {
+            healthFace.GetComponent<SpriteRenderer>().sprite = flowerFaces[newFaceIndex];
+        } else {
+            healthFace.GetComponent<SpriteRenderer>().sprite = flowerFaces[0];
+        }
     }
 
     public void setMaxHP(int HP) {

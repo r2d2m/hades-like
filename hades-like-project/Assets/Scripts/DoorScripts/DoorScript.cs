@@ -12,6 +12,7 @@ public class DoorScript : MonoBehaviour {
     Animator animator;
     Collider2D[] colliders;
     public AudioClip spawnSound;
+    public bool enableSpriteRendererOnStart = false;
 
     public GameObject exit;
 
@@ -38,7 +39,9 @@ public class DoorScript : MonoBehaviour {
     }
 
     public void closeDoor() {
-        GetComponentInChildren<SpriteRenderer>().enabled = false;
+        if (!enableSpriteRendererOnStart) {
+            GetComponentInChildren<SpriteRenderer>().enabled = false;
+        }
         setColliders(false);
         isOpen = false;
     }

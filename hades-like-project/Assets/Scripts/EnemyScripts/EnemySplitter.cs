@@ -8,6 +8,7 @@ public class EnemySplitter : EnemyPathfinder {
     public GameObject smallSplitter;
     public int numberOfSplits = 2;
 
+    public GameObject testLoot;
     public float splitForce;
 
     // Start is called before the first frame update
@@ -56,6 +57,10 @@ public class EnemySplitter : EnemyPathfinder {
         IEnumerator spawnChildrenFunc = SpawnChildren();
         StartCoroutine(spawnChildrenFunc);
         GetComponentInChildren<SpriteRenderer>().sortingLayerName = "Corpses";
+
+        if (testLoot) {
+            Instantiate(testLoot, transform.position, transform.rotation, transform.parent);
+        }
 
         // Add one more enemy to room
         enabled = false;

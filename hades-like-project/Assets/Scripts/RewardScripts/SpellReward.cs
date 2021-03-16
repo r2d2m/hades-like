@@ -8,7 +8,7 @@ public class SpellReward : Reward {
     void Start() {
         spell = loadRandomSpell(1);
         GetComponentInChildren<SpriteRenderer>().sprite = spell.GetComponent<Spell>().getSpellIcon();
-        GetComponentInChildren<Transform>().localScale = new Vector3(0.7f, 0.7f, 1);
+        GetComponentInChildren<Transform>().localScale = new Vector3(1f, 1f, 1);
     }
 
     public GameObject loadRandomSpell(int tier) {

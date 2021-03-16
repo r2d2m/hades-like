@@ -181,6 +181,8 @@ MonoBehaviour:
   smallSplitter: {fileID: 4512697855044761324, guid: f9b9f4941a45db3489e888118bd7007f,
     type: 3}
   numberOfSplits: 3
+  testLoot: {fileID: 4019686157144874702, guid: d3d5b0180ac71d2429e2e139425dc841,
+    type: 3}
   splitForce: 3000
 --- !u!1 &6522194096032420569
 GameObject:
