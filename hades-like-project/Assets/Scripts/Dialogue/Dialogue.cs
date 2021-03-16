@@ -32,6 +32,7 @@ public class Dialogue : MonoBehaviour {
     private int index;
     private int letterIndex;
     private bool typing;
+    private bool clickCooldown = false;
     
 
     void Awake() {
@@ -50,20 +51,29 @@ public class Dialogue : MonoBehaviour {
 
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Mouse0) || Input.GetKeyDown(KeyCode.Space)) {
-            if (typing) {
-                Skip();
-            } else {
-                currentSpeed = typingSpeed;
-                NextSentence();
-            }
+        
+        if (!ValidInput()) {
+            return;
+        } 
+            
+        if (typing) {
+            Skip();
+        } else {
+            currentSpeed = typingSpeed;
+            NextSentence();
         }
+        
+    }
+
+    bool ValidInput() {
+        bool mouseInput = Input.GetKeyUp(KeyCode.Mouse0);
+        bool spaceInput = Input.GetKeyDown(KeyCode.Space);
+        return ((mouseInput || spaceInput) && !clickCooldown);
     }
 
     // Load topics from .json-file and put into a dictionary.
 
     void LoadTopics() {
-        
         
         Conversation conversationFromFile = JsonUtility.FromJson<Conversation>(dialogueFile.text);
 
@@ -85,8 +95,6 @@ public class Dialogue : MonoBehaviour {
             answerButtons[i] = GameObject.FindGameObjectWithTag("DialogueDisplay").gameObject.transform.GetChild(i).gameObject;
         }
     }
-
-
 
 
     IEnumerator Type(char[] sentence) {
@@ -118,23 +126,32 @@ public class Dialogue : MonoBehaviour {
 
             answering = true;
             textDisplay.text = "";
-            
-            for (int i = 0; i < answers.Length; i++) {
-                GameObject btn = answerButtons[i];
-                Answer ans = answers[i];
 
-                MakeButton(btn,ans);
-                currentSpeed = typingSpeed;
-                typing = false;
+            MakeButtons();
 
-            } 
+            currentSpeed = typingSpeed;
+            typing = false;
+
         }
     }
 
 
-    void MakeButton(GameObject btn, Answer ans) {
-                
-        if (ans.text != "") {
+    IEnumerator StartClickCooldown(float time) {
+        clickCooldown = true;
+        yield return new WaitForSeconds(time);
+        clickCooldown = false;
+    }
+
+    void MakeButtons() {
+
+        for (int i = 0; i < answers.Length; i++) {
+            GameObject btn = answerButtons[i];
+            Answer ans = answers[i];
+
+            if (ans.text == "") {
+                continue; 
+            }
+
             int ptr = ans.pointer;
             
             btn.GetComponent<Button>().interactable = true;
@@ -144,15 +161,15 @@ public class Dialogue : MonoBehaviour {
             btn.GetComponentsInChildren<TextMeshProUGUI>()[0].text = ans.text;
 
             Color textColor;
-
             textColor = (playedBefore.Contains(ptr) ? new Color(0.5f,0.5f,0.5f,1f) : new Color(1f,1f,1f,1f));
-
             btn.GetComponentsInChildren<TextMeshProUGUI>()[0].color = textColor;
-        }
+        }         
+        
         
     }
 
     public void NewTopic(int id) {
+
 
         foreach (GameObject btn in answerButtons) {
             btn.GetComponentsInChildren<TextMeshProUGUI>()[0].color = new Color(1f,1f,1f,0f);
@@ -168,7 +185,7 @@ public class Dialogue : MonoBehaviour {
         letterIndex = 0;
         playedBefore.Add(id);
 
-
+        StartCoroutine(StartClickCooldown(0.2f));
         StartCoroutine(Type(sentences[index].ToCharArray()));
 
     }
