@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LootScript : MonoBehaviour {
+public class SoulScript : MonoBehaviour {
     GameObject player;
-    float speed = 0.09f;
-    float range = 4;
+    float speed = 0.6f;
+    float range = 100000;
     // Start is called before the first frame update
     void Start() {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -15,13 +15,15 @@ public class LootScript : MonoBehaviour {
     void Update() {
         if ((player.transform.position - transform.position).magnitude < range) {
             Vector2 deltaVec = (player.transform.position - transform.position);
-            GetComponent<Rigidbody2D>().AddForce(deltaVec.normalized * speed * (range / deltaVec.magnitude) * Time.deltaTime);
+            GetComponent<Rigidbody2D>().AddForce(deltaVec.normalized * speed * Time.deltaTime);
             //GetComponent<Rigidbody2D>().velocity = deltaVec * speed;
             //speed += 0.05f;
         }
     }
 
     public void DestroyMe() {
-        Destroy(gameObject);
+        GetComponentInChildren<ParticleSystem>().Stop();
+        GetComponent<Collider2D>().enabled = false;
+        Destroy(gameObject, 2);
     }
 }

@@ -13,8 +13,9 @@ public class TestSpell3 : Spell {
     void Start() {
         damage = 1 * damageMultiplier;
         transform.position = playerPos;
+        transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
+        GetComponent<Rigidbody2D>().AddTorque(20);
         GetComponent<Rigidbody2D>().AddForce(getMouseVector() * 1000 * speedMultiplier);
-        //setRotationTowardsVector(getMouseDeltaVector());
         Destroy(gameObject, 0.7f * lifeTimeMultiplier);
     }
 

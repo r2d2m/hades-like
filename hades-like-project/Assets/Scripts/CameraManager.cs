@@ -27,7 +27,7 @@ public class CameraManager : MonoBehaviour {
         followingPlayer = true;
         cameraDestination = transform.position;
         cameraPos = transform.position;
-        cameraSens = 6.0f; // Higher = less impact from mousePos
+        cameraSens = 15.0f; // Higher = less impact from mousePos
 
         GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
         GraphicsSettings.transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
@@ -45,7 +45,7 @@ public class CameraManager : MonoBehaviour {
         if (followingPlayer == true) {
             cameraDestination = new Vector3(playerPos.x + (mousePos.x - playerPos.x) / cameraSens, playerPos.y + (mousePos.y - playerPos.y) / cameraSens, -10);
             // x camera center offset ~= 9, y camera center offset ~= 5
-            cameraDestination = new Vector3(Mathf.Clamp(cameraDestination.x, -maxXPositions / 2 + 9, maxXPositions / 2 - 9), Mathf.Clamp(cameraDestination.y, -maxYPositions / 2 + 5, maxYPositions / 2 - 5), -10);
+            cameraDestination = new Vector3(Mathf.Clamp(cameraDestination.x, -maxXPositions / 2 + GetComponent<Camera>().orthographicSize * 1.78f, maxXPositions / 2 - GetComponent<Camera>().orthographicSize * 1.78f), Mathf.Clamp(cameraDestination.y, -maxYPositions / 2 + GetComponent<Camera>().orthographicSize, maxYPositions / 2 - GetComponent<Camera>().orthographicSize), -10);
         } else {
             cameraDestination = new Vector3(0, 0, -1);
         }

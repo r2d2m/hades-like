@@ -387,7 +387,7 @@ public class PlayerMain : MonoBehaviour {
                 takeDamage(other.gameObject.GetComponent<PlayerHazard>().getDamage());
                 break;
             case "Loot":
-                other.gameObject.GetComponent<LootScript>().DestroyMe();
+                other.gameObject.GetComponent<SoulScript>().DestroyMe();
                 print("Looted");
                 break;
         }
