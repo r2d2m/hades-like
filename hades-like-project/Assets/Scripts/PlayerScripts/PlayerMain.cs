@@ -27,6 +27,7 @@ public class PlayerMain : MonoBehaviour {
 
     int maxHP;
     int currentHP;
+    int currentSouls = 0;
 
     public float damageMultiplier = 1.0f;
     public float cooldownMultiplier = 1.0f;
@@ -59,6 +60,7 @@ public class PlayerMain : MonoBehaviour {
 
     CooldownUI cooldownUI;
     public GameObject InventoryUI;
+    SoulCountUI soulCountUI;
     HealthFlowerManger hpManager;
 
     bool inventoryIsOpen = false;
@@ -79,6 +81,7 @@ public class PlayerMain : MonoBehaviour {
         cooldownUI.setSpellIcons(equippedSpells);
         InventoryUI.GetComponent<InventoryManager>().initInventory();
         InventoryUI.SetActive(false);
+        soulCountUI = canvasUI.GetComponent<SoulCountUI>();
 
         hpManager = canvasUI.GetComponent<HealthFlowerManger>();
         updateHealthBar();
@@ -387,8 +390,9 @@ public class PlayerMain : MonoBehaviour {
                 takeDamage(other.gameObject.GetComponent<PlayerHazard>().getDamage());
                 break;
             case "Loot":
+                currentSouls += other.gameObject.GetComponent<SoulScript>().soulCount;
                 other.gameObject.GetComponent<SoulScript>().DestroyMe();
-                print("Looted");
+                soulCountUI.setSoulCount(currentSouls);
                 break;
         }
     }

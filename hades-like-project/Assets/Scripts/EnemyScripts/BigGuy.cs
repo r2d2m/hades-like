@@ -15,6 +15,7 @@ public class BigGuy : EnemyPathfinder {
         movementStr = 1000;
         target = player.transform;
         followingPath = true;
+        rewardSouls = 50;
         StartUpdatePath();
     }
 

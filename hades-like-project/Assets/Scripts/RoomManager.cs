@@ -24,6 +24,7 @@ public class RoomManager : MonoBehaviour {
 
     public GameObject startRoom;
     public GameObject debugRoom;
+    public GameObject soulRewardPrefab;
     public bool DEBUG_startInStartRoom;
     public bool DEBUG_startInDebugRoom;
 
@@ -49,10 +50,14 @@ public class RoomManager : MonoBehaviour {
         debugRoomManager();
     }
 
-    public void enemyDeath() {
+    public void enemyDeath(Vector3 enemyPosition, int rewardSouls) {
         enemiesAliveInRoom--;
         print("Enemies alive: " + enemiesAliveInRoom);
-
+        GameObject newSouls = Instantiate(soulRewardPrefab, enemyPosition, Quaternion.identity);
+        print("Souls:" + rewardSouls);
+        ParticleSystem.EmissionModule em = newSouls.GetComponentInChildren<ParticleSystem>().emission;
+        em.rateOverTime = rewardSouls * 2f;
+        newSouls.GetComponent<SoulScript>().soulCount = rewardSouls;
         if (enemiesAliveInRoom <= 0) {
             roomIsClear();
         }

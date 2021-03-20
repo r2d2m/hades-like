@@ -17,6 +17,7 @@ public class EnemyDasher : Enemy {
         doDash = false;
         dashForce = 2000;
         dashCD = 0.8f;
+        rewardSouls = 10;
         currentDashCD = dashCD;
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
     }

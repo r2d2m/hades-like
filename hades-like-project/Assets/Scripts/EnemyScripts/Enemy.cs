@@ -11,6 +11,8 @@ public class Enemy : MonoBehaviour {
 
     public float maxHP;
     public float currentHP;
+    protected int rewardSouls = 10;
+
     protected GameObject player;
     public int collisionDamage = 0;
     protected Vector3 movementVector;
@@ -112,7 +114,7 @@ public class Enemy : MonoBehaviour {
             //corpse.GetComponent<SpriteRenderer>().color = originalColor;
         }
 
-        floor.GetComponent<RoomManager>().enemyDeath();
+        floor.GetComponent<RoomManager>().enemyDeath(transform.position, rewardSouls);
 
         // TODO: Debug, every enemy WILL have an animator
         if (GetComponentInChildren<Animator>() != null) {

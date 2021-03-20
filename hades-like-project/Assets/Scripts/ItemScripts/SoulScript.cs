@@ -6,6 +6,7 @@ public class SoulScript : MonoBehaviour {
     GameObject player;
     float speed = 0.6f;
     float range = 100000;
+    public int soulCount = 0;
     // Start is called before the first frame update
     void Start() {
         player = GameObject.FindGameObjectWithTag("Player");

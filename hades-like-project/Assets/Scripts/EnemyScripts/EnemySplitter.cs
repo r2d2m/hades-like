@@ -58,10 +58,6 @@ public class EnemySplitter : EnemyPathfinder {
         StartCoroutine(spawnChildrenFunc);
         GetComponentInChildren<SpriteRenderer>().sortingLayerName = "Corpses";
 
-        if (testLoot) {
-            Instantiate(testLoot, transform.position, transform.rotation, transform.parent);
-        }
-
         // Add one more enemy to room
         enabled = false;
         // Destroy(gameObject);

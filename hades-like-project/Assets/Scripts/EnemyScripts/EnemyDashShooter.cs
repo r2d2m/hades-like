@@ -22,6 +22,7 @@ public class EnemyDashShooter : Enemy {
         doDash = false;
         currentDashCD = dashCD;
         shootCD = 1.0f;
+        rewardSouls = 10;
         currentShootCD = shootCD;
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
     }

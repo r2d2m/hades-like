@@ -14,6 +14,7 @@ public class EnemyGroupMember : EnemyPathfinder {
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
         movementStr = 150;
         target = player.transform;
+        rewardSouls = 20;
         initialState();
     }
 
@@ -77,7 +78,7 @@ public class EnemyGroupMember : EnemyPathfinder {
             corpse.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
             corpse.transform.parent = transform.parent;
         }
-        floor.GetComponent<RoomManager>().enemyDeath();
+        floor.GetComponent<RoomManager>().enemyDeath(transform.position, rewardSouls);
         Destroy(gameObject);
     }
 
