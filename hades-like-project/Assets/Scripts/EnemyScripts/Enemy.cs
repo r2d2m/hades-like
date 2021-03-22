@@ -124,6 +124,7 @@ public class Enemy : MonoBehaviour {
         }
         GetComponent<Collider2D>().enabled = false;
         GetComponentInChildren<SpriteRenderer>().sortingLayerName = "Corpses";
+        gameObject.tag = "Corpse";
         setToOriginalColor();
         enabled = false;
     }

@@ -20,8 +20,7 @@ public class HealthFlowerManger : MonoBehaviour {
         currentHP = HP;
         float percentHP = (float)currentHP / maxHP;
         int newFaceIndex = (int)((flowerFaces.Length - 1) * percentHP);
-        print(((flowerFaces.Length - 1) * (currentHP / maxHP)));
-        print(newFaceIndex);
+
         if (currentHP > 0) {
             healthFace.GetComponent<SpriteRenderer>().sprite = flowerFaces[newFaceIndex];
         } else {

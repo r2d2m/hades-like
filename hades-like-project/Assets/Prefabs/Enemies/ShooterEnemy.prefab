@@ -90,8 +90,8 @@ MonoBehaviour:
   collisionDamage: 0
   currentState: 1
   chaseRange: 0
-  dashCD: 0.8
-  dashStrength: 2000
+  dashCD: 1
+  dashStrength: 3600
   shootCD: 0
   currentShootCD: 0
   bullet: {fileID: 5373906658468952480, guid: 51dfc8d6dd09fd34cb34ba956a2cfe79, type: 3}

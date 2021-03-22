@@ -12,12 +12,14 @@ public class EnemyDashShooter : Enemy {
     public float currentShootCD;
     bool doDash;
 
+
+    float shootRange = 7.5f;
     public GameObject bullet;
 
     // Start is called before the first frame update
     void Start() {
         collisionDamage = 1;
-        maxHP = 3;
+        maxHP = 7;
         currentHP = maxHP;
         doDash = false;
         currentDashCD = dashCD;
@@ -42,9 +44,9 @@ public class EnemyDashShooter : Enemy {
             currentDashCD -= Time.deltaTime;
         }
 
-        if(currentShootCD <= 0){
+        if (currentShootCD <= 0 && (transform.position - player.transform.position).magnitude < shootRange) {
             shoot();
-           currentShootCD = shootCD + Random.Range(-0.2f, 0.2f);
+            currentShootCD = shootCD + Random.Range(-0.2f, 0.2f);
         } else {
             currentShootCD -= Time.deltaTime;
         }
@@ -62,13 +64,21 @@ public class EnemyDashShooter : Enemy {
 
     private void FixedUpdate() {
         if (doDash) {
-            movementVector = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
-            movementVector = movementVector.normalized;
-            if (Random.Range(0, 100) < 75) {
-                rigidBody.AddForce(movementVector * dashStrength);
+            /*
+            if ((transform.position - player.transform.position).magnitude < shootRange) {
+                movementVector = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0);
+                movementVector = movementVector.normalized;
+
             } else {
-                rigidBody.AddForce(-movementVector * dashStrength);
+                movementVector = player.transform.position - transform.position;
+                movementVector = movementVector.normalized;
             }
+            */
+
+            movementVector = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), 0);
+            movementVector = movementVector.normalized;
+            
+            rigidBody.AddForce(movementVector * dashStrength);
             doDash = false;
         }
     }

@@ -57,6 +57,7 @@ public class EnemySplitter : EnemyPathfinder {
         IEnumerator spawnChildrenFunc = SpawnChildren();
         StartCoroutine(spawnChildrenFunc);
         GetComponentInChildren<SpriteRenderer>().sortingLayerName = "Corpses";
+        gameObject.tag = "Corpse";
 
         // Add one more enemy to room
         enabled = false;

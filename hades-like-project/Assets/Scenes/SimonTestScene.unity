@@ -1185,6 +1185,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: EyeDrop
       objectReference: {fileID: 0}
+    - target: {fileID: 4019686157144874702, guid: d3d5b0180ac71d2429e2e139425dc841,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7762817877617272072, guid: d3d5b0180ac71d2429e2e139425dc841,
         type: 3}
       propertyPath: m_RootOrder
@@ -1500,7 +1505,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 159392979, guid: 55804497ab4ffd4468388677784ce275, type: 3}
       propertyPath: orthographic size
-      value: 4.5
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4562611108377575021, guid: 55804497ab4ffd4468388677784ce275,
         type: 3}
@@ -1629,19 +1634,24 @@ PrefabInstance:
       objectReference: {fileID: 554835005}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
+      propertyPath: damageMultiplier
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
+        type: 3}
       propertyPath: cooldownMultiplier
-      value: 0.2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: equippedSpells.Array.size
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: equippedSpells.Array.data[0]
       value: 
-      objectReference: {fileID: 6389400638280554138, guid: 07b2a5c9f6b2b174386f6f65de8a1f3d,
+      objectReference: {fileID: 6389400638280554138, guid: b2ff31f5036d80a4697afecf708ba96a,
         type: 3}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
@@ -1779,7 +1789,7 @@ PrefabInstance:
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
       propertyPath: DEBUG_startInDebugRoom
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}

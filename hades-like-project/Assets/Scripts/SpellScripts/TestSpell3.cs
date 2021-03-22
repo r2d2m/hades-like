@@ -6,7 +6,7 @@ public class TestSpell3 : Spell {
     // Start is called before the first frame update
 
     private void Awake() {
-        cooldownTime = 0.4f;
+        cooldownTime = 0.3f;
         isBasicAttack = true;
     }
 

@@ -7,7 +7,7 @@ public class WaveBeamMain : Spell {
     public GameObject waveBeamSub;
 
     private void Awake() {
-        cooldownTime = 0.3f;
+        cooldownTime = 0.4f;
         isBasicAttack = true;
     }
 
@@ -20,7 +20,7 @@ public class WaveBeamMain : Spell {
             newWave.transform.parent = transform.parent;
             WaveBeamSub spellScript = newWave.GetComponent<WaveBeamSub>();
             spellScript.mouseVector = getMouseVector();
-            spellScript.damage = 1.5f * damageMultiplier;
+            spellScript.damage = 1f * damageMultiplier;
             spellScript.waveDirection = (i == 0) ? 1 : -1;
             spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier, speedMultiplier, lifeTimeMultiplier, forceMultipler);
         }
