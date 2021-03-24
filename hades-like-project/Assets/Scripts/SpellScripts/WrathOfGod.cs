@@ -16,11 +16,17 @@ public class WrathOfGod : Spell {
         damage = 1 * damageMultiplier;
         transform.localScale *= rangeMultiplier;
         transform.position = playerGameObject.transform.position;
-        Destroy(gameObject, 0.2f);
+        Destroy(gameObject, 0.3f);
     }
 
     private void Update() {
         transform.position = playerGameObject.transform.position;    
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+        if(other.gameObject.layer == LayerMask.NameToLayer("Unwalkable")){
+            Destroy(gameObject);
+        }
     }
 
 
@@ -29,6 +35,9 @@ public class WrathOfGod : Spell {
             case "Enemy":
                 other.gameObject.GetComponent<Rigidbody2D>().AddForce((other.transform.position - transform.position).normalized * 8000);
                 other.gameObject.GetComponent<Enemy>().takeDamage(damage);
+                break;
+            case "EnemyBullet":
+                other.gameObject.GetComponent<Rigidbody2D>().velocity *= -2;
                 break;
         }
     }

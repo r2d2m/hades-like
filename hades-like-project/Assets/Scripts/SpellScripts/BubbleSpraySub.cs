@@ -8,10 +8,10 @@ public class BubbleSpraySub : Spell {
     public GameObject bubblePop;
 
     void Start() {
-          destroySelfWithDelay(Random.Range(0.7f, 2f) * rangeMultiplier);
+          destroySelfWithDelay(Random.Range(4f, 5f) * rangeMultiplier);
     
         transform.localScale = Vector3.one * 0.2f;
-        maxScale = Random.Range(0.8f, 1.2f);
+        maxScale = Random.Range(1.2f, 1.8f);
     }
 
     void Update() {

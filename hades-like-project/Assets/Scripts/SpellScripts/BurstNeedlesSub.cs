@@ -9,6 +9,7 @@ public class BurstNeedlesSub : Spell {
     public float timeSinceSpawn = 0.0f;
     public Vector3 moveVec;
     GameObject targetEnemy = null;
+    Vector3 goalPos;
     float closestDistance = Mathf.Infinity;
     float maxDist;
 
@@ -16,6 +17,7 @@ public class BurstNeedlesSub : Spell {
     }
 
     void Start() {
+        goalPos = transform.position;
         setRotationTowardsVector(moveVec);
         Destroy(gameObject, 10 * rangeMultiplier);
         maxDist = 13 * rangeMultiplier;
@@ -33,7 +35,10 @@ public class BurstNeedlesSub : Spell {
             if (targetEnemy != null) {
                 GetComponent<Rigidbody2D>().AddForce((targetEnemy.transform.position - transform.position).normalized * 200);
             } else {
-                Destroy(gameObject);
+                GetComponent<Rigidbody2D>().AddForce((goalPos - transform.position).normalized * 200);
+                if ((goalPos - transform.position).magnitude < 0.2f) {
+                    Destroy(gameObject);
+                }
             }
         }
 
@@ -50,6 +55,7 @@ public class BurstNeedlesSub : Spell {
             targetVec = (enemy.transform.position - transform.position);
             if (targetVec.magnitude < closestDistance && targetVec.magnitude < maxDist) {
                 targetEnemy = enemy;
+                goalPos = targetEnemy.transform.position;
                 closestDistance = targetVec.magnitude;
             }
         }

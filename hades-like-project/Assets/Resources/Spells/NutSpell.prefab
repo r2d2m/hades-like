@@ -72,7 +72,7 @@ MonoBehaviour:
   cooldownTime: 0
   damage: 0
   isBasicAttack: 0
-  spellIcon: {fileID: 21300000, guid: 75fa143f4f0af0f4eacffdb48e7dbb6f, type: 3}
+  spellIcon: {fileID: 21300000, guid: c16cac7436c474a428ce61dc36a3f1f7, type: 3}
 --- !u!50 &7835383598372489836
 Rigidbody2D:
   serializedVersion: 4

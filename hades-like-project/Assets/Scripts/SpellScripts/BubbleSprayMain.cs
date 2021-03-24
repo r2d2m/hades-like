@@ -7,7 +7,7 @@ public class BubbleSprayMain : Spell {
     public GameObject bubbleSpraySub;
 
     private void Awake() {
-        cooldownTime = 3f;
+        cooldownTime = 7f;
         isBasicAttack = false;
     }
 
@@ -18,7 +18,7 @@ public class BubbleSprayMain : Spell {
     }
 
     IEnumerator ShootBubble() {
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 20; i++) {
             GameObject newBubble = Instantiate(bubbleSpraySub, gunGameObject.transform.position, transform.rotation);
             newBubble.transform.parent = transform.parent;
             Spell spellScript = newBubble.GetComponent<Spell>();

@@ -67,8 +67,12 @@ public class PlayerMain : MonoBehaviour {
     bool usingBasicAttack;
     int currentHoldSpellID = -1;
 
+    float maxMana = 20;
+    float currentMana;
+
     // Start is called before the first frame update
     void Start() {
+        currentMana = maxMana;
         maxHP = 5;
         currentHP = maxHP;
         usingBasicAttack = false;
@@ -103,15 +107,17 @@ public class PlayerMain : MonoBehaviour {
         if (!inventoryIsOpen) {
             playerMovement();
             playerAim();
-            if (!inDialogue) {spellInputHandler();}
+            if (!inDialogue) { spellInputHandler(); }
         }
 
-        
+
         invulFlicker();
 
         // TODO: delete this later!
         debugPlayer();
         animator.SetFloat("MovementSpeed", movementVector.magnitude);
+        currentMana += Time.deltaTime * 2;
+        print("CurrentMana: " + currentMana);
     }
 
     public List<GameObject> getEquippedSpells() {
@@ -217,8 +223,9 @@ public class PlayerMain : MonoBehaviour {
                 if (!usingBasicAttack) {
                     castSpell(spellObject, spellScript, spellIndex);
                 }
-            } else {
+            } else if(currentMana >= 10){
                 castSpell(spellObject, spellScript, spellIndex);
+                currentMana -= 10;
                 usingBasicAttack = false;
             }
         }
@@ -364,6 +371,14 @@ public class PlayerMain : MonoBehaviour {
                 }
                 // TODO: POISON AND OTHER EFFECTS?
                 break;
+            case "EnemyBullet":
+                recievedDamage = other.gameObject.GetComponent<EnemyBullet>().getDamage();
+                if (recievedDamage > 0) {
+                    takeDamage(recievedDamage);
+                }
+                other.gameObject.GetComponent<EnemyBullet>().collideWithPlayer();
+                // TODO: POISON AND OTHER EFFECTS?
+                break;
 
             case "Door":
                 break;
@@ -374,15 +389,6 @@ public class PlayerMain : MonoBehaviour {
         switch (other.gameObject.tag) {
             case "Reward":
                 other.gameObject.GetComponent<Reward>().grabReward(gameObject);
-                break;
-            case "EnemyBullet":
-                int recievedDamage;
-                recievedDamage = other.gameObject.GetComponent<EnemyBullet>().getDamage();
-                if (recievedDamage > 0) {
-                    takeDamage(recievedDamage);
-                }
-                other.gameObject.GetComponent<EnemyBullet>().collideWithPlayer();
-                // TODO: POISON AND OTHER EFFECTS?
                 break;
             case "ExitDoor":
                 break;

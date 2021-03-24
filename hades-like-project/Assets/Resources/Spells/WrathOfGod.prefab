@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2354094854794384372}
   - component: {fileID: 6508482530358019829}
-  m_Layer: 8
+  m_Layer: 17
   m_Name: ShooterThing
   m_TagString: PlayerSpell
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 5830590883821784025}
   - component: {fileID: 3848269954819182431}
   - component: {fileID: 1108116265306840585}
-  m_Layer: 8
+  m_Layer: 17
   m_Name: WrathOfGod
   m_TagString: PlayerSpell
   m_Icon: {fileID: 0}

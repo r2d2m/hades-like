@@ -7,11 +7,11 @@ public class BurstNeedlesMain : Spell {
     public GameObject burstNeedlesSub;
 
     float shootForce = 700;
-    int nrOfNeedles = 10;
-    float offsetAngle = 55;
+    int nrOfNeedles = 25;
+    float offsetAngle = 180;
 
     private void Awake() {
-        cooldownTime = 0.4f;
+        cooldownTime = 6f;
         isBasicAttack = false;
     }
 

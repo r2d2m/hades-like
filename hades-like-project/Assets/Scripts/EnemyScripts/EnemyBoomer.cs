@@ -37,20 +37,10 @@ public class EnemyBoomer : EnemyPathfinder {
     }
 
     public override void die() {
-        // Spawn corpse if we have a prefab
-        if (corpsePrefab != null) {
-            GameObject corpse = Instantiate(corpsePrefab, transform.position, transform.rotation);
-            corpse.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
-            corpse.transform.parent = transform.parent; // TODO CHANGE THIS!
-            //corpse.GetComponent<SpriteRenderer>().color = originalColor;
-        }
 
         GameObject poison = Instantiate(poisonField, transform.position, transform.rotation, transform.parent);
         poison.GetComponent<PoisonField>().setValues(1, 5.0f);
-        StopUpdatePath();
-        floor.GetComponent<RoomManager>().enemyDeath(transform.position, rewardSouls);
-
-        Destroy(gameObject);
+        base.die();
     }
 
 }

@@ -45,23 +45,27 @@ public class EnemySplitter : EnemyPathfinder {
             GameObject newSmallSplitter = Instantiate(smallSplitter, transform.position + rotatedVector * 0.3f, transform.rotation, transform.parent);
             newSmallSplitter.GetComponent<Rigidbody2D>().AddForce(splitForce * rotatedVector);
         }
-        floor.GetComponent<RoomManager>().addEnemiesIntoRoom(numberOfSplits - 1);
+        floor.GetComponent<RoomManager>().addEnemiesIntoRoom(numberOfSplits);
     }
 
     public override void die() {
+        IEnumerator spawnChildrenFunc = SpawnChildren();
+        StartCoroutine(spawnChildrenFunc);
+        /*
         GetComponentInChildren<Animator>().SetTrigger("Die");
         StopUpdatePath();
         GetComponent<Collider2D>().enabled = false;
         setToOriginalColor();
 
-        IEnumerator spawnChildrenFunc = SpawnChildren();
-        StartCoroutine(spawnChildrenFunc);
+
         GetComponentInChildren<SpriteRenderer>().sortingLayerName = "Corpses";
         gameObject.tag = "Corpse";
 
         // Add one more enemy to room
         enabled = false;
         // Destroy(gameObject);
+        */
+        base.die();
     }
 
 }
