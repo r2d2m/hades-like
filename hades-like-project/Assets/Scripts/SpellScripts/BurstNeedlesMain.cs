@@ -29,7 +29,7 @@ public class BurstNeedlesMain : Spell {
             spellScript.moveVec = currentDir;
             spellScript.damage = 0.5f * damageMultiplier;
 
-            spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier, speedMultiplier, lifeTimeMultiplier, forceMultipler);
+            spellScript.setPlayerStats(damageMultiplier, playerAgility, playerStrength, playerIntelligence);
             currentDir = Quaternion.Euler(0, 0, offsetAngle * 2 / nrOfNeedles) * currentDir;
         }
         Destroy(gameObject);

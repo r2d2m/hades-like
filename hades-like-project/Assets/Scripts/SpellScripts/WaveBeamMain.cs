@@ -9,6 +9,7 @@ public class WaveBeamMain : Spell {
     private void Awake() {
         cooldownTime = 0.4f;
         isBasicAttack = true;
+        manaCost = 0;
     }
 
     void Start() {
@@ -22,7 +23,7 @@ public class WaveBeamMain : Spell {
             spellScript.mouseVector = getMouseVector();
             spellScript.damage = 1f * damageMultiplier;
             spellScript.waveDirection = (i == 0) ? 1 : -1;
-            spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier, speedMultiplier, lifeTimeMultiplier, forceMultipler);
+            spellScript.setPlayerStats(damageMultiplier, playerAgility, playerStrength, playerIntelligence);
         }
         Destroy(gameObject);
     }

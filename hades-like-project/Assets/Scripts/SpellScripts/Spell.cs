@@ -15,6 +15,7 @@ public class Spell : MonoBehaviour {
     public Vector3 mousePos;
     public float cooldownTime;
     public float damage;
+    public float testCooldown = 1.0f;
 
     public bool isBasicAttack;
 
@@ -24,6 +25,10 @@ public class Spell : MonoBehaviour {
     protected float speedMultiplier = 1.0f;
     protected float lifeTimeMultiplier = 1.0f;
     protected float forceMultipler = 1.0f;
+    protected float manaCost = 50.0f;
+    protected float playerAgility = 0;
+    protected float playerStrength = 0;
+    protected float playerIntelligence = 0;
 
     public Sprite spellIcon;
 
@@ -72,17 +77,19 @@ public class Spell : MonoBehaviour {
         return damage;
     }
 
+    public float getManaCost(){
+        return manaCost;
+    }
+
     public Vector3 getMouseVector() {
         return (mousePos - playerPos).normalized;
     }
 
-    public void setPlayerStats(float damageMultiplier, float rangeMultiplier, float cooldownMultiplier, float speedMultiplier, float lifeTimeMultiplier, float forceMultipler) {
+    public void setPlayerStats(float damageMultiplier, float playerAgility, float playerStrength, float playerIntelligence) {
         this.damageMultiplier = damageMultiplier;
-        this.rangeMultiplier = rangeMultiplier;
-        this.cooldownMultiplier = cooldownMultiplier;
-        this.speedMultiplier = speedMultiplier;
-        this.lifeTimeMultiplier = lifeTimeMultiplier;
-        this.forceMultipler = forceMultipler;
+        this.playerAgility = playerAgility;
+        this.playerStrength = playerStrength;
+        this.playerIntelligence = playerIntelligence;
     }
 
     public virtual float getCooldownTime() {

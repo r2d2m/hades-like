@@ -29,13 +29,17 @@ public class PlayerMain : MonoBehaviour {
     int currentHP;
     int currentSouls = 0;
 
-    public float damageMultiplier = 1.0f;
-    public float cooldownMultiplier = 1.0f;
+    public float globalDamageMultiplier = 1.0f;
+    public float globalCooldownMultiplier = 1.0f;
     public float rangeMultiplier = 1.0f;
     public float spellSpeedMultiplier = 1.0f;
     public float spellForceMultipler = 1.0f;
     public float spellLifeTimeMultiplier = 1.0f;
     public float movementSpeedMultiplier = 1.0f;
+
+    public float agility = 0;
+    public float strength = 0;
+    public float intelligence = 0;
 
     float minCD = 0.0001f;
     float minDmgMult = 0.5f;
@@ -54,20 +58,24 @@ public class PlayerMain : MonoBehaviour {
     Color opaqueColor = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
     public List<GameObject> equippedSpells;
+    List<float> maxSpellCooldowns;
+
     List<float> spellCooldowns;
+    List<float> manaCosts;
 
     Vector3 currentMousePos = new Vector3(0, 0, 0);
 
-    CooldownUI cooldownUI;
+    CooldownUI spellUI;
     public GameObject InventoryUI;
     SoulCountUI soulCountUI;
     HealthFlowerManger hpManager;
+    ManaUI manaUI;
 
     bool inventoryIsOpen = false;
     bool usingBasicAttack;
     int currentHoldSpellID = -1;
 
-    float maxMana = 20;
+    float maxMana = 100;
     float currentMana;
 
     // Start is called before the first frame update
@@ -76,15 +84,17 @@ public class PlayerMain : MonoBehaviour {
         maxHP = 5;
         currentHP = maxHP;
         usingBasicAttack = false;
+
         spellCooldowns = new List<float>();
-        for (int i = 0; i < equippedSpells.Count; i++) {
-            spellCooldowns.Add(0);
-        }
-        cooldownUI = canvasUI.GetComponent<CooldownUI>();
-        cooldownUI.setSpellCount(equippedSpells.Count);
-        cooldownUI.setSpellIcons(equippedSpells);
+        manaCosts = new List<float>();
+        maxSpellCooldowns = new List<float>();
+
+        spellUI = canvasUI.GetComponent<CooldownUI>();
+        spellUI.setSpellCount(equippedSpells.Count);
+        spellUI.setSpellIcons(equippedSpells);
         InventoryUI.GetComponent<InventoryManager>().initInventory();
         InventoryUI.SetActive(false);
+        manaUI = canvasUI.GetComponent<ManaUI>();
         soulCountUI = canvasUI.GetComponent<SoulCountUI>();
 
         hpManager = canvasUI.GetComponent<HealthFlowerManger>();
@@ -97,6 +107,7 @@ public class PlayerMain : MonoBehaviour {
         gunSpriteRenderer = playerGun.GetComponentInChildren<SpriteRenderer>();
         mousePointer.GetComponent<MousePointerScript>().setMouseAim();
 
+        updateSpellManaCosts();
     }
 
     // Update is called once per frame
@@ -110,18 +121,36 @@ public class PlayerMain : MonoBehaviour {
             if (!inDialogue) { spellInputHandler(); }
         }
 
-
         invulFlicker();
 
         // TODO: delete this later!
         debugPlayer();
         animator.SetFloat("MovementSpeed", movementVector.magnitude);
-        currentMana += Time.deltaTime * 2;
-        print("CurrentMana: " + currentMana);
+        if (currentMana < maxMana) {
+            currentMana = Mathf.Min(currentMana + Time.deltaTime * 10, maxMana);
+        }
+
+        spellUI.UpdateManaBar(currentMana, currentMana / maxMana, manaCosts);
     }
 
     public List<GameObject> getEquippedSpells() {
         return equippedSpells;
+    }
+
+    //TODO: clean this up
+    void updateSpellManaCosts() {
+        for (int i = 0; i < equippedSpells.Count; i++) {
+            GameObject spellObject = Instantiate(equippedSpells[i]);
+            spellObject.transform.parent = floorGameObject.transform;
+            Spell spellScript = spellObject.GetComponent<Spell>();
+            spellScript.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
+            float manaCost = spellScript.getManaCost();
+            float coooldown = spellScript.getCooldownTime();
+            manaCosts.Add(manaCost);
+            spellCooldowns.Add(0);
+            maxSpellCooldowns.Add(coooldown);
+            Destroy(spellObject);
+        }
     }
 
     public void switchSpellSlots(int firstSpellIndex, int secondSpellIndex) {
@@ -139,16 +168,28 @@ public class PlayerMain : MonoBehaviour {
         for (int i = 0; i < spellCooldowns.Count; i++) {
             spellCooldowns[i] = 0;
         }
-        cooldownUI.updateCooldowns(spellCooldowns);
+        spellUI.updateCooldowns(spellCooldowns);
+        currentMana = maxMana;
     }
 
     public void pickupSpell(GameObject newSpell) {
         if (equippedSpells.Count < 7) {
             equippedSpells.Add(newSpell);
             spellCooldowns.Add(0);
-            //cooldownUI.setSpellCount(equippedSpells.Count);
-            cooldownUI.addSpell();
+            // TODO: cleana upp
+            GameObject spellObject = Instantiate(newSpell);
+            Spell spellScript = spellObject.GetComponent<Spell>();
+            spellScript.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
+            float manaCost = spellScript.getManaCost();
+            float coooldown = spellScript.getCooldownTime();
+            manaCosts.Add(manaCost);
+            spellCooldowns.Add(0);
+            maxSpellCooldowns.Add(coooldown);
+            Destroy(spellObject);
+            //spellUI.setSpellCount(equippedSpells.Count);
+            spellUI.addSpell();
             InventoryUI.GetComponent<InventoryManager>().updateInventory();
+            spellUI.UpdateManaBar(currentMana, currentMana / maxMana, manaCosts);
             updateIcons();
         } else {
             toggleInventory(true);
@@ -156,7 +197,7 @@ public class PlayerMain : MonoBehaviour {
     }
 
     public void updateIcons() {
-        cooldownUI.setSpellIcons(equippedSpells);
+        spellUI.setSpellIcons(equippedSpells);
         InventoryUI.GetComponent<InventoryManager>().setInventoryIcons(equippedSpells);
     }
 
@@ -219,28 +260,36 @@ public class PlayerMain : MonoBehaviour {
             GameObject spellObject = Instantiate(equippedSpells[spellIndex]);
             spellObject.transform.parent = floorGameObject.transform;
             Spell spellScript = spellObject.GetComponent<Spell>();
-            if (spellScript.getIsBasicAttack()) {
-                if (!usingBasicAttack) {
+            spellScript.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
+            float manaCost = spellScript.getManaCost();
+            if (currentMana >= manaCost) {
+                if (spellScript.getIsBasicAttack()) {
+                    if (!usingBasicAttack) {
+                        castSpell(spellObject, spellScript, spellIndex);
+                    } else {
+                        Destroy(spellObject);
+                    }
+                } else {
                     castSpell(spellObject, spellScript, spellIndex);
+                    usingBasicAttack = false;
                 }
-            } else if(currentMana >= 10){
-                castSpell(spellObject, spellScript, spellIndex);
-                currentMana -= 10;
-                usingBasicAttack = false;
+                currentMana -= manaCost;
+            } else {
+                Destroy(spellObject);
             }
         }
     }
 
     void castSpell(GameObject spellObject, Spell spellScript, int spellIndex) {
-        spellCooldowns[spellIndex] = spellScript.getCooldownTime() * cooldownMultiplier;
-        cooldownUI.setCooldownDuration(spellIndex, spellCooldowns[spellIndex]);
+        print(spellScript.getCooldownTime());
+        spellCooldowns[spellIndex] = spellScript.getCooldownTime() * globalCooldownMultiplier;
+        spellUI.setCooldownDuration(spellIndex, spellCooldowns[spellIndex]);
         spellScript.setMousePos(currentMousePos);
         spellScript.setPlayerGameObject(gameObject);
         spellScript.setPlayerPos(transform.position);
         spellScript.setGunGameObject(playerGun);
         spellScript.setMouseGameObject(mousePointer);
         spellScript.setMainCameraObject(mainCamera);
-        spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier, spellSpeedMultiplier, spellLifeTimeMultiplier, spellForceMultipler);
     }
 
     // flicker player sprite when invurnable
@@ -285,7 +334,7 @@ public class PlayerMain : MonoBehaviour {
             }
         }
 
-        cooldownUI.updateCooldowns(spellCooldowns);
+        spellUI.updateCooldowns(spellCooldowns);
     }
 
     // All physics related stuff should be here!
@@ -414,7 +463,7 @@ public class PlayerMain : MonoBehaviour {
         } else {
             damageMultiplier = minDmgMult;
         }*/
-        damageMultiplier = Mathf.Max(damageMultiplier + damageMult, minDmgMult);
+        globalDamageMultiplier = Mathf.Max(globalDamageMultiplier + damageMult, minDmgMult);
     }
 
     public void modifyPlayerHealth(int maxHealthMod) {
@@ -433,12 +482,12 @@ public class PlayerMain : MonoBehaviour {
 
     public void modifyCooldown(float cooldownMod) {
         /*
-        if (cooldownMultiplier - cooldownMod > minCD) {
-            cooldownMultiplier -= cooldownMod;
+        if (globalCooldownMultiplier - cooldownMod > minCD) {
+            globalCooldownMultiplier -= cooldownMod;
         } else {
-            cooldownMultiplier = minCD;
+            globalCooldownMultiplier = minCD;
         }*/
-        cooldownMultiplier = Mathf.Max(cooldownMultiplier - cooldownMod, minCD);
+        globalCooldownMultiplier = Mathf.Max(globalCooldownMultiplier - cooldownMod, minCD);
     }
 
 

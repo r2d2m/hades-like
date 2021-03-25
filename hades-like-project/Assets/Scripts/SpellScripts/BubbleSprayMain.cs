@@ -7,8 +7,11 @@ public class BubbleSprayMain : Spell {
     public GameObject bubbleSpraySub;
 
     private void Awake() {
-        cooldownTime = 7f;
         isBasicAttack = false;
+    }
+
+    public override float getCooldownTime() {
+        return 7.0f;
     }
 
     void Start() {
@@ -26,7 +29,7 @@ public class BubbleSprayMain : Spell {
             //print(currMouseVec);
             newBubble.GetComponent<Rigidbody2D>().AddForce(Quaternion.Euler(0, 0, Random.Range(-50, 50)) * currMouseVec.normalized * Random.Range(300, 600) * speedMultiplier);
             spellScript.damage = 1f * damageMultiplier;
-            spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier, speedMultiplier, lifeTimeMultiplier, forceMultipler);
+            spellScript.setPlayerStats(damageMultiplier, playerAgility, playerStrength, playerIntelligence);
             yield return new WaitForSeconds(0.1f);
         }
         Destroy(gameObject);

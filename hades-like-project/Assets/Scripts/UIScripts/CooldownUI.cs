@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class CooldownUI : MonoBehaviour {
     public GameObject cooldownIconPrefab;
@@ -15,6 +16,10 @@ public class CooldownUI : MonoBehaviour {
 
     List<Transform> spellSlots;
     List<GameObject> cooldownIcons;
+
+
+    public GameObject manaBar;
+    public GameObject manaText;
     // Start is called before the first frame update
 
     public void setSpellCount(int count) {
@@ -49,7 +54,7 @@ public class CooldownUI : MonoBehaviour {
         cooldownIcons.Add(cooldownIcon);
         cooldownDurations.Add(1);
         currentSpellCount++;
-        
+
         updateBranchSprite();
     }
 
@@ -78,6 +83,19 @@ public class CooldownUI : MonoBehaviour {
     public void setSpellIcons(List<GameObject> equippedSpells) {
         for (int i = 0; i < equippedSpells.Count; i++) {
             cooldownIcons[i].GetComponent<SpriteRenderer>().sprite = equippedSpells[i].GetComponent<Spell>().spellIcon;
+        }
+    }
+
+    public void UpdateManaBar(float currentAmount, float currentPercent, List<float> manaCosts) {
+        manaBar.GetComponent<Image>().fillAmount = currentPercent;
+        manaText.GetComponent<TextMeshProUGUI>().text = ((int)currentAmount).ToString();
+        for (int i = 0; i < manaCosts.Count; i++) {
+            if (currentAmount < manaCosts[i]) {
+                cooldownIcons[i].GetComponent<SpriteRenderer>().color = Color.red;
+            } else {
+                cooldownIcons[i].GetComponent<SpriteRenderer>().color = Color.white;
+
+            }
         }
     }
 }

@@ -7,6 +7,7 @@ public class TestSpell3 : Spell {
 
     private void Awake() {
         cooldownTime = 0.3f;
+        manaCost = 0;
         isBasicAttack = true;
     }
 

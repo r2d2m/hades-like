@@ -27,7 +27,7 @@ public class SpreadShotMain : Spell {
             spellScript.moveVec = currentDir;
             spellScript.damage = 0.1f * damageMultiplier;
 
-            spellScript.setPlayerStats(damageMultiplier, rangeMultiplier, cooldownMultiplier, speedMultiplier, lifeTimeMultiplier, forceMultipler);
+            spellScript.setPlayerStats(damageMultiplier, playerAgility, playerStrength, playerIntelligence);
             currentDir = Quaternion.Euler(0, 0, 60 / 10) * currentDir;
         }
         Destroy(gameObject);
