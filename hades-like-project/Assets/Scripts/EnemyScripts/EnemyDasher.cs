@@ -27,6 +27,7 @@ public class EnemyDasher : Enemy {
         movement();
         updateCooldowns();
         deathCheck();
+
     }
 
     void movement() {

@@ -8,6 +8,7 @@ public class EnemyCharger : Enemy {
     float currentDashCD;
     float dashForce;
     bool doDash;
+    Vector3 originalScale;
 
     // Start is called before the first frame update
     void Start() {
@@ -20,6 +21,7 @@ public class EnemyCharger : Enemy {
         rewardSouls = 10;
         currentDashCD = dashCD;
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
+        originalScale = GetComponentInChildren<SpriteRenderer>().transform.localScale;
     }
 
     // Update is called once per frame
@@ -33,8 +35,10 @@ public class EnemyCharger : Enemy {
         if (currentDashCD <= 0) {
             doDash = true;
             currentDashCD = dashCD + Random.Range(-0.2f, 0.2f);
+            GetComponentInChildren<SpriteRenderer>().transform.localScale = originalScale;
         } else {
             currentDashCD -= Time.deltaTime;
+            GetComponentInChildren<SpriteRenderer>().transform.localScale += new Vector3(0, 0.004f * Time.deltaTime, 0);
         }
     }
 
