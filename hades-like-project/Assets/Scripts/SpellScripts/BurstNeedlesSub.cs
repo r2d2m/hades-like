@@ -20,7 +20,7 @@ public class BurstNeedlesSub : Spell {
         goalPos = transform.position;
         setRotationTowardsVector(moveVec);
         Destroy(gameObject, 10 * rangeMultiplier);
-        maxDist = 13 * rangeMultiplier;
+        maxDist = 8 * rangeMultiplier;
     }
 
     private void Update() {

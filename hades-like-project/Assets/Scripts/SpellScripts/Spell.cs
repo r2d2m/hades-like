@@ -30,6 +30,7 @@ public class Spell : MonoBehaviour {
     protected float playerStrength = 0;
     protected float playerIntelligence = 0;
 
+
     public Sprite spellIcon;
 
     public void setPlayerPos(Vector3 playerPos) {
@@ -77,7 +78,7 @@ public class Spell : MonoBehaviour {
         return damage;
     }
 
-    public float getManaCost(){
+    public float getManaCost() {
         return manaCost;
     }
 

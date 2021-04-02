@@ -25,6 +25,7 @@ public class PlayerMain : MonoBehaviour {
     float invulCD = 1.0f;
     float currentInvulCD = 0;
 
+    int baseMaxHP;
     int maxHP;
     int currentHP;
     int currentSouls = 0;
@@ -75,13 +76,25 @@ public class PlayerMain : MonoBehaviour {
     bool usingBasicAttack;
     int currentHoldSpellID = -1;
 
-    float maxMana = 100;
+    float baseMana = 100;
+    float maxMana;
     float currentMana;
+
+    float manaMaxGainPerInt = 10;
+    float manaRegGainPerInt = 1;
+
+    float movementSpeedPerAgi = 0.03f;
+    float cooldownSpeedPerAgi = 0.03f;
+
+    int nrOfStrPerMaxHealth = 3;
+    float strDamageMultGain = 0.01f;
 
     // Start is called before the first frame update
     void Start() {
+        maxMana = baseMana + intelligence * manaMaxGainPerInt;
         currentMana = maxMana;
-        maxHP = 5;
+        baseMaxHP = 5;
+        maxHP = baseMaxHP + (int)(strength / nrOfStrPerMaxHealth);
         currentHP = maxHP;
         usingBasicAttack = false;
 
@@ -112,6 +125,7 @@ public class PlayerMain : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        //maxMana = 100 + intelligence * manaMaxGainPerInt;
         currentMousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         updateCooldowns();
         handleInventory();
@@ -127,7 +141,7 @@ public class PlayerMain : MonoBehaviour {
         debugPlayer();
         animator.SetFloat("MovementSpeed", movementVector.magnitude);
         if (currentMana < maxMana) {
-            currentMana = Mathf.Min(currentMana + Time.deltaTime * 10, maxMana);
+            currentMana = Mathf.Min(currentMana + Time.deltaTime * (1.0f / 10.0f * maxMana), maxMana);
         }
 
         spellUI.UpdateManaBar(currentMana, currentMana / maxMana, manaCosts);
@@ -281,8 +295,7 @@ public class PlayerMain : MonoBehaviour {
     }
 
     void castSpell(GameObject spellObject, Spell spellScript, int spellIndex) {
-        print(spellScript.getCooldownTime());
-        spellCooldowns[spellIndex] = spellScript.getCooldownTime() * globalCooldownMultiplier;
+        spellCooldowns[spellIndex] = spellScript.getCooldownTime() * globalCooldownMultiplier * (1 - cooldownSpeedPerAgi * agility);
         spellUI.setCooldownDuration(spellIndex, spellCooldowns[spellIndex]);
         spellScript.setMousePos(currentMousePos);
         spellScript.setPlayerGameObject(gameObject);
@@ -339,7 +352,7 @@ public class PlayerMain : MonoBehaviour {
 
     // All physics related stuff should be here!
     void FixedUpdate() {
-        rigidBody.AddForce(movementVector * movementSpeed * movementSpeedMultiplier);
+        rigidBody.AddForce(movementVector * movementSpeed * (1 + agility * movementSpeedPerAgi));
     }
 
     // Handle player input
@@ -507,5 +520,25 @@ public class PlayerMain : MonoBehaviour {
     public void modifyPlayerSpeed(float speedMod) {
         movementSpeedMultiplier = Mathf.Max(movementSpeedMultiplier + speedMod, minMoveSpeed);
 
+    }
+
+    public void addPlayerStats(float strengthGain, float agilityGain, float intelligenceGain) {
+        strength = Mathf.Max(strength + strengthGain, 0);
+        agility = Mathf.Max(agility + agilityGain, 0);
+        intelligence = Mathf.Max(intelligence + intelligenceGain, 0);
+        updateManaAndHealth();
+    }
+
+    public void multiplyPlayerStats(float strengthMult, float agilityMult, float intelligenceMult) {
+        strength = Mathf.Max(strength * strengthMult, 0);
+        agility = Mathf.Max(agility * agilityMult, 0);
+        intelligence = Mathf.Max(intelligence * intelligenceMult, 0);
+        updateManaAndHealth();
+    }
+
+    public void updateManaAndHealth() {
+        maxMana = baseMana + intelligence * manaMaxGainPerInt;
+        maxHP = baseMaxHP + (int)(strength / nrOfStrPerMaxHealth);
+        updateHealthBar();
     }
 }
