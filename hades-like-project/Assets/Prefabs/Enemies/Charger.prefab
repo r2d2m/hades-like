@@ -86,6 +86,8 @@ MonoBehaviour:
   corpsePrefab: {fileID: 7308130576889434722, guid: d3d5ddbc166be0f4788fb42045b63393,
     type: 3}
   floor: {fileID: 0}
+  dirBloodSplatter: {fileID: 1030290264029095085, guid: 2739c4d234d74dc409115ee6b0262b60,
+    type: 3}
   maxHP: 0
   currentHP: 0
   collisionDamage: 0

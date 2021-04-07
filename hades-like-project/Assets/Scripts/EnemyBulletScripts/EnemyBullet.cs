@@ -43,9 +43,23 @@ public class EnemyBullet : MonoBehaviour {
             case "PlayerSpell":
                 break;
             default:
+                //Destroy(gameObject);
+                break;
+
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D other) {
+
+        switch (other.transform.tag) {
+            case "Unwalkable":
+                Destroy(gameObject);
+                break;
+            default:
                 Destroy(gameObject);
                 break;
 
         }
+
     }
 }

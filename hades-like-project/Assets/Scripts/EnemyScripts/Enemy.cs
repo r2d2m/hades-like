@@ -8,6 +8,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour {
     public GameObject corpsePrefab;
     public GameObject floor;
+    public GameObject dirBloodSplatter;
 
     public float maxHP;
     public float currentHP;
@@ -70,12 +71,28 @@ public class Enemy : MonoBehaviour {
         }
     }
 
+    public void takeDirectionalDamage(float damage, Vector3 damageSourcePos) {
+        takeDamage(damage);
+        spawnDirectionalBlood(damageSourcePos);
+    }
+
     // Take damage and set color
     public void takeDamage(float damage) {
         if (damage > 0) {
             currentHP -= damage;
             currentColorTime = colorTime;
             spriteRenderer.color = new Color(1.0f, 0.0f, 0.0f);
+        }
+    }
+
+    public void spawnDirectionalBlood(Vector3 damageSourcePos) {
+        if (dirBloodSplatter != null) {
+            Vector3 deltaVec = damageSourcePos - transform.position;
+            Quaternion rot = Quaternion.LookRotation(deltaVec);
+            rot = Quaternion.Euler(rot.eulerAngles.x, rot.eulerAngles.y, -90);
+            Instantiate(dirBloodSplatter, damageSourcePos - deltaVec.normalized * 0.4f, rot, floor.transform);
+        } else {
+            print("Missing bloodsplatter");
         }
     }
 
@@ -119,7 +136,7 @@ public class Enemy : MonoBehaviour {
         // TODO: Debug, every enemy WILL have an animator
         if (GetComponentInChildren<Animator>() != null) {
             GetComponentInChildren<Animator>().SetTrigger("Die");
-        }else{
+        } else {
             Destroy(gameObject);
         }
         GetComponent<Collider2D>().enabled = false;

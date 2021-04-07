@@ -168,6 +168,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   corpsePrefab: {fileID: 0}
   floor: {fileID: 0}
+  dirBloodSplatter: {fileID: 1030290264029095085, guid: 2739c4d234d74dc409115ee6b0262b60,
+    type: 3}
   maxHP: 5
   currentHP: 5
   collisionDamage: 1

@@ -168,6 +168,14 @@ MonoBehaviour:
   corpsePrefab: {fileID: 8177963705478102103, guid: af7ffbd310c4bf748b30d70a2990e440,
     type: 3}
   floor: {fileID: 0}
+  dirBloodSplatter: {fileID: 1030290264029095085, guid: 2739c4d234d74dc409115ee6b0262b60,
+    type: 3}
   maxHP: 0
   currentHP: 0
   collisionDamage: 0
+  currentState: 1
+  chaseRange: 0
+  target: {fileID: 0}
+  turnSpeed: 2
+  turnDst: 1
+  followingPath: 0

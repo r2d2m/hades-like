@@ -12,7 +12,7 @@ public class TestSpell3 : Spell {
     }
 
     void Start() {
-        damage = 1 * damageMultiplier;
+        damage = 1 + playerStrength * 0.2f;
         transform.position = playerPos;
         transform.rotation = Quaternion.Euler(0, 0, Random.Range(0, 360));
         GetComponent<Rigidbody2D>().AddTorque(20);
@@ -24,7 +24,7 @@ public class TestSpell3 : Spell {
     private void OnCollisionEnter2D(Collision2D other) {
         switch (other.transform.tag) {
             case "Enemy":
-                other.gameObject.GetComponent<Enemy>().takeDamage(damage);
+                other.gameObject.GetComponent<Enemy>().takeDirectionalDamage(damage, transform.position);
                 Destroy(gameObject);
                 break;
             case "Destructible":

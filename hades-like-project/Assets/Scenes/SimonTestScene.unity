@@ -620,17 +620,17 @@ PrefabInstance:
     - target: {fileID: 1030290264029095086, guid: 2739c4d234d74dc409115ee6b0262b60,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.72929
+      value: -6.24
       objectReference: {fileID: 0}
     - target: {fileID: 1030290264029095086, guid: 2739c4d234d74dc409115ee6b0262b60,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -5.905705
+      value: -3.64
       objectReference: {fileID: 0}
     - target: {fileID: 1030290264029095086, guid: 2739c4d234d74dc409115ee6b0262b60,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 39.512974
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1030290264029095086, guid: 2739c4d234d74dc409115ee6b0262b60,
         type: 3}
@@ -1303,19 +1303,29 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
+      propertyPath: agility
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
+        type: 3}
       propertyPath: canvasUI
       value: 
       objectReference: {fileID: 1859710328}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: strength
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: InventoryUI
       value: 
       objectReference: {fileID: 54693937}
+    - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
+        type: 3}
+      propertyPath: intelligence
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}
       propertyPath: mousePointer
@@ -1369,7 +1379,7 @@ PrefabInstance:
         type: 3}
       propertyPath: equippedSpells.Array.data[4]
       value: 
-      objectReference: {fileID: 6389400638280554138, guid: f7b09bef9d9cc934a8b2a12f32b0d5ba,
+      objectReference: {fileID: 4857134667406225093, guid: 321810eb530844e4fa1ac601211d313c,
         type: 3}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}

@@ -29,7 +29,7 @@ public class WaveBeamSub : Spell {
     private void OnCollisionEnter2D(Collision2D other) {
         switch (other.transform.tag) {
             case "Enemy":
-                other.gameObject.GetComponent<Enemy>().takeDamage(damage);
+                other.gameObject.GetComponent<Enemy>().takeDirectionalDamage(damage, transform.position);
                 Destroy(gameObject);
                 break;
             default:
