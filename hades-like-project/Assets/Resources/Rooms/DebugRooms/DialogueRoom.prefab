@@ -363,7 +363,7 @@ GameObject:
   - component: {fileID: 5201213759069045625}
   - component: {fileID: 5201213759069045626}
   m_Layer: 16
-  m_Name: DialogueRoom
+  m_Name: DialogueRoom 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -957,6 +957,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5201213759069045625}
     m_Modifications:
+    - target: {fileID: 3143545934851778963, guid: 97ff5b70267e8d64d8a3c84f9a9725be,
+        type: 3}
+      propertyPath: infoText
+      value: 'Shoot bubble /n Cooldown: 5 / DMG: 3'
+      objectReference: {fileID: 0}
     - target: {fileID: 4311801343773433968, guid: 97ff5b70267e8d64d8a3c84f9a9725be,
         type: 3}
       propertyPath: m_RootOrder

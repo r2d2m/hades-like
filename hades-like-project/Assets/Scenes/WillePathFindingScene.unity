@@ -6727,7 +6727,7 @@ PrefabInstance:
         type: 3}
       propertyPath: debugRoom
       value: 
-      objectReference: {fileID: 5201213759069045624, guid: 38ba7e5f2fce59242bf858eb0cdf84dd,
+      objectReference: {fileID: 5201213759069045624, guid: de2b31a15b5f7fb438f0a20b7dcf4ded,
         type: 3}
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
