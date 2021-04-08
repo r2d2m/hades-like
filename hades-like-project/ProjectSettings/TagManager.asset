@@ -24,6 +24,7 @@ TagManager:
   - DialoguePanel
   - DialogueDisplay
   - Loot
+  - PlayerUI
   layers:
   - Default
   - TransparentFX

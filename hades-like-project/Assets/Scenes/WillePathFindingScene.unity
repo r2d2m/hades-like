@@ -3533,6 +3533,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2705911301356051518, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: UI
+      value: 
+      objectReference: {fileID: 1078244393}
+    - target: {fileID: 2705911301356051518, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: fadeTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2705911301356051518, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: background
+      value: 
+      objectReference: {fileID: 1078244392}
+    - target: {fileID: 2705911301356051518, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: textDisplay
+      value: 
+      objectReference: {fileID: 1078244391}
+    - target: {fileID: 2705911301356051518, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: slideDistance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806292232370787314, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 220
+      objectReference: {fileID: 0}
+    - target: {fileID: 2806292232370787314, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3925273322087384132, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3948685487895688107, guid: 4979d88f69716d345b140d6352522dd6,
         type: 3}
       propertyPath: m_Camera
@@ -3648,11 +3688,102 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerUI
       objectReference: {fileID: 0}
+    - target: {fileID: 3948685487895688111, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_TagString
+      value: PlayerUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4508763047186233914, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400935508459424021, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400935508459424021, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: b19d115038fc4de4a8f9daf4e6e16e08,
+        type: 2}
+    - target: {fileID: 5400935508459424021, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_fontColor.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400935508459424021, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -2610392797565534852, guid: b19d115038fc4de4a8f9daf4e6e16e08,
+        type: 2}
+    - target: {fileID: 5400935508459424021, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400935508459424021, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400935508459424021, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400935508459424021, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5400935508459424021, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_enableVertexGradient
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287485761954220495, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8287485761954220495, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4979d88f69716d345b140d6352522dd6, type: 3}
 --- !u!1 &1078244390 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3948685487895688111, guid: 4979d88f69716d345b140d6352522dd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1078244389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1078244391 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 473686445519919354, guid: 4979d88f69716d345b140d6352522dd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1078244389}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1078244392 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3982084312981551468, guid: 4979d88f69716d345b140d6352522dd6,
+    type: 3}
+  m_PrefabInstance: {fileID: 1078244389}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1078244393 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2690090443939700793, guid: 4979d88f69716d345b140d6352522dd6,
     type: 3}
   m_PrefabInstance: {fileID: 1078244389}
   m_PrefabAsset: {fileID: 0}
@@ -6650,7 +6781,7 @@ PrefabInstance:
         type: 3}
       propertyPath: debugRoom
       value: 
-      objectReference: {fileID: 5201213759069045624, guid: 38ba7e5f2fce59242bf858eb0cdf84dd,
+      objectReference: {fileID: 5201213759069045624, guid: de2b31a15b5f7fb438f0a20b7dcf4ded,
         type: 3}
     - target: {fileID: 8095881563316779164, guid: e23b14f1eedd40742a87e5ca5fe7a62f,
         type: 3}
