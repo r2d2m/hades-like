@@ -6,8 +6,13 @@ public class GravitySpell : Spell {
     Vector3 originalScale;
     // Start is called before the first frame update
 
+    public GravitySpell() {
+        manaCost = 55f;
+        cooldownTime = 7.0f;
+        isBasicAttack = false;
+    }
+
     private void Awake() {
-        cooldownTime = 7;
         originalScale = transform.localScale;
         transform.localScale = new Vector3(0.1f, 0.1f, 1);
     }

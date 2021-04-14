@@ -13,18 +13,11 @@ public class BurstNeedlesSub : Spell {
     float closestDistance = Mathf.Infinity;
     float maxDist;
 
-    private void Awake() {
-    }
-
     void Start() {
         goalPos = transform.position;
         setRotationTowardsVector(moveVec);
         Destroy(gameObject, 10 * rangeMultiplier);
         maxDist = 8 * rangeMultiplier;
-    }
-
-    private void Update() {
-
     }
 
     // Update is called once per frame

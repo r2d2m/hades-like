@@ -83,7 +83,7 @@ public class PlayerMain : MonoBehaviour {
     float manaMaxGainPerInt = 10;
     float manaRegGainPerInt = 1;
 
-    float movementSpeedPerAgi = 0.03f;
+    float movementSpeedPerAgi = 0.02f;
     float cooldownSpeedPerAgi = 0.03f;
 
     int nrOfStrPerMaxHealth = 3;
@@ -123,7 +123,6 @@ public class PlayerMain : MonoBehaviour {
 
         updateSpellManaCosts();
         MakeInputDictionary();
-
     }
 
     // Update is called once per frame
@@ -169,16 +168,12 @@ public class PlayerMain : MonoBehaviour {
     //TODO: clean this up
     void updateSpellManaCosts() {
         for (int i = 0; i < equippedSpells.Count; i++) {
-            GameObject spellObject = Instantiate(equippedSpells[i]);
-            spellObject.transform.parent = floorGameObject.transform;
-            Spell spellScript = spellObject.GetComponent<Spell>();
-            spellScript.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
-            float manaCost = spellScript.getManaCost();
-            float coooldown = spellScript.getCooldownTime();
-            manaCosts.Add(manaCost);
+            Spell mySpell = equippedSpells[i].GetComponent<Spell>();
+            mySpell.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
+            manaCosts.Add(mySpell.getManaCost());
             spellCooldowns.Add(0);
-            maxSpellCooldowns.Add(coooldown);
-            Destroy(spellObject);
+            maxSpellCooldowns.Add(mySpell.getCooldownTime());
+            print(mySpell.getCooldownTime());
         }
     }
 
@@ -250,7 +245,6 @@ public class PlayerMain : MonoBehaviour {
         }
     }
 
-    //Todo FIX THIS MESS
     void spellInputHandler() {
 
         foreach (KeyValuePair<KeyCode, int> entry in inputs) {
@@ -260,40 +254,7 @@ public class PlayerMain : MonoBehaviour {
                 break;
             }
         }
-
         usingBasicAttack = false;
-        /*      
-
-        
-        if (Input.GetMouseButton(0) && equippedSpells.Count > 0) {
-            spellCooldownCheckAndCast(0);
-            usingBasicAttack = true;
-        }
-        if (Input.GetMouseButton(1) && equippedSpells.Count > 1) {
-            spellCooldownCheckAndCast(1);
-            usingBasicAttack = true;
-        }
-        if (Input.GetKey(KeyCode.Space) && equippedSpells.Count > 2) {
-            spellCooldownCheckAndCast(2);
-            usingBasicAttack = true;
-        }
-        if (Input.GetKey(KeyCode.Q) && equippedSpells.Count > 3) {
-            spellCooldownCheckAndCast(3);
-            usingBasicAttack = true;
-        }
-        if (Input.GetKey(KeyCode.E) && equippedSpells.Count > 4) {
-            spellCooldownCheckAndCast(4);
-            usingBasicAttack = true;
-        }
-        if (Input.GetKey(KeyCode.R) && equippedSpells.Count > 5) {
-            spellCooldownCheckAndCast(5);
-            usingBasicAttack = true;
-        }
-        if (Input.GetKey(KeyCode.F) && equippedSpells.Count > 6) {
-            spellCooldownCheckAndCast(6);
-            usingBasicAttack = true;
-        }
-        usingBasicAttack = false;*/
     }
 
 
@@ -323,8 +284,10 @@ public class PlayerMain : MonoBehaviour {
     }
 
     void castSpell(GameObject spellObject, Spell spellScript, int spellIndex) {
-        spellCooldowns[spellIndex] = spellScript.getCooldownTime() * globalCooldownMultiplier * (1 - cooldownSpeedPerAgi * agility);
-        spellUI.setCooldownDuration(spellIndex, spellCooldowns[spellIndex]);
+        print(maxSpellCooldowns[spellIndex]);
+        spellCooldowns[spellIndex] = maxSpellCooldowns[spellIndex];
+        spellUI.setCooldownDuration(spellIndex, maxSpellCooldowns[spellIndex]);
+        print(spellCooldowns[spellIndex]);
         spellScript.setMousePos(currentMousePos);
         spellScript.setPlayerGameObject(gameObject);
         spellScript.setPlayerPos(transform.position);
@@ -431,6 +394,7 @@ public class PlayerMain : MonoBehaviour {
             updateHealthBar();
             currentInvulCD = invulCD;
             animator.SetTrigger("TookDamage");
+            mainCamera.GetComponent<CameraManager>().screenShake(0.1f, 0.14f);
             print("Took: " + amount + " damage, " + currentHP + "/" + maxHP + " HP left!");
 
             if (currentHP <= 0) {

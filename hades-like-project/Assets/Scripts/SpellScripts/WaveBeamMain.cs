@@ -6,10 +6,10 @@ public class WaveBeamMain : Spell {
     // Start is called before the first frame update
     public GameObject waveBeamSub;
 
-    private void Awake() {
+    public WaveBeamMain() {
+        manaCost = 0f;
         cooldownTime = 0.4f;
         isBasicAttack = true;
-        manaCost = 0;
     }
 
     void Start() {

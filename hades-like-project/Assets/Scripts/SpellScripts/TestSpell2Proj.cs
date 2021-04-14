@@ -7,8 +7,10 @@ public class TestSpell2Proj : Spell {
     float livedTime = 0;
     // Start is called before the first frame update
 
-    private void Awake() {
+    public TestSpell2Proj() {
+        manaCost = 55f;
         cooldownTime = 12;
+        isBasicAttack = false;
     }
 
     void Start() {
@@ -20,7 +22,7 @@ public class TestSpell2Proj : Spell {
     // Update is called once per frame
     void Update() {
         livedTime += Time.deltaTime;
-        if(livedTime > rangeMultiplier * 1.0f){
+        if (livedTime > rangeMultiplier * 1.0f) {
             explode();
             Destroy(gameObject);
         }

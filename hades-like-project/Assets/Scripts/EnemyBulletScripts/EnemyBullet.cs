@@ -15,7 +15,8 @@ public class EnemyBullet : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-
+        transform.rotation = Quaternion.LookRotation(Vector3.forward, GetComponent<Rigidbody2D>().velocity.normalized);
+        //Debug.DrawLine(transform.position, transform.position + new Vector3(GetComponent<Rigidbody2D>().velocity.normalized.x, GetComponent<Rigidbody2D>().velocity.normalized.y));
     }
 
 

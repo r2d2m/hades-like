@@ -8,9 +8,10 @@ public class SpreadShotMain : Spell {
 
     float shootForce = 1000;
 
-    private void Awake() {
+    public SpreadShotMain() {
+        manaCost = 55f;
         cooldownTime = 0.4f;
-        isBasicAttack = false;
+        isBasicAttack = true;
     }
 
     void Start() {

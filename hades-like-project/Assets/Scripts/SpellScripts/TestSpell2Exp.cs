@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class TestSpell2Exp : Spell {
 
+    public TestSpell2Exp() {
+        manaCost = 50f;
+        cooldownTime = 10;
+        isBasicAttack = false;
+    }
+
     void Start() {
         transform.localScale = new Vector3(0.1f * rangeMultiplier, 0.1f * rangeMultiplier, 0);
         Destroy(gameObject, 0.3f);

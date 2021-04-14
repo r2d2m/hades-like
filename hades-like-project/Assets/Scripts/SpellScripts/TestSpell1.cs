@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class TestSpell1 : Spell {
 
-    private void Awake() {
+    public TestSpell1() {
+        manaCost = 55f;
         cooldownTime = 10;
+        isBasicAttack = false;
     }
 
     // Start is called before the first frame update

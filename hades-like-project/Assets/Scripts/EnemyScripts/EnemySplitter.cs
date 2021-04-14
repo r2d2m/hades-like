@@ -51,21 +51,6 @@ public class EnemySplitter : EnemyPathfinder {
     public override void die() {
         IEnumerator spawnChildrenFunc = SpawnChildren();
         StartCoroutine(spawnChildrenFunc);
-        /*
-        GetComponentInChildren<Animator>().SetTrigger("Die");
-        StopUpdatePath();
-        GetComponent<Collider2D>().enabled = false;
-        setToOriginalColor();
-
-
-        GetComponentInChildren<SpriteRenderer>().sortingLayerName = "Corpses";
-        gameObject.tag = "Corpse";
-
-        // Add one more enemy to room
-        enabled = false;
-        // Destroy(gameObject);
-        */
         base.die();
     }
-
 }

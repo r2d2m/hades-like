@@ -61,6 +61,10 @@ public class Enemy : MonoBehaviour {
         return player;
     }
 
+    public void checkStatusEffects(){
+
+    }
+
     // Update things as current color etc
     protected void updateCooldowns() {
         if (currentColorTime > 0) {

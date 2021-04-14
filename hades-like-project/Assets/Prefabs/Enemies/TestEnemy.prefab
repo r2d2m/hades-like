@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4512697855044761325}
   - component: {fileID: 4512697855044761327}
-  - component: {fileID: 1306320533}
   - component: {fileID: 769454776294537716}
+  - component: {fileID: 3803967525177727544}
   m_Layer: 13
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -55,27 +55,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &1306320533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4512697855044761324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30c232190b3baeb4aab39a3b5d897724, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  corpsePrefab: {fileID: 7308130576889434722, guid: d3d5ddbc166be0f4788fb42045b63393,
-    type: 3}
-  floor: {fileID: 0}
-  dirBloodSplatter: {fileID: 0}
-  maxHP: 0
-  currentHP: 0
-  collisionDamage: 0
-  currentState: 1
-  chaseRange: 0
 --- !u!70 &769454776294537716
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -92,6 +71,26 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: -0.18}
   m_Size: {x: 0.6, y: 0.87}
   m_Direction: 0
+--- !u!114 &3803967525177727544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4512697855044761324}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efd6f23a994d7aa4cb2ef83db18352e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  corpsePrefab: {fileID: 0}
+  floor: {fileID: 0}
+  dirBloodSplatter: {fileID: 0}
+  maxHP: 0
+  currentHP: 0
+  collisionDamage: 0
+  currentState: 1
+  chaseRange: 0
 --- !u!1 &6522194096032420569
 GameObject:
   m_ObjectHideFlags: 0

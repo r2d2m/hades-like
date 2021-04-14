@@ -12,6 +12,12 @@ public class WrathOfGod : Spell {
         //transform.localScale = new Vector3(0.1f, 0.1f, 1);
     }
 
+    public WrathOfGod() {
+        manaCost = 50f;
+        cooldownTime = 7f;
+        isBasicAttack = false;
+    }
+
     void Start() {
         damage = 1 * damageMultiplier;
         transform.localScale *= rangeMultiplier;
@@ -20,11 +26,11 @@ public class WrathOfGod : Spell {
     }
 
     private void Update() {
-        transform.position = playerGameObject.transform.position;    
+        transform.position = playerGameObject.transform.position;
     }
 
     private void OnCollisionEnter2D(Collision2D other) {
-        if(other.gameObject.layer == LayerMask.NameToLayer("Unwalkable")){
+        if (other.gameObject.layer == LayerMask.NameToLayer("Unwalkable")) {
             Destroy(gameObject);
         }
     }

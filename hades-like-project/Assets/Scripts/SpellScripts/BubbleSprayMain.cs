@@ -6,12 +6,10 @@ public class BubbleSprayMain : Spell {
     // Start is called before the first frame update
     public GameObject bubbleSpraySub;
 
-    private void Awake() {
+    public BubbleSprayMain() {
+        manaCost = 55f;
+        cooldownTime = 7.0f;
         isBasicAttack = false;
-    }
-
-    public override float getCooldownTime() {
-        return 7.0f;
     }
 
     void Start() {

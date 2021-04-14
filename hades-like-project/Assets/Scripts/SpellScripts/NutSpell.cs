@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestSpell3 : Spell {
+public class NutSpell : Spell {
     // Start is called before the first frame update
 
-    private void Awake() {
+    public NutSpell() {
+        manaCost = 0f;
         cooldownTime = 0.3f;
-        manaCost = 0;
         isBasicAttack = true;
     }
 

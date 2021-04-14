@@ -15,8 +15,8 @@ public class EnemyDasher : Enemy {
         maxHP = 3;
         currentHP = maxHP;
         doDash = false;
-        dashForce = 2000;
-        dashCD = 0.8f;
+        dashForce = 4000;
+        dashCD = 2f;
         rewardSouls = 10;
         currentDashCD = dashCD;
         rigidBody = gameObject.GetComponent<Rigidbody2D>();
@@ -27,7 +27,7 @@ public class EnemyDasher : Enemy {
         movement();
         updateCooldowns();
         deathCheck();
-
+        gameObject.GetComponentInChildren<Animator>().SetFloat("MoveSpeed", rigidBody.velocity.magnitude);
     }
 
     void movement() {
@@ -50,5 +50,4 @@ public class EnemyDasher : Enemy {
             doDash = false;
         }
     }
-
 }
