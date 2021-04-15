@@ -27,7 +27,7 @@ public class EnemyDasher : Enemy {
         movement();
         updateCooldowns();
         deathCheck();
-        gameObject.GetComponentInChildren<Animator>().SetFloat("MoveSpeed", rigidBody.velocity.magnitude);
+        //gameObject.GetComponentInChildren<Animator>().SetFloat("MoveSpeed", rigidBody.velocity.magnitude);
     }
 
     void movement() {
