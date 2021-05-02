@@ -111,6 +111,14 @@ public class Enemy : MonoBehaviour {
     public int getCollisionDamage() {
         return collisionDamage;
     }
+    
+    public void disableEnemy(){
+        enabled = false;
+    }
+
+    public void enableEnemy(){
+        enabled = true;
+    }
 
     /*
         private void OnCollisionEnter2D(Collision2D other) {

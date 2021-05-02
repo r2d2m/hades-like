@@ -39,7 +39,7 @@ public class EnemyMoveAndStop : Enemy {
             currentWalkCD -= Time.deltaTime;
             if (currentWalkCD <= 0) {
                 doWalk = false;
-                currentWalkDuration = walkDuration;
+                currentWalkDuration = walkDuration + Random.Range(-0.5f, 0.5f);
             }
         } else {
             currentWalkDuration -= Time.deltaTime;
@@ -47,10 +47,10 @@ public class EnemyMoveAndStop : Enemy {
                 doWalk = true;
                 if (Random.Range(0.0f, 1.0f) > 0.5f) {
                     movementVector = Random.insideUnitCircle.normalized;
-                }else{
+                } else {
                     movementVector = (player.transform.position - transform.position).normalized;
                 }
-                currentWalkCD = walkCD;
+                currentWalkCD = walkCD + Random.Range(-0.3f, 0.3f);
             }
         }
     }

@@ -109,6 +109,7 @@ public class RoomManager : MonoBehaviour {
 
     private IEnumerator fadeToNextRoom(int difficulty, int floorNumber) {
         currentRoomDepth++;
+
         yield return new WaitForSeconds(1.0f / blackFadeSpeed);
 
         foreach (Transform child in transform) {
@@ -120,11 +121,24 @@ public class RoomManager : MonoBehaviour {
             createRewardRoom(1, 5);
         } else {
             createRoom(difficulty, floorNumber);
+            StartCoroutine(disableAllEnemies(0.7f));
         }
 
         movePlayerToEntrance();
         setCameraAndGridBounds();
         player.GetComponent<PlayerMain>().resetCooldowns();
+    }
+
+    private IEnumerator disableAllEnemies(float disableTime) {
+        foreach (Transform enemy in activeRoom.transform.Find("Enemies").transform) {
+            enemy.gameObject.GetComponent<Enemy>().disableEnemy();
+        }
+
+        yield return new WaitForSeconds(disableTime);
+
+        foreach (Transform enemy in activeRoom.transform.Find("Enemies").transform) {
+            enemy.gameObject.GetComponent<Enemy>().enableEnemy();
+        }
     }
 
     void moveCameraToPlayer(float boundX, float boundY) {
@@ -197,12 +211,12 @@ public class RoomManager : MonoBehaviour {
         activeRoom.transform.parent = transform;
         movePlayerToEntrance();
         setCameraAndGridBounds();
+        //disableAllEnemies(0.7f);
     }
 
     public void exitStartRoom() {
         goToNextRoom();
     }
-
 
     public void spawnRandomRewards(int count, int tier) {
         for (int i = 0; i < count; i++) {

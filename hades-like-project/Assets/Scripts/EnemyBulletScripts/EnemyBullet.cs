@@ -3,25 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBullet : MonoBehaviour {
-    public int damage = 1;
-    public float movementForce = 200;
-    public float pushForce = 5;
-    public float bulletLifeTime = 1;
+    protected int damage = 1;
+    protected float movementForce = 200;
+    protected float pushForce = 5;
+    protected float bulletLifeTime = 1;
 
-    // Start is called before the first frame update
-    void Start() {
-        Destroy(gameObject, bulletLifeTime);
-    }
-
-    // Update is called once per frame
-    void Update() {
-        transform.rotation = Quaternion.LookRotation(Vector3.forward, GetComponent<Rigidbody2D>().velocity.normalized);
-        //Debug.DrawLine(transform.position, transform.position + new Vector3(GetComponent<Rigidbody2D>().velocity.normalized.x, GetComponent<Rigidbody2D>().velocity.normalized.y));
-    }
-
-
-    public void setMovementVector(Vector3 movementVec) {
-        GetComponent<Rigidbody2D>().AddForce(movementForce * movementVec.normalized);
+    public void setMovementVector(Vector3 movementVec, float moveForce = 1) {
+        GetComponent<Rigidbody2D>().AddForce(moveForce * movementVec.normalized);
     }
 
     public int getDamage() {
@@ -30,6 +18,18 @@ public class EnemyBullet : MonoBehaviour {
 
     public void collideWithPlayer() {
         Destroy(gameObject);
+    }
+
+    public void setDamage(int newDamage) {
+        damage = newDamage;
+    }
+
+    public void setBulletLifeTime(float newLifeTime) {
+        bulletLifeTime = newLifeTime;
+    }
+
+    public void setMovementForce(float newForce) {
+        movementForce = newForce;
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
@@ -46,7 +46,6 @@ public class EnemyBullet : MonoBehaviour {
             default:
                 //Destroy(gameObject);
                 break;
-
         }
     }
 
@@ -61,6 +60,5 @@ public class EnemyBullet : MonoBehaviour {
                 break;
 
         }
-
     }
 }

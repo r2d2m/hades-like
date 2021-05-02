@@ -26,7 +26,7 @@ public class InventoryManager : MonoBehaviour {
             Destroy(spellIcon);
         }
         spellIcons.Clear();
-        List<GameObject> equippedSpells = playerMain.getEquippedSpells();
+        List<PlayerSpell> equippedSpells = playerMain.getEquippedSpells();
         for (int i = 0; i < equippedSpells.Count; i++) {
             spellIcons.Add(Instantiate(spellIconPrefab, spellSlots[i].transform.position, spellSlots[i].transform.rotation, transform));
             spellIcons[i].GetComponent<InventoryItem>().currentSpellSlotIndex = i;
@@ -35,7 +35,7 @@ public class InventoryManager : MonoBehaviour {
     }
 
     public void setRaycastTargets(bool enabled) {
-        List<GameObject> equippedSpells = playerMain.getEquippedSpells();
+        List<PlayerSpell> equippedSpells = playerMain.getEquippedSpells();
         for (int i = 0; i < equippedSpells.Count; i++) {
             spellIcons[i].GetComponent<Image>().raycastTarget = enabled;
         }
@@ -43,15 +43,15 @@ public class InventoryManager : MonoBehaviour {
 
     public void switchSpellSlots(int firstSpell, int secondSpell) {
         print("switch: " + firstSpell + ", " + secondSpell);
-        List<GameObject> equippedSpells = playerMain.getEquippedSpells();
+        List<PlayerSpell> equippedSpells = playerMain.getEquippedSpells();
         if (firstSpell != secondSpell && firstSpell < equippedSpells.Count && secondSpell < equippedSpells.Count) {
             playerMain.switchSpellSlots(firstSpell, secondSpell);
         }
     }
 
-    public void setInventoryIcons(List<GameObject> equippedSpells) {
+    public void setInventoryIcons(List<PlayerSpell> equippedSpells) {
         for (int i = 0; i < equippedSpells.Count; i++) {
-            spellIcons[i].GetComponent<Image>().sprite = equippedSpells[i].GetComponent<Spell>().spellIcon;
+            spellIcons[i].GetComponent<Image>().sprite = equippedSpells[i].getSpellScript().spellIcon;
         }
     }
 

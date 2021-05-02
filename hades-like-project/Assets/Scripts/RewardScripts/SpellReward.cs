@@ -21,10 +21,10 @@ public class SpellReward : Reward {
         }
 
         PlayerMain playerMain = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMain>();
-        List<GameObject> playerSpells = playerMain.equippedSpells;
+        List<PlayerSpell> playerSpells = playerMain.getEquippedSpells();
         List<string> playerSpellNames = new List<string>();
         for (int i = 0; i < playerSpells.Count; i++) {
-            playerSpellNames.Add(playerSpells[i].name);
+            playerSpellNames.Add(playerSpells[i].spellObject.name);
         }
 
         spellArray = Resources.LoadAll<GameObject>("Spells");
