@@ -13,7 +13,6 @@ public class CooldownUI : MonoBehaviour {
     public Sprite[] branchSprites;
     public GameObject branchGameObject;
 
-
     List<Transform> spellSlots;
     List<GameObject> cooldownIcons;
 
@@ -31,6 +30,7 @@ public class CooldownUI : MonoBehaviour {
         cooldownIcons = new List<GameObject>();
         cooldownDurations = new List<float>();
         spellSlots = new List<Transform>();
+
         foreach (Transform spellSlot in cooldownContainer.transform) {
             print(spellSlot);
             spellSlots.Add(spellSlot);
@@ -80,13 +80,21 @@ public class CooldownUI : MonoBehaviour {
 
     public void updateCooldowns(List<PlayerSpell> spells) {
         for (int i = 0; i < currentSpellCount; i++) {
-            cooldownIcons[i].GetComponentInChildren<Image>().fillAmount = spells[i].currentCooldown / cooldownDurations[i];
+            if (spells[i] != null) {
+                cooldownIcons[i].GetComponentInChildren<Image>().fillAmount = spells[i].currentCooldown / spells[i].cooldown;
+            }
         }
     }
 
     public void setSpellIcons(List<PlayerSpell> equippedSpells) {
         for (int i = 0; i < equippedSpells.Count; i++) {
-            cooldownIcons[i].GetComponent<SpriteRenderer>().sprite = equippedSpells[i].getSpellScript().spellIcon;
+            if (equippedSpells[i] != null) {
+                cooldownIcons[i].GetComponent<SpriteRenderer>().sprite = equippedSpells[i].getSpellScript().spellIcon;
+                cooldownIcons[i].GetComponentInChildren<Image>().enabled = true;
+            } else {
+                cooldownIcons[i].GetComponent<SpriteRenderer>().sprite = null;
+                cooldownIcons[i].GetComponentInChildren<Image>().enabled = false;
+            }
         }
     }
 
@@ -94,11 +102,12 @@ public class CooldownUI : MonoBehaviour {
         manaBar.GetComponent<Image>().fillAmount = currentPercent;
         manaText.GetComponent<TextMeshProUGUI>().text = ((int)currentAmount).ToString();
         for (int i = 0; i < spells.Count; i++) {
-            if (currentAmount < spells[i].manaCost) {
-                cooldownIcons[i].GetComponent<SpriteRenderer>().color = Color.red;
-            } else {
-                cooldownIcons[i].GetComponent<SpriteRenderer>().color = Color.white;
-
+            if (spells[i] != null) {
+                if (currentAmount < spells[i].manaCost) {
+                    cooldownIcons[i].GetComponent<SpriteRenderer>().color = Color.red;
+                } else {
+                    cooldownIcons[i].GetComponent<SpriteRenderer>().color = Color.white;
+                }
             }
         }
     }

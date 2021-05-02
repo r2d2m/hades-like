@@ -8,11 +8,14 @@ public class InventoryItem : EventTrigger {
     private bool currentlyDragging;
     public int currentSpellSlotIndex = -1;
     public Vector3 originalPos = Vector3.zero;
-    
+    public PlayerMain playerMain;
+
     public override void OnPointerDown(PointerEventData data) {
-        currentlyDragging = true;
-        GetComponentInParent<InventoryManager>().setRaycastTargets(false);
-        print(currentSpellSlotIndex);
+        if (playerMain.getEquippedSpells()[currentSpellSlotIndex] != null) {
+            currentlyDragging = true;
+            GetComponentInParent<InventoryManager>().setRaycastTargets(false);
+            print(currentSpellSlotIndex);
+        }
     }
 
     public override void OnPointerUp(PointerEventData data) {

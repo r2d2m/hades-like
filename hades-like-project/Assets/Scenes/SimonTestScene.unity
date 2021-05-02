@@ -1355,6 +1355,16 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3948685488768161805, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3948685488768161806, guid: 4979d88f69716d345b140d6352522dd6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8287485761954220495, guid: 4979d88f69716d345b140d6352522dd6,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -1611,7 +1621,7 @@ PrefabInstance:
         type: 3}
       propertyPath: startingSpells.Array.data[2]
       value: 
-      objectReference: {fileID: 4857134667406225093, guid: 321810eb530844e4fa1ac601211d313c,
+      objectReference: {fileID: 6389400638280554138, guid: f7b09bef9d9cc934a8b2a12f32b0d5ba,
         type: 3}
     - target: {fileID: 5428975484495120942, guid: a4a58113c3152fa40bd518898c8ce135,
         type: 3}

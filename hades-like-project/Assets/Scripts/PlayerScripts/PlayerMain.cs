@@ -86,6 +86,7 @@ public class PlayerMain : MonoBehaviour {
     int nrOfStrPerMaxHealth = 3;
     float strDamageMultGain = 0.01f;
     private Dictionary<KeyCode, int> inputs;
+    int maxSpellCount = 7;
 
     // Start is called before the first frame update
     void Start() {
@@ -97,6 +98,9 @@ public class PlayerMain : MonoBehaviour {
         usingBasicAttack = false;
 
         equippedSpells = new List<PlayerSpell>();
+        for (int i = 0; i < maxSpellCount; i++) {
+            equippedSpells.Add(null);
+        }
         equipStartingSpells();
 
         spellUI = canvasUI.GetComponent<CooldownUI>();
@@ -122,8 +126,8 @@ public class PlayerMain : MonoBehaviour {
     }
 
     void equipStartingSpells() {
-        foreach (GameObject spell in startingSpells) {
-            equippedSpells.Add(new PlayerSpell(spell, spell.GetComponent<Spell>().getCooldownTime(), spell.GetComponent<Spell>().getManaCost()));
+        for (int i = 0; i < startingSpells.Count; i++) {
+            equippedSpells[i] = new PlayerSpell(startingSpells[i], startingSpells[i].GetComponent<Spell>().getCooldownTime(), startingSpells[i].GetComponent<Spell>().getManaCost());
         }
     }
 
@@ -170,12 +174,14 @@ public class PlayerMain : MonoBehaviour {
     //TODO: clean this up
     void updateSpellManaCosts() {
         foreach (PlayerSpell spell in equippedSpells) {
-            Spell spellScript = spell.getSpellScript();
-            spellScript.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
-            spell.manaCost = spellScript.getManaCost();
-            spell.currentCooldown = 0;
-            spell.cooldown = spellScript.getCooldownTime();
-            print(spellScript.getCooldownTime());
+            if (spell != null) {
+                Spell spellScript = spell.getSpellScript();
+                spellScript.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
+                spell.manaCost = spellScript.getManaCost();
+                spell.currentCooldown = 0;
+                spell.cooldown = spellScript.getCooldownTime();
+                print(spellScript.getCooldownTime());
+            }
         }
     }
 
@@ -183,13 +189,15 @@ public class PlayerMain : MonoBehaviour {
         PlayerSpell temp = equippedSpells[firstSpellIndex];
         equippedSpells[firstSpellIndex] = equippedSpells[secondSpellIndex];
         equippedSpells[secondSpellIndex] = temp;
-        updateCooldowns();
         updateIcons();
+        updateCooldowns();
     }
 
     public void resetCooldowns() {
         foreach (PlayerSpell spell in equippedSpells) {
-            spell.currentCooldown = 0;
+            if (spell != null) {
+                spell.currentCooldown = 0;
+            }
         }
         spellUI.updateCooldowns(equippedSpells);
         currentMana = maxMana;
@@ -235,7 +243,6 @@ public class PlayerMain : MonoBehaviour {
     }
 
     void spellInputHandler() {
-
         foreach (KeyValuePair<KeyCode, int> entry in inputs) {
             if (Input.GetKey(entry.Key) && equippedSpells.Count > entry.Value) {
                 spellCooldownCheckAndCast(entry.Value);
@@ -248,7 +255,8 @@ public class PlayerMain : MonoBehaviour {
 
 
     void spellCooldownCheckAndCast(int spellIndex) {
-        if (equippedSpells[spellIndex].currentCooldown <= 0) {
+        print(equippedSpells[spellIndex]);
+        if (equippedSpells[spellIndex] != null && equippedSpells[spellIndex].currentCooldown <= 0) {
             GameObject spellObject = Instantiate(equippedSpells[spellIndex].spellObject);
             spellObject.transform.parent = floorGameObject.transform;
             Spell spellScript = spellObject.GetComponent<Spell>();
@@ -321,10 +329,12 @@ public class PlayerMain : MonoBehaviour {
         }
 
         for (int i = 0; i < equippedSpells.Count; i++) {
-            if (equippedSpells[i].currentCooldown > 0) {
-                equippedSpells[i].currentCooldown -= Time.deltaTime;
-            } else {
-                equippedSpells[i].currentCooldown = 0;
+            if (equippedSpells[i] != null) {
+                if (equippedSpells[i].currentCooldown > 0) {
+                    equippedSpells[i].currentCooldown -= Time.deltaTime;
+                } else {
+                    equippedSpells[i].currentCooldown = 0;
+                }
             }
         }
 

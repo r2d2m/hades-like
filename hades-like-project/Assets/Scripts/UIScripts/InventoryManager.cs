@@ -16,13 +16,13 @@ public class InventoryManager : MonoBehaviour {
         spellSlots = new List<GameObject>();
         playerMain = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMain>();
         for (int i = 0; i < 7; i++) {
-            spellSlots.Add(Instantiate(spellSlotPrefab, transform.position + new Vector3(i - 7/2, 0, 0), Quaternion.identity, transform));
+            spellSlots.Add(Instantiate(spellSlotPrefab, transform.position + new Vector3(i - 7 / 2, 0, 0), Quaternion.identity, transform));
         }
         updateInventory();
     }
 
     public void updateInventory() {
-        foreach(GameObject spellIcon in spellIcons){
+        foreach (GameObject spellIcon in spellIcons) {
             Destroy(spellIcon);
         }
         spellIcons.Clear();
@@ -31,6 +31,7 @@ public class InventoryManager : MonoBehaviour {
             spellIcons.Add(Instantiate(spellIconPrefab, spellSlots[i].transform.position, spellSlots[i].transform.rotation, transform));
             spellIcons[i].GetComponent<InventoryItem>().currentSpellSlotIndex = i;
             spellIcons[i].GetComponent<InventoryItem>().originalPos = spellSlots[i].GetComponent<RectTransform>().localPosition;
+            spellIcons[i].GetComponent<InventoryItem>().playerMain = playerMain;
         }
     }
 
@@ -51,7 +52,14 @@ public class InventoryManager : MonoBehaviour {
 
     public void setInventoryIcons(List<PlayerSpell> equippedSpells) {
         for (int i = 0; i < equippedSpells.Count; i++) {
-            spellIcons[i].GetComponent<Image>().sprite = equippedSpells[i].getSpellScript().spellIcon;
+            if (equippedSpells[i] != null) {
+                spellIcons[i].GetComponent<Image>().sprite = equippedSpells[i].getSpellScript().spellIcon;
+                spellIcons[i].GetComponent<Image>().color = Color.white;
+            } else {
+                spellIcons[i].GetComponent<Image>().sprite = null;
+                
+                spellIcons[i].GetComponent<Image>().color = new Color(0, 0, 0, 0);
+            }
         }
     }
 

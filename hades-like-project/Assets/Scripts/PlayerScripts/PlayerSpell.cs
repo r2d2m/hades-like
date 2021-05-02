@@ -7,12 +7,14 @@ public class PlayerSpell {
     public float cooldown;
     public float currentCooldown;
     public float manaCost;
+    public bool hasSpell;
 
     public PlayerSpell() {
         spellObject = null;
         cooldown = 1;
         currentCooldown = 0;
         manaCost = 10;
+        hasSpell = true;
     }
 
     public PlayerSpell(GameObject spellObject, float cooldown, float manaCost) {
@@ -20,6 +22,7 @@ public class PlayerSpell {
         this.cooldown = cooldown;
         this.currentCooldown = 0;
         this.manaCost = manaCost;
+        this.hasSpell = true;
     }
 
     public GameObject getSpellObject(){
