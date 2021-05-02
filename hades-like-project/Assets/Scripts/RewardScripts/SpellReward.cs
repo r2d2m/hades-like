@@ -24,8 +24,9 @@ public class SpellReward : Reward {
         List<PlayerSpell> playerSpells = playerMain.getEquippedSpells();
         List<string> playerSpellNames = new List<string>();
         for (int i = 0; i < playerSpells.Count; i++) {
-            print(playerSpells[i].spellObject.name);
-            playerSpellNames.Add(playerSpells[i].spellObject.name);
+            if (playerSpells[i] != null) {
+                playerSpellNames.Add(playerSpells[i].spellObject.name);
+            }
         }
 
         spellArray = Resources.LoadAll<GameObject>("Spells");

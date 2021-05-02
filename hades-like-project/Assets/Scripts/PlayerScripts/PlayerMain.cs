@@ -204,17 +204,20 @@ public class PlayerMain : MonoBehaviour {
     }
 
     public void pickupSpell(GameObject newSpellObject) {
-        if (equippedSpells.Count < 7) {
-            Spell spellScript = newSpellObject.GetComponent<Spell>();
-            spellScript.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
-            PlayerSpell newSpell = new PlayerSpell(newSpellObject, spellScript.getCooldownTime(), spellScript.getManaCost());
-            spellUI.addSpell();
-            InventoryUI.GetComponent<InventoryManager>().updateInventory();
-            spellUI.UpdateManaBar(currentMana, currentMana / maxMana, equippedSpells);
-            updateIcons();
-        } else {
-            toggleInventory(true);
+        for (int i = 0; i < equippedSpells.Count; i++) {
+            if (equippedSpells[i] == null) {
+                Spell spellScript = newSpellObject.GetComponent<Spell>();
+                spellScript.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
+                PlayerSpell newSpell = new PlayerSpell(newSpellObject, spellScript.getCooldownTime(), spellScript.getManaCost());
+                equippedSpells[i] = newSpell;
+                //spellUI.addSpell();
+                InventoryUI.GetComponent<InventoryManager>().updateInventory();
+                spellUI.UpdateManaBar(currentMana, currentMana / maxMana, equippedSpells);
+                updateIcons();
+                return;
+            }
         }
+        toggleInventory(true);
     }
 
     public void updateIcons() {

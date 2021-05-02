@@ -54,7 +54,6 @@ public class CooldownUI : MonoBehaviour {
         cooldownIcons.Add(cooldownIcon);
         cooldownDurations.Add(1);
         currentSpellCount++;
-
         updateBranchSprite();
     }
 
