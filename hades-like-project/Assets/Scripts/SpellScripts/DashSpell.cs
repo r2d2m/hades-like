@@ -16,6 +16,6 @@ public class DashSpell : Spell {
 
     // Update is called once per frame
     void Update() {
-        playerGameObject.GetComponent<Rigidbody2D>().AddForce(getMouseDeltaVector().normalized * 6500);
+        playerGameObject.GetComponent<Rigidbody2D>().velocity =  getMouseDeltaVector().normalized * (1000 + playerAgility * 50);
     }
 }

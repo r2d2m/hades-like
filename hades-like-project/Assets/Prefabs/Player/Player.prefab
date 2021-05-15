@@ -91,7 +91,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 86714f8bda5a07c448941800a4a6fb14, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1af032bb76b75354cbf1ca5bbc95b09d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -99,7 +99,7 @@ SpriteRenderer:
   m_Size: {x: 20.48, y: 20.48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!1 &100308274
@@ -489,15 +489,18 @@ MonoBehaviour:
   floorGameObject: {fileID: 0}
   shadowObject: {fileID: 0}
   animator: {fileID: 17895253}
-  damageMultiplier: 1
-  cooldownMultiplier: 1
+  globalDamageMultiplier: 1
+  globalCooldownMultiplier: 1
   rangeMultiplier: 1
   spellSpeedMultiplier: 1
   spellForceMultipler: 1
   spellLifeTimeMultiplier: 1
   movementSpeedMultiplier: 1
-  equippedSpells:
-  - {fileID: 8853799596945735059, guid: beaccd7cf233dcc4bab574e8ab1ab4b6, type: 3}
+  agility: 0
+  strength: 0
+  intelligence: 0
+  inDialogue: 0
+  startingSpells: []
   InventoryUI: {fileID: 0}
 --- !u!50 &5428975484495120929
 Rigidbody2D:

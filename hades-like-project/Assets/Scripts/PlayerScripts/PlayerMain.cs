@@ -179,7 +179,7 @@ public class PlayerMain : MonoBehaviour {
                 spellScript.setPlayerStats(globalDamageMultiplier, agility, strength, intelligence);
                 spell.manaCost = spellScript.getManaCost();
                 spell.currentCooldown = 0;
-                spell.cooldown = spellScript.getCooldownTime();
+                spell.cooldown = spellScript.getCooldownTime() - cooldownSpeedPerAgi * agility;
                 print(spellScript.getCooldownTime());
             }
         }
@@ -468,6 +468,7 @@ public class PlayerMain : MonoBehaviour {
         this.agility += agility;
         this.intelligence += intelligence;
         updateManaAndHealth();
+        updateSpellManaCosts();
     }
 
     public void modifyPlayerDamageMultiplier(float damageMult) {

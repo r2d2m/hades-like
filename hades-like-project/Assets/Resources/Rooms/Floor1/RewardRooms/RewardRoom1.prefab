@@ -340,6 +340,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormHoleEntrance
       objectReference: {fileID: 0}
+    - target: {fileID: 2561595876313692596, guid: 8c6ebf34db9fad74cadb8ec045da72bc,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2561595876313692596, guid: 8c6ebf34db9fad74cadb8ec045da72bc,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8731495110716648989, guid: 8c6ebf34db9fad74cadb8ec045da72bc,
         type: 3}
       propertyPath: m_RootOrder
@@ -415,6 +425,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: WormHole
       objectReference: {fileID: 0}
+    - target: {fileID: 2561595876313692596, guid: 44aa5b7e03aedcc41b1733f31c143832,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2561595876313692596, guid: 44aa5b7e03aedcc41b1733f31c143832,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 8731495110716648989, guid: 44aa5b7e03aedcc41b1733f31c143832,
         type: 3}
       propertyPath: m_RootOrder
@@ -469,6 +489,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9119813191248208792, guid: 44aa5b7e03aedcc41b1733f31c143832,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 1.8481164
+      objectReference: {fileID: 0}
+    - target: {fileID: 9119813191248208792, guid: 44aa5b7e03aedcc41b1733f31c143832,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1.3730847
+      objectReference: {fileID: 0}
+    - target: {fileID: 9119813191248208792, guid: 44aa5b7e03aedcc41b1733f31c143832,
+        type: 3}
+      propertyPath: m_Offset.x
+      value: -0.057575867
+      objectReference: {fileID: 0}
+    - target: {fileID: 9119813191248208792, guid: 44aa5b7e03aedcc41b1733f31c143832,
+        type: 3}
+      propertyPath: m_Offset.y
+      value: -0.33152512
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 44aa5b7e03aedcc41b1733f31c143832, type: 3}
