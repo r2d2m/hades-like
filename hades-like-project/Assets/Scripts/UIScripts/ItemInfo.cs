@@ -27,7 +27,7 @@ public class ItemInfo : MonoBehaviour {
         UI.transform.position = new Vector2(windowX, windowY);
     }
 
-    public void OpenWindow(float x, float y, string infoText) {
+    public void OpenWindow(float x, float y, string itemName,string infoText) {
 
         windowX = x;
         windowY = y + margin - slideDistance;

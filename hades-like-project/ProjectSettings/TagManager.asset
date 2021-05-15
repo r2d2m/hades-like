@@ -25,6 +25,7 @@ TagManager:
   - DialogueDisplay
   - Loot
   - PlayerUI
+  - Shadow
   layers:
   - Default
   - TransparentFX

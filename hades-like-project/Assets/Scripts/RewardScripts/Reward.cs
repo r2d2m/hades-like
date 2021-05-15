@@ -7,7 +7,8 @@ using UnityEngine.EventSystems;
 public class Reward : MonoBehaviour {
     public AudioClip pickupSound;
     public ItemInfo info;
-    public string infoText;
+    public string itemName = "Item Name";
+    public string infoText = "This is a placeholder text";
 
     void Awake() {
         info = GameObject.Find("PlayerUI").GetComponent<ItemInfo>();
@@ -21,14 +22,17 @@ public class Reward : MonoBehaviour {
     }
 
     public void despawnSelf() {
+        info.CloseWindow();
         Destroy(gameObject);
     }
 
     void OnMouseEnter() {
-        info.OpenWindow(transform.position.x,transform.position.y,infoText);
+        print("Enter");
+        info.OpenWindow(transform.position.x, transform.position.y, itemName, infoText);
     }
 
     void OnMouseExit() {
+        print("Exit");
         info.CloseWindow();
     }
 

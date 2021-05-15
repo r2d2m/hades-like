@@ -13,6 +13,7 @@ public class CameraManager : MonoBehaviour {
     float shakeDuration;
     float shakeStrength;
     float cameraSens;
+    float cameraDampening;
     Vector3 cameraDestination;
     Vector3 cameraPos;
     Vector3 mousePos;
@@ -28,6 +29,7 @@ public class CameraManager : MonoBehaviour {
         cameraDestination = transform.position;
         cameraPos = transform.position;
         cameraSens = 15.0f; // Higher = less impact from mousePos
+        cameraDampening = 0.04f; // less = faster
 
         GraphicsSettings.transparencySortMode = TransparencySortMode.CustomAxis;
         GraphicsSettings.transparencySortAxis = new Vector3(0.0f, 1.0f, 0.0f);
@@ -51,7 +53,7 @@ public class CameraManager : MonoBehaviour {
         }
 
         Vector3 velocity = Vector3.zero;
-        cameraPos = Vector3.SmoothDamp(transform.position, cameraDestination, ref velocity, 0.05f);
+        cameraPos = Vector3.SmoothDamp(transform.position, cameraDestination, ref velocity, cameraDampening);
         // cameraPos = cameraDestination;
 
 

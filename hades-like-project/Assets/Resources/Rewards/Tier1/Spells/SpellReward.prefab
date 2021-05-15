@@ -63,6 +63,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pickupSound: {fileID: 0}
+  info: {fileID: 0}
+  itemName: Item Name
+  infoText: This is a placeholder text
 --- !u!1 &7448285630723085086
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +91,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7448285630723085086}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.308, z: 0}
+  m_LocalPosition: {x: 0, y: -0.3, z: 0}
   m_LocalScale: {x: 0.099999994, y: 0.18, z: 1}
   m_Children: []
   m_Father: {fileID: 2077145094267997680}

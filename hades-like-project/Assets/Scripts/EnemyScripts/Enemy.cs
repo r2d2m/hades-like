@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour {
     protected Color originalColor;
     protected SpriteRenderer spriteRenderer;
 
-    public enum EnemyStates { IDLE, CHASING, DYING };
+    public enum EnemyStates { IDLE, CHASING, DYING, DEAD };
     public EnemyStates currentState = EnemyStates.CHASING;
     protected float colorTime = 0.07f;
     protected float currentColorTime = 0.0f;
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour {
         return player;
     }
 
-    public void checkStatusEffects(){
+    public void checkStatusEffects() {
 
     }
 
@@ -111,12 +111,12 @@ public class Enemy : MonoBehaviour {
     public int getCollisionDamage() {
         return collisionDamage;
     }
-    
-    public void disableEnemy(){
+
+    public void disableEnemy() {
         enabled = false;
     }
 
-    public void enableEnemy(){
+    public void enableEnemy() {
         enabled = true;
     }
 
@@ -132,6 +132,23 @@ public class Enemy : MonoBehaviour {
 
         }
     */
+    // every 2 seconds perform the print()
+    private IEnumerator FadeShadow(GameObject shadowObject, float fadeSpeed) {
+        /*
+        while (shadowObject.GetComponent<SpriteRenderer>().color.a > 0) {
+            Color newColor = shadowObject.GetComponent<SpriteRenderer>().color - new Color(0, 0, 0, Time.deltaTime * fadeSpeed);
+            shadowObject.GetComponent<SpriteRenderer>().color = newColor;
+            print(newColor.a);
+            yield return null;
+        }*/
+
+        Vector3 originalScale = shadowObject.transform.localScale;
+        while (shadowObject.transform.localScale.x > 0.01f) {
+            print(Time.deltaTime);
+            shadowObject.transform.localScale -= originalScale * Time.deltaTime * 1.8f;
+            yield return null;
+        }
+    }
 
     // Things to do and set during deah
     public virtual void die() {
@@ -141,6 +158,13 @@ public class Enemy : MonoBehaviour {
             corpse.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
             corpse.transform.parent = transform.parent; // TODO CHANGE THIS!
             //corpse.GetComponent<SpriteRenderer>().color = originalColor;
+        }
+
+        Transform shadow = gameObject.transform.Find("Shadow");
+
+        if (shadow != null) {
+            IEnumerator fadeCorutine = FadeShadow(shadow.gameObject, 1.3f);
+            StartCoroutine(fadeCorutine);
         }
 
         floor.GetComponent<RoomManager>().enemyDeath(transform.position, rewardSouls);
@@ -154,7 +178,8 @@ public class Enemy : MonoBehaviour {
         GetComponent<Collider2D>().enabled = false;
         GetComponentInChildren<SpriteRenderer>().sortingLayerName = "Corpses";
         gameObject.tag = "Corpse";
+        currentState = EnemyStates.DEAD;
         setToOriginalColor();
-        enabled = false;
+        this.enabled = false;
     }
 }

@@ -10,8 +10,10 @@ public class GeneralStatUpgrade : Reward {
     public float spellForceMultipler = 0;
     public float spellLifeTimeMultiplier = 0;
     public float movementSpeedMultiplier = 0;
+    public int agilityGain = 0;
+    public int intelligenceGain = 0;
+    public int strengthGain = 0;
     public int maxHealthMod = 0;
-
 
     // Update is called once per frame
     public override void grabReward(GameObject player) {
@@ -23,7 +25,7 @@ public class GeneralStatUpgrade : Reward {
         playerMain.modifySpellForce(spellForceMultipler);
         playerMain.modifySpellSpeed(spellSpeedMultiplier);
         playerMain.modifyLifeTime(spellLifeTimeMultiplier);
-
+        playerMain.modifyStats(strengthGain, agilityGain, intelligenceGain);
         base.grabReward(player);
     }
 }

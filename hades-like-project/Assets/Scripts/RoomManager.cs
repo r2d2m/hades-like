@@ -118,7 +118,7 @@ public class RoomManager : MonoBehaviour {
 
         if (currentRoomDepth % 4 == 0) {
             //createRewardRoom(1, Random.Range(1, 4));
-            createRewardRoom(1, 5);
+            createRewardRoom(1, 3);
         } else {
             createRoom(difficulty, floorNumber);
             StartCoroutine(disableAllEnemies(0.7f));
@@ -176,7 +176,8 @@ public class RoomManager : MonoBehaviour {
             while (tries > 0) {
                 randomReward = getRandomReward(1);
                 if (!rewardNames.Contains((randomReward.name + "(Clone)"))) {
-                    newReward = Instantiate(randomReward, rewardSpawnPoint.transform.position + new Vector3(1.3f * i - numberOfRewards * 0.65f, 0, 0), rewardSpawnPoint.transform.rotation);
+                    //z-pos has to be below 0 so mouseEnter/exit has priority on rewards
+                    newReward = Instantiate(randomReward, rewardSpawnPoint.transform.position + new Vector3(1.3f * i - numberOfRewards * 0.65f, 0, -1), rewardSpawnPoint.transform.rotation);
                     break;
                 }
                 tries--;
@@ -262,7 +263,7 @@ public class RoomManager : MonoBehaviour {
         GetComponent<Grid>().CreateGrid();
         //TODO maybe dont move camera here??
         moveCameraToPlayer(cameraBounds[0], cameraBounds[1]);
-        print(cameraBounds[0] + ", " + cameraBounds[1]);
+        //print(cameraBounds[0] + ", " + cameraBounds[1]);
         return cameraBounds;
     }
 

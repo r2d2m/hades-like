@@ -258,7 +258,6 @@ public class PlayerMain : MonoBehaviour {
 
 
     void spellCooldownCheckAndCast(int spellIndex) {
-        print(equippedSpells[spellIndex]);
         if (equippedSpells[spellIndex] != null && equippedSpells[spellIndex].currentCooldown <= 0) {
             GameObject spellObject = Instantiate(equippedSpells[spellIndex].spellObject);
             spellObject.transform.parent = floorGameObject.transform;
@@ -462,6 +461,13 @@ public class PlayerMain : MonoBehaviour {
 
     public Vector3 getPlayerPosition() {
         return transform.position;
+    }
+
+    public void modifyStats(int strength, int agility, int intelligence) {
+        this.strength += strength;
+        this.agility += agility;
+        this.intelligence += intelligence;
+        updateManaAndHealth();
     }
 
     public void modifyPlayerDamageMultiplier(float damageMult) {

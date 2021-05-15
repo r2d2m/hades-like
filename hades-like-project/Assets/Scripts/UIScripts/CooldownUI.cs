@@ -18,8 +18,14 @@ public class CooldownUI : MonoBehaviour {
 
 
     public GameObject manaBar;
+    public GameObject manaMask;
+    float manaMaskOriginalY;
     public GameObject manaText;
     // Start is called before the first frame update
+
+    private void Awake() {
+        manaMaskOriginalY = manaMask.transform.localPosition.y;
+    }
 
     public void setSpellCount(int count) {
         if (cooldownIcons != null) {
@@ -100,6 +106,7 @@ public class CooldownUI : MonoBehaviour {
     public void UpdateManaBar(float currentAmount, float currentPercent, List<PlayerSpell> spells) {
         manaBar.GetComponent<Image>().fillAmount = currentPercent;
         manaText.GetComponent<TextMeshProUGUI>().text = ((int)currentAmount).ToString();
+        manaMask.transform.localPosition = new Vector3(manaMask.transform.localPosition.x, manaMaskOriginalY * currentPercent, 0);
         for (int i = 0; i < spells.Count; i++) {
             if (spells[i] != null) {
                 if (currentAmount < spells[i].manaCost) {
