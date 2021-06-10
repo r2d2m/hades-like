@@ -28,12 +28,20 @@ public class Enemy : MonoBehaviour {
     protected float currentColorTime = 0.0f;
     public float chaseRange = 0;
 
+    AudioSource enemyAudioSource;
+
+    public AudioClip idleSound;
+    public AudioClip damagedSound;
+    public AudioClip deathSound;
+
+
     // Start is called before the first frame update
     void Awake() {
         player = GameObject.FindGameObjectWithTag("Player");
         floor = GameObject.FindGameObjectWithTag("Floor");
         spriteRenderer = gameObject.GetComponentInChildren<SpriteRenderer>();
         originalColor = spriteRenderer.color;
+        enemyAudioSource = GetComponent<AudioSource>();
     }
 
     // Check if enemy is dead
@@ -83,6 +91,9 @@ public class Enemy : MonoBehaviour {
     // Take damage and set color
     public void takeDamage(float damage) {
         if (damage > 0) {
+            if (damagedSound != null) {
+                enemyAudioSource.PlayOneShot(damagedSound);
+            }
             currentHP -= damage;
             currentColorTime = colorTime;
             spriteRenderer.color = new Color(1.0f, 0.0f, 0.0f);
@@ -153,6 +164,11 @@ public class Enemy : MonoBehaviour {
     // Things to do and set during deah
     public virtual void die() {
         // Spawn corpse if we have a prefab
+
+        if(enemyAudioSource != null && deathSound != null){
+            enemyAudioSource.PlayOneShot(deathSound);
+        }
+
         if (corpsePrefab != null) {
             GameObject corpse = Instantiate(corpsePrefab, transform.position, transform.rotation);
             corpse.GetComponent<Rigidbody2D>().velocity = gameObject.GetComponent<Rigidbody2D>().velocity;

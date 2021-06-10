@@ -28,7 +28,9 @@ public class Spell : MonoBehaviour {
     protected float playerStrength = 0;
     protected float playerIntelligence = 0;
 
-
+    public AudioClip onCastSound;
+    public AudioClip onHitSound;
+    
     public Sprite spellIcon;
 
     public void setPlayerPos(Vector3 playerPos) {

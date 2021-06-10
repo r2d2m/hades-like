@@ -152,6 +152,11 @@ public class PlayerMain : MonoBehaviour {
             currentMana = Mathf.Min(currentMana + Time.deltaTime * (1.0f / 10.0f * maxMana), maxMana);
         }
 
+        if (Input.GetKeyDown(KeyCode.B)) {
+            print("CAST");
+            animator.SetTrigger("AoECast");
+        }
+
         spellUI.UpdateManaBar(currentMana, currentMana / maxMana, equippedSpells);
     }
 
